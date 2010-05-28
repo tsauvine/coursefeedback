@@ -1,0 +1,43 @@
+en:
+  ##########
+  # Course
+  ##########
+  courses_heading: "Courses"
+  course_instances_heading: "Instances"
+  no_courses: "There are no courses in the system yet"
+  active_instance: active
+  inactive_instance: inactive
+  new_instance: "New course instance"
+  Settings: "Settings"
+  
+  new_course: "Create new course"
+  new_course_heading: "New course"
+  course_code: "Course code"
+  course_code_hint: "(e.g. 58123)"
+  course_name: "Course name"
+  course_name_hint: "(e.g. Programming)"
+  headlines_read_permission: "Permission to read headlines"
+  feedback_read_permission: "Permission to read feedback"
+  feedback_write_permission: "Permission to send feedback"
+  moderated: "Moderated"
+  course_created: "Course created"
+  course_updated: "Course updated"
+  
+  visibility_public: "Public Internet"
+  visibility_ip: "University network"
+  visibility_authenticated: "Logged in"
+  visibility_enrolled: "Students of the course"
+  visibility_staff: "Staff of the course"
+  
+  
+  activerecord:
+    errors:
+      models:
+        course:
+          attributes:
+            code:
+              invalid: "may contain letters, numbers, following special characters: \-+*_.,!$'(), no whitespace"
+              blank: "code missing"
+              taken: "code is already in use"
+            name:
+              blank: "name missing"

@@ -1,0 +1,17 @@
+<h1><%=t :courses_heading %></h1>
+
+<% if @courses.empty? %>
+  <p><%=t :no_courses %></p>
+<% else %>
+  <ul>
+    <% @courses.each do |course| %>
+      <li><%= link_to "#{h course.code} #{h course.name}", course %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
+<% if is_admin?(current_user) %>
+  <p><%= link_to t(:new_course), new_course_path %></p>
+<% end %>
+

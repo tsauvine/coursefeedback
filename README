@@ -1,0 +1,23 @@
+# Installing #
+
+Install gems
+ gem install daemons
+
+Configure database settings
+ cp config/database.yml.base config/database.yml
+ $EDITOR config/database.yml
+
+Configure settings
+ cp config/initializers/settings.rb.base config/initializers/settings.rb
+ $EDITOR config/initializers/settings.rb
+
+
+# E-mail notifications #
+
+E-mail notification settings are specified in config/initializers/settings.rb
+
+NOTIFICATIONS_SENDER_EMAIL is the 'from' address of the notification mails.
+PATH_PREFIX specifies the base url of the links.
+
+Notifications are sent by a background worker. The worker deamon must be started by running
+ script/worker start

@@ -1,0 +1,82 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  app_title: "Feedback"
+  login_button: "Login"
+  logout_button: "Logout"
+  not_logged_in: "Not logged in"
+  
+  back: "Back"
+  preview_button: "Preview"
+  send_button: "Send"
+  cancel_button: "Cancel"
+  Send: "Send"
+  Save: "Save"
+  Edit: "Edit"
+  Delete: "Delete"
+  Cancel: "Cancel"
+  
+  thumb_up_tooltip: "Agree"
+  thumb_down_tooltip: "Disagree"
+  thumb_up_alttext: "Thumbs up"
+  thumb_down_alttext: "Thumbs down"
+  
+  move_up_alttext: "Move up"
+  move_down_alttext: "Move down"
+  
+  navi_instances: "Instances"
+  navi_settings: "Settings"
+  navi_faq: "FAQ"
+  navi_feedback: "Feedback"
+  navi_surveys: "Surveys"
+  navi_course_settings: "Course"
+  navi_instance_settings: "Instance"
+  navi_my_preferences: "My preferences"
+  
+  #################
+  # Active Record
+  #################
+  
+  activerecord:
+    errors:
+      models:
+        course_instance:
+          attributes:
+            code:
+              invalid: "may contain letters, numbers, following special characters: \-+*_.,!$'(), no whitespace"
+              blank: "path missing"
+              taken: "path is already in use"
+            name:
+              blank: "name missing"
+        course:
+          attributes:
+            code:
+              invalid: "may contain letters, numbers, following special characters: \-+*_.,!$'(), no whitespace"
+              blank: "code missing"
+              taken: "code is already in use"
+            name:
+              blank: "name missing"
+        faq_entry:
+          attributes:
+            caption:
+              blank: "caption missing"
+
+
+
+  ##############
+  # Time & Date
+  ##############
+  
+  date:
+    formats:
+      # Use the strftime parameters for formats.
+      default: "%Y-%m-%d"
+      short: "%d %b"
+      long: "%Y-%m-%d"
+
+  time:
+    formats:
+      default: "%a %d %b %H:%M"
+      short: "%d %b %H:%M"
+      long: "%a %Y-%m-%d %H:%M:%S"

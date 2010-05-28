@@ -1,0 +1,65 @@
+# Topic
+
+fi:
+  # Index
+  topics_index_heading: "Palaute"
+  in_queue: "Viesti moderointijonossa"
+  topic_censored: "Palaute moderoitu"
+  message_censored: "Kommentti moderoitu"
+  new_topic: "Lähetä palautetta"
+  new_topic_login: "Kirjaudu sisään lähettääksesi palautetta"
+  new_topic_enrolled: "Vain kurssille ilmoittautuneet opiskelijat voivat lähettää palautetta."
+  topic_read_authenticated: "Kirjaudu sisään lukeaksesi palautetta"
+  topic_read_staff: "Palaute on vain kurssihenkilökunnan luettavissa"
+  instance_inactive: "Kurssille &quot;{{course}}&quot; ei voi lähettää palautetta, koska kurssi ei ole käynnissä."
+  
+  Topic: "Aihe"
+  Opened: "Avattu"
+  Commented: "Kommentoitu"
+  Answered: "Vastattu"
+  
+  # Show
+  private_topic_hint: "Tämä palaute on lähetetty vain henkilökunnan luettavaksi. Viestiketju ei näy opiskelijoille."
+  new_comment: "Kommentoi"
+  authenticated: autentikoitu
+  not_authenticated: ei autentikoitu
+  new_comment_login: "Kirjaudu sisään kommentoidaksesi"
+  new_comment_inactive: "Keskustelua ei voi kommentoida, koska kurssi-instanssi ei ole aktiivinen."
+  new_comment_enrolled: "Vain kurssille ilmoittautuneet opiskelijat voivat kommentoida keskustelua."
+  add_to_faq: "FAQ"
+  re_moderate: "Moderoi"
+  edit_topic: "Muokkaa"
+  moderated_published: "Viestiketju julkaistu"
+  moderated_censored: "Viestiketju sensuroitu"
+  moderated_deleted: "Viestiketju poistettu"
+  topic_visibility_staff: "yksityinen"
+  topic_moderation_pending: "jonossa"
+  topic_moderation_published: "julkaistu"
+  topic_moderation_censored: "sensuroitu"
+
+  # New
+  new_topic_heading: "Uusi aihe"
+  instace_closed: "Kurssi-instanssi ei ole aktiivinen. Palautetta voi ainoastaan lukea."
+  name: "Nimi"
+  caption: "Otsikko"
+  topic_visibility: "Palautteen näkyvyys"
+  topic_visibility_staff: "Kurssihenkilökunnalle"
+  topic_visibility_public: "Kaikille"
+  feedback: "Palaute"
+  added_to_queue: "Viestisi on lähetetty moderointijonoon."
+  topic_opened: "Kiitos palautteestasi!"
+  send_with_pseudonym: "Lähetä nimimerkillä"
+  send_with_real_name: "Lähetä omalla nimellä"
+  new_topic_hint: "Jos lähetät palautetta nimimerkillä, palautteeseen ei tallenneta lähettäjän tietoja."
+
+  # New message
+  Nick: Nimi
+  new_message_heading: "Uusi kommentti"
+  new_message_hint: "Jos lähetät kommentin nimimerkillä, siihen ei tallenneta lähettäjän tietoja."
+
+  # Misc
+  moderateAccept: "Julkaise"
+  moderateReject: "Sensuroi"
+  moderateDelete: "Poista"
+  edit_topic_heading: "Muokkaa viestiketjua"
+  topic_updated: "Viestiketju päivitetty"

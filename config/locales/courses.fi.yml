@@ -1,0 +1,42 @@
+fi:
+  ##########
+  # Course
+  ##########
+  courses_heading: "Kurssit"
+  course_instances_heading: "Instanssit"
+  no_courses: "J&auml;rjestelm&auml;ss&auml; ei ole viel&auml; kursseja"
+  active_instance: "aktiivinen"
+  inactive_instance: "suljettu"
+  new_instance: "Uusi kurssi-instanssi"
+  Settings: "Asetukset"
+  
+  new_course: "Luo uusi kurssi"
+  new_course_heading: "Uusi kurssi"
+  course_code: "Kurssikoodi"
+  course_code_hint: "(esim. 58123)"
+  course_name: "Kurssin nimi"
+  course_name_hint: "(esim. Ohjelmointi)"
+  headlines_read_permission: "Otsikoiden lukuoikeus"
+  feedback_read_permission: "Palautteen lukuoikeus"
+  feedback_write_permission: "Palautteen lähetysoikeus"
+  moderated: "Moderoitu"
+  course_created: "Kurssi luotu"
+  course_updated: "Kurssi tallennettu"
+  
+  visibility_public: "Avoin Internet"
+  visibility_ip: "Yliopiston verkosta"
+  visibility_authenticated: "Sisään kirjautuneet"
+  visibility_enrolled: "Kurssin opiskelijat"
+  visibility_staff: "Kurssin henkilökunta"
+  
+  activerecord:
+    errors:
+      models:
+        course:
+          attributes:
+            code:
+              invalid: "saa sisältää kirjaimia, numeroita, seuraavia merkkejä: \-+*_.,!$'(), ei välilyöntejä"
+              blank: "koodi puuttuu"
+              taken: "koodi on jo käytössä"
+            name:
+              blank: "nimi puuttuu"

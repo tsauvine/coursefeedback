@@ -1,0 +1,3 @@
+class TextQuestion < SurveyQuestion
+  
+end

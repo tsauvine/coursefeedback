@@ -1,0 +1,432 @@
+img, object {
+  border: 0px;
+}
+
+
+
+div.topNavi {
+  background: #919191 url('../images/topnaviBg.png') repeat-x;
+  height: 48px;
+}
+
+.topNavi .extraButtons {
+  float: right;
+}
+
+.topNavi ul {
+  margin: 0px 1em 0px 0px;
+  padding: 0px;
+  float: left;
+}
+
+.topNavi li {
+  display: block;
+  float: left;
+  height: 41px;
+}
+
+.topNavi a {
+  margin: 0px 0px 0px 2px;
+  padding: 0px .5em;
+  display: block;
+  height: 41px;
+  line-height: 41px;
+  color: white;
+  font-weight: bold;
+  font-variant: small-caps;
+  font-family: sans-serif;
+  text-decoration: none;
+}
+
+.topNavi a:hover {
+  text-decoration: underline;
+}
+
+.topNavi ul.buttons li {
+  background: #4464cb url('../images/topButtonLeft.png') left no-repeat;
+}
+
+.topNavi ul.buttons a {
+  background: url('../images/topButtonRight.png') right no-repeat;
+  
+}
+
+.topNavi ul.language a {
+  padding: 0px .1em;
+}
+
+div.loginInfo {
+  float: right;
+  color: gray;
+  font-family: sans-serif;
+  font-size: smaller;
+  margin: 0px 1em;
+}
+
+ul.breadcrumbs {
+  float: left;
+  color: gray;
+  font-family: sans-serif;
+  font-size: smaller;
+  margin: 0px 1em;
+  padding: 0px;
+  list-style: none;
+}
+
+.breadcrumbs li {
+  background: none;
+  display: block;
+  float: left;
+  margin: 0px .5em 0px 0px;
+  padding: 0px;
+}
+
+.breadcrumbs a {
+  color: gray;
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  color: gray;
+  text-decoration: underline;
+}
+
+
+
+
+.sideNavi {
+  /*
+  background: white;
+  border: 1px solid #e0e0e0;
+  */
+  width: 180px;
+  position: absolute;
+  z-index: 1;
+  padding: 0px;
+  margin: 20px 0px 0px 5px;
+}
+
+.sideNavi h2 a {
+  color: gray;
+}
+
+.sideNavi ul {
+ list-style: none;
+ margin: 0px 0px 16px 0px;
+ padding: 0px;
+}
+
+
+.sideNavi .inactive a {
+  color: gray;
+}
+
+
+
+
+/*******************
+  Text styles
+ *******************/
+
+.hint {
+  font-size: small;
+  color: gray;
+  font-style: italic;
+}
+
+.hint a, a.hint {
+  color: gray;
+}
+
+.error {
+  color: red;
+}
+
+/*******************
+  Tables
+ *******************/
+
+table {
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+
+td {
+  padding: .2em .4em;
+}
+
+thead {
+  color: #404040;
+  background: #f0f0f0;
+  border-bottom: 1px solid #a0a0a0;
+  font-style: italic;
+  font-size: smaller;
+}
+
+thead td {
+  border: 1px solid #a0a0a0;
+}
+
+thead a {
+  color: #404040;
+}
+
+/*
+table.columns {
+  border-bottom: 1px solid #a0a0a0;
+}
+
+table.columns td {
+  border-left: 1px solid #a0a0a0;
+  border-right: 1px solid #a0a0a0;
+}
+*/
+
+
+/*******************
+  Misc
+ *******************/
+
+div.course-instance {
+  /*border-top: 5px solid gray;*/
+  margin: 1em 1em 2em 1em;
+}
+
+
+.clear {
+  clear: both;
+}
+
+.thumbsUp, .thumbsUp a, a.thumbsUp {
+  color: #008000;
+}
+
+.thumbsDown, .thumbsDown a, a.thumbsDown {
+  color: #800000;
+}
+
+
+/*******************
+  Flash messages
+ *******************/
+
+.flashError, .flashWarning, .flashSuccess, .flashNotice {
+  margin: 1em 1em;
+  padding: .5em;
+  color: black;
+  -moz-border-radius: .5em;
+}
+
+.flashError {
+  background: #ff8080;
+  border: 1px solid #800000;
+}
+
+.flashWarning {
+  background: #ffff80;
+  border: 1px solid #808000;
+}
+
+.flashSuccess {
+  background: #a0ffa0;
+  border: 1px solid #008000;
+}
+
+.flashNotice {
+  background: #c0c0ff;
+  border: 1px solid #000080;
+}
+
+
+
+/**********************
+  Topics, messages
+ **********************/
+ 
+.topic h2 {
+  margin: 0px;
+  padding: 0px;
+  /*font-size: 120%;*/
+}
+
+.topic .sender {
+  color: #808080;
+  font-size: smaller;
+  margin: 0px;
+  padding: 0px;
+}
+
+.topic .text {
+  margin: .5em 0em 0em 0em;
+  padding: 0px;
+}
+
+.topic .message {
+  margin: 0em 0em 0em 0em;
+  padding: .5em .5em;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.topic .staffMessage {
+  background: #e0e0ff;
+  border-bottom: 1px solid #c0c0c0;
+}
+
+.topic .messageEditor {
+  margin-top: .5em;
+}
+
+.answered {
+  border-left: 2px solid #80ff80;
+}
+
+.unanswered {
+  border-left: 2px solid #ff8080;
+}
+
+.recent {
+  font-weight: bold;
+}
+
+.thumbs img {
+  vertical-align: middle;
+}
+
+.thumbs a {
+  text-decoration: none;
+}
+
+a.acceptButton, a.rejectButton {
+  display: block;
+  float: left;
+  width: 64px;
+  height: 64px;
+  margin: 2px;
+  line-height: 64px;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a.acceptButton {
+  background: url('../images/acceptButton.png');
+}
+
+a.rejectButton {
+  background: url('../images/rejectButton.png');
+}
+
+span.acceptButton, span.acceptButton a, span.rejectButton, span.rejectButton a {
+  float: left;
+  display: block;
+  height: 24px;
+  line-height: 24px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: small;
+}
+
+
+span.acceptButton, span.rejectButton {
+  padding: 0px 10px 0px 0px;   /* right padding must exeed corner radius */
+  margin: 4px 8px 4px 10px;    /* match right margin with a's left margin */
+}
+
+span.acceptButton a, span.rejectButton a {
+  padding: 0px 2px 0px 26px;   /* text padding */
+  margin: 0px 0px 0px -10px;   /* left margin must exeed corner radius */
+  color: #404040;
+}
+
+span.acceptButton {
+  background: url('../images/buttons.png') no-repeat right 0px;
+}
+
+span.acceptButton a {
+  background: url('../images/buttons.png') no-repeat left 0px;
+}
+
+span.rejectButton a {
+  background: url('../images/buttons.png') no-repeat left -24px;
+}
+
+span.rejectButton {
+  background: url('../images/buttons.png') no-repeat right -24px;
+}
+
+/*
+span.acceptButton:hover {
+  background: url('../images/buttons.png') no-repeat right -24px;
+}
+
+span.acceptButton:hover a {
+  background: url('../images/buttons.png') no-repeat left -24px;
+}
+*/
+
+/*
+span.rejectButton:hover {
+  background: url('../images/buttons.png') no-repeat right -96px;
+}
+
+span.rejectButton:hover a {
+  background: url('../images/buttons.png') no-repeat left -96px;
+}
+*/
+
+/* topic or message that is not visible for students, because it's in queue or censored */
+.hiddenMessage {
+  color: #808080;
+  font-style: italic;
+}
+
+.topics .censored a {
+  color: #800000;
+}
+
+.topics .moderation_pending {
+  background: #e0e0e0;
+}
+
+.topics .moderation_censored {
+  background: #ffe0e0;
+}
+
+.topics .visibility_staff {
+  background: #ffffe0;
+}
+
+/************
+  Messages
+ ************/
+
+.messageButtons {
+  float: right;
+  text-align: right;
+}
+
+.messageButtons ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.messageButtons .messageActions a {
+  font-size: small;
+  color: gray;
+}
+
+.messageActions {
+  visibility: hidden;
+}
+
+.message:hover .messageActions {
+  visibility: visible;
+}
+
+.message img.moderationStatus {
+  float: left;
+  margin: 0em 1em .5em 0em; 
+}

@@ -1,0 +1,66 @@
+# Topic
+
+en:
+  # Index
+  topics_index_heading: "Feedback"
+  in_queue: "Message in moderation queue"
+  topic_censored: "Feedback moderated"
+  message_censored: "Comment moderated"
+  new_topic: "Send feedback"
+  new_topic_login: "Login to send feedback"
+  new_topic_enrolled: "Only enrolled students are allowed to open new topics."
+  topic_read_authenticated: "Log in to read feedback"
+  topic_read_staff: "Feedback can only be read by course staff"
+  instance_inactive: "Feedback cannot be sent to course &quot;{{course}}&quot; because the course is not active."
+  
+  Topic: "Topic"
+  Opened: "Opened"
+  Commented: "Commented"
+  Answered: "Answered"
+  
+  # Show
+  private_topic_hint: "This feedback is sent for staff only. Thread is not visible to students."
+  new_comment: "Add comment"
+  authenticated: "authenticated"
+  not_authenticated: "not authenticated"
+  new_comment_login: "Login to comment"
+  new_comment_inactive: "Course instance is not active. Topic cannot be commented any more."
+  new_comment_enrolled: "Only enrolled students are allowed to comment topics."
+  add_to_faq: "Add to FAQ"
+  re_moderate: "Moderate"
+  edit_topic: "Edit"
+  moderated_published: "Topic published"
+  moderated_censored: "Topic censored"
+  moderated_deleted: "Topic deleted"
+  topic_visibility_staff: "private"
+  topic_moderation_pending: "in queue"
+  topic_moderation_published: "published"
+  topic_moderation_censored: "censored"
+  
+  # New
+  new_topic_heading: "New topic"
+  instace_closed: "Course instance is not active. Feedback can only be read."
+  name: "Name"
+  caption: "Caption"
+  topic_visibility: "Feedback visibility"
+  topic_visibility_staff: "To course staff"
+  topic_visibility_public: "To everybody"
+  feedback: "Feedback"
+  added_to_queue: "Your message has been added to moderation queue."
+  topic_opened: "Thank you for your feedback!"
+  send_with_pseudonym: "Send with pseudonym"
+  send_with_real_name: "Send with real name"
+  new_topic_hint: "Feedback is handled anonymously is you use a pseudonym."
+
+  # New message
+  Nick: Name
+  new_message_heading: "New comment"
+  new_message_hint: "Comment is handled anonymously if you use a pseudonym."
+  
+  # Misc
+  moderateAccept: "Publish"
+  moderateReject: "Censor"
+  moderateDelete: "Delete"
+  edit_topic_heading: "Edit topic"
+  topic_updated: "Topic updated"
+  

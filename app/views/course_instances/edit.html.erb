@@ -1,0 +1,5 @@
+<h1><%= "#{@course.code} #{@course.name} - #{@instance.name} - " + t(:Settings) %></h1>
+
+<%= render :partial => 'settings' %>
+
+<%= link_to t(:back), edit_course_path(@course) %>

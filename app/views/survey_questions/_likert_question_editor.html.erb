@@ -1,0 +1,23 @@
+<!-- Scale -->
+<p><%=t :likert_scale_heading %>:</p>
+<ul id="likertscale<%= question.id %>">
+  <% if question.payload %>
+    <% question.payload[0].each_with_index do |alternative, index| %>
+      <li><%= text_field_tag "likertscale[#{index}]", alternative %></li>
+    <% end %>
+  <% end %>
+</ul>
+
+<button type="button" onclick="addTextfieldRow('<%= "likertscale#{question.id}" %>', 'likertscale')" ><%=t :survey_add_alternative %></button>
+
+<!-- Questions -->
+<p><%=t :likert_questions_heading %>:</p>
+<ul id="likertquestions<%= question.id %>">
+  <% if question.payload %>
+    <% question.payload[1].each_with_index do |alternative, index| %>
+      <li><%= text_field_tag "likertquestion[#{index}]", alternative %></li>
+    <% end %>
+  <% end %>
+</ul>
+
+<button type="button" onclick="addTextfieldRow('<%= "likertquestions#{question.id}" %>', 'likertquestion')" ><%=t :survey_add_alternative %></button>

@@ -1,0 +1,8 @@
+<!-- Radiobuttons -->
+<p id="radio<%= question.id %>">
+  <% if question.payload %>
+    <% question.payload.each_with_index do |alternative, index| %>
+      <%= radio_button_tag question.id, alternative %> <%=h alternative %> <br />
+    <% end %>
+  <% end %>
+</p>

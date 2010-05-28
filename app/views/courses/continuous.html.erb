@@ -1,0 +1,25 @@
+<h1><%= "#{h@course.code} #{h @course.name}" %></h1>
+
+<!-- Course instances -->
+<% @course.course_instances.each do |instance| %>
+  <div class="course-instance">
+    <h2><%= instance.name %></h2>
+    
+    <!-- Topics -->
+    <% instance.topics.each do |topic| %>
+      <%= render :partial => 'topics/topic', :object => topic %>
+    <% end %>
+    
+    <% if instance.active %>
+      <!-- New topic -->
+      <div class="sheet-shadow"><div class="sheet">
+        <%= link_to 'New topic', new_topic_path(:course_instance_id => instance.id) %>
+      </div></div>
+    <% end %>
+      
+  </div>
+<% end %>
+
+<% if @allow_edting %>
+  <%= link_to 'Edit', edit_course_path(@course) %>
+<% end %>

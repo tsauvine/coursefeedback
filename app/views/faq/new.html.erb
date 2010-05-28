@@ -1,0 +1,9 @@
+<h1><%=t :new_entry_heading %></h1>
+
+<%= render :partial => 'settings' %>
+
+<% if @topic %>
+  <%= link_to t(:back), @topic %>
+<% else %>
+  <%= link_to t(:back), faq_url(@course.code, @instance.path) %>
+<% end %>

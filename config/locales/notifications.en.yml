@@ -1,0 +1,5 @@
+en:
+  ################
+  # Notifications
+  ################
+  notification_subject: "Feedback from {{course}}"

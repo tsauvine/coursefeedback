@@ -1,0 +1,44 @@
+<h2><%=t :topics_index_heading %></h2>
+
+<% if !@instance.active %>
+  <p class="hint"><%= t(:instance_inactive, :course => @instance.name) %></p>
+<% else %>
+  <p><%= link_to t(:new_topic), new_topic_path(@course.code, @instance.path) %></p>
+<% end %>
+
+<table class="topics">
+  <thead>
+    <tr>
+      <td><%=t :Topic %></td>
+      <td></td>
+      <td><%= link_to t(:Opened), url_for(:overwrite_params => {:sort => 'opened'}) %></td>
+      <td><%= link_to t(:Commented), url_for(:overwrite_params => {:sort => 'commented'}) %></td>
+      <td><%= link_to t(:Answered), url_for(:overwrite_params => {:sort => 'answered'}) %></td>
+      <td><%= link_to image_tag('thumb_up.png', :alt => 'Thumbs up'), url_for(:overwrite_params => {:sort => 'thumbs_up'}) %></td>
+      <td><%= link_to image_tag('thumb_down.png', :alt => 'Thumbs down'), url_for(:overwrite_params => {:sort => 'thumbs_down'}) %></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @topics.each do |topic| %>
+        <tr class="moderation_<%= topic.moderation_status %> visibility_<%= topic.visibility %>">
+          <td><%= link_to topic.caption, topic_path(topic.id) %></td>
+          <td>
+            <% if topic.visibility == 'staff' %>
+              <%=t :topic_visibility_staff %>
+            <% else %>
+              <%=t "topic_moderation_#{topic.moderation_status}" %>
+            <% end %>
+          </td>
+          <td class="<%= current_user.previous_login_at && topic.created_at > current_user.previous_login_at ? 'recent' : ''%>"><%=l topic.created_at %></td>
+          <% if topic.commented_at %>
+            <td class="<%= current_user.previous_login_at && topic.commented_at > current_user.previous_login_at ? 'recent' : ''%>"><%=l topic.commented_at, :format => :short %></td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <td><%= topic.action_status == 'answered' ? 'x' : '' %></td>
+          <td class="thumbsUp"><%= topic.thumbs_up %></td>
+          <td class="thumbsDown"><%= topic.thumbs_down %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

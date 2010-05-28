@@ -1,0 +1,28 @@
+en:
+  ##########
+  # Users
+  ##########
+  
+  edit_user_heading: "Edit user"
+  new_user_heading: "Edit user"
+  my_preferences_heading: "My settings"
+  user_login: "Login"
+  user_firstname: "First name"
+  user_lastname: "Last name"
+  user_email: "E-mail"
+  user_password: "Password"
+  user_confirm_password: "Confirm password"
+  user_notify: "Notify me by e-mail about new messages"
+  user_updated: "Settings saved"
+  
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            code:
+              invalid: "may contain letters, numbers, following special characters: \-+*_.,!$'(), no whitespace"
+              blank: "code missing"
+              taken: "code is already in use"
+            name:
+              blank: "name missing"

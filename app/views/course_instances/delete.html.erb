@@ -1,0 +1,16 @@
+<h1>Editing course</h1>
+
+<%= render :partial => 'settings' %>
+
+<%= link_to 'Show', @course %>
+
+
+<h2>Instances</h2>
+
+<ul>
+  <% @course.course_instances.each do |instance| %>
+    <li><%= instance.name %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'New course instance', new_course_instance_path %>

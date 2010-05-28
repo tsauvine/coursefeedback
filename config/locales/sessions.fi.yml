@@ -1,0 +1,8 @@
+fi:
+  login_heading: "Kirjaudu sisään"
+  username: "Käyttäjänimi"
+  password: "Salasana"
+  remember_me: "Muista minut"
+  login_button: "Kirjaudu"
+  login_failed: "Virheellinen käyttäjätunnus tai salasana"
+  logged_out: "Olet kirjautunut ulos palautejärjestelmästä"

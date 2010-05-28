@@ -1,0 +1,38 @@
+.faqEntry:hover .messageActions {
+  visibility: visible;
+}
+
+.faqEntry {
+  margin: .5em 0em 2em 0em;
+}
+
+.faqEntry h2 {
+  margin: 0em 0em .5em 0em;
+}
+
+.faqEntry .question {
+  background: url('../images/quote.gif') no-repeat top left;
+  margin: 0em 0em .5em 1em;
+  padding-left: 28px;
+  font-style: italic;
+  color: gray;
+  
+}
+
+.faqEntry .answer {
+  margin: 0em 0em 0em 1em;
+}
+
+.faqEntry span.q, .faqEntry span.a {
+  margin-left: -2em;
+  
+  font-weight: bold;
+}
+
+
+.faqEntry .question {
+  
+}
+
+.faqEntry .answer {
+}

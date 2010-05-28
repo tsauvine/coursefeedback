@@ -1,0 +1,29 @@
+fi:
+  #######
+  # FAQ
+  #######
+
+  # New
+  new_entry_heading: "Uusi FAQ-kysymys"
+  edit_entry_heading: "Muokkaa FAQ-kysymystä"
+  new_caption: "Otsikko"
+  new_question: "Kysymys"
+  new_question_hint: "(ei pakollinen)"
+  new_answer: "Vastaus"
+  edit_entry_link: "Muokkaa"
+  delete_entry_link: "Poista"
+  faq_confirm_delete: "Haluatko varmasti poistaa FAQ-kysymyksen?"
+  new_entry_link: "Lisää uusi kysymys"
+  faq_entry_created: "FAQ-kysymys lisätty"
+  updated: "FAQ-kysymys tallennettu"
+  
+  # Index
+  faq_index_heading: "FAQ"
+  
+  activerecord:
+    errors:
+      models:
+        faq_entry:
+          attributes:
+            caption:
+              blank: "otsikko puuttuu"

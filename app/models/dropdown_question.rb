@@ -1,0 +1,4 @@
+class DropdownQuestion < MultiQuestion
+  
+  
+end

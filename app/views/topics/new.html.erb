@@ -1,0 +1,42 @@
+<h1><%=t :new_topic_heading %></h1>
+
+<% form_for(@topic) do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :course_instance_id %>
+
+  <table>
+    <tr>
+      <td><%=t :topic_visibility %></td>
+      <td>
+        <%= f.radio_button :visibility, 'staff' %> <%=t :topic_visibility_staff %><br />
+        <%= f.radio_button :visibility, 'public' %> <%=t :topic_visibility_public %>
+      </td>
+    </tr>
+  </table>
+  
+  <p>
+    <%=t :caption %>
+    <%= f.text_field :caption %>
+  </p>
+    
+  <p>
+  <%=t :feedback %><br />
+  <%= f.text_area :text, { :rows => 5, :cols => 80 } %>
+  </p>
+  
+  <p>
+    <%= f.radio_button :anonymous, true %> <%=t :send_with_pseudonym %>: <%= f.text_field :nick %>
+    <% if logged_in? %>
+      <br /><%= f.radio_button :anonymous, false %> <%=t :send_with_real_name %>: <b><%=h current_user.name %></b>
+    <% end %>
+  </p>
+
+  <p>
+    <!-- %= f.submit t(:preview_button) % -->
+    <%= f.submit t(:send_button) %>
+  </p>
+<% end %>
+
+<p class="hint"><%=t :new_topic_hint %></p>
+
+<%= link_to t(:back), topic_index_path(@course.code, @instance.path) %>

@@ -1,0 +1,28 @@
+fi:
+  ##########
+  # Users
+  ##########
+  
+  edit_user_heading: "Muokkaa käyttäjää"
+  new_user_heading: "Luo käyttäjä"
+  my_preferences_heading: "Omat asetukset"
+  user_login: "Login"
+  user_firstname: "Etunimi"
+  user_lastname: "Sukunimi"
+  user_email: "Sähköposti"
+  user_password: "Salasana"
+  user_confirm_password: "Toista salasana"
+  user_notify: "Ilmoita uusista viesteistä sähköpostitse"
+  user_updated: "Asetukset tallennettu"
+  
+  activerecord:
+    errors:
+      models:
+        course:
+          attributes:
+            code:
+              invalid: "may contain letters, numbers, following special characters: \-+*_.,!$'(), no whitespace"
+              blank: "code missing"
+              taken: "code is already in use"
+            name:
+              blank: "name missing"

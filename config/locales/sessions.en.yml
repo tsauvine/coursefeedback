@@ -1,0 +1,8 @@
+en:
+  login_heading: "Login"
+  username: "Username"
+  password: "Password"
+  remember_me: "Remember me"
+  login_button: "Log in"
+  login_failed: "Incorrect username or password"
+  logged_out: "You have been logged out"

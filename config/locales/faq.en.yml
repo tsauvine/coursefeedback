@@ -1,0 +1,29 @@
+en:
+  #######
+  # FAQ
+  #######
+  
+  # New, Edit
+  new_entry_heading: "New FAQ entry"
+  edit_entry_heading: "Edit FAQ entry"
+  new_caption: "Caption"
+  new_question: "Question"
+  new_question_hint: "(not mandatory)"
+  new_answer: "Answer"
+  edit_entry_link: "Edit"
+  delete_entry_link: "Delete"
+  faq_confirm_delete: "Are you sure you want to delete the FAQ entry?"
+  new_entry_link: "Add new question"
+  faq_entry_created: "FAQ entry created"
+  updated: "FAQ entry saved"
+
+  # Index
+  faq_index_heading: "FAQ"
+
+  activerecord:
+    errors:
+      models:
+        faq_entry:
+          attributes:
+            caption:
+              blank: "caption missing"

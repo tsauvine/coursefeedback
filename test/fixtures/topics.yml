@@ -1,0 +1,43 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+private:
+  course_instance_id: course_instances(:one).id
+  caption: "Feedback6684"
+  text: "Secret feedback"
+  visibility: "staff"
+
+anonymous:
+  course_instance_id: course_instances(:one).id
+  caption: "Feedback9783"
+  user_login: "student1"
+  anonymous: true
+
+real_name:
+  course_instance_id: course_instances(:one).id
+  caption: "Feedback8347"
+  user_login: "student1"
+  anonymous: false
+
+deleted_user:
+  course_instance_id: course_instances(:one).id
+  user_login: "nonexistent"
+  caption: "Feedback3867"
+
+without_caption:
+  text: "Feedback without caption"
+
+moderated_published:
+  caption: "Feedback9264"
+  moderation_status: "published"
+
+moderated_pending:
+  caption: "Feedback8255"
+  moderation_status: "pending"
+
+moderated_censored:
+  caption: "Feedback4781"
+  moderation_status: "censored"
+
+moderated_deleted:
+  caption: "Feedback2563"
+  moderation_status: "deleted"

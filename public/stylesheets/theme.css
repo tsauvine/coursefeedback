@@ -1,0 +1,153 @@
+html {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background: #e0e0e0 url('../images/bg.png') repeat-x;
+  margin: 0px;
+  padding: 0px;
+}
+
+div.content {
+  margin: 20px 20px 20px 200px;
+}
+
+
+
+div.sheet {
+  width: 863px;
+  background: white url('../images/threadBottom.png') bottom repeat-x;
+  padding: 1.5em 1.5em 3em 1.5em;
+  margin: 0px 0px;
+}
+
+div.sheet-shadow {
+  width: 863px;
+  padding: 0px 0px 41px 0px;
+  background: url('../images/threadShadow.png') bottom repeat-x;
+  margin: 0px 0px 10px 0px;
+}
+
+
+/*******************
+  Logo
+ *******************/
+ 
+div.logo {
+  font-variant: small-caps;
+  margin: 20px 20px 20px 20px;
+}
+
+div.logo h1 {
+  border: none;
+}
+
+
+/*******************
+  Header
+ *******************/
+
+
+
+
+/*******************
+  Text styles
+ *******************/
+
+h1 {
+  font-variant: small-caps;
+  margin: 0px 0px .5em 0px;
+  padding: 0px 0px 0px 0px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 180%;
+}
+
+h1:first-child {
+  margin-top: 0px;
+}
+
+h2 {
+  margin: 1em 0px .5em 0px;
+  padding: 0px 0px 0px 0px;
+  font: serif;
+  font-size: 120%;
+}
+
+h1 a, h2 a, h3 a {
+  color: black;
+  text-decoration: none;
+}
+
+hr {
+  height: 1px;
+  border: none;
+  border-top: 1px solid #f0f0f0;
+  color: #e0e0e0;
+  margin: .5em 0em;
+}
+
+
+/*****************
+  Side Navi
+ *****************/
+
+.sideNavi ul.naviButtons a {
+  display: table-cell;
+  width: 80px;
+  height: 80px;
+  vertical-align: bottom;
+  text-align: center;
+  padding: 0px 0px 4px 0px;
+  color: #4040c0;
+  text-decoration: none;
+}
+
+.sideNavi .instances a {
+  display: block;
+  background: white;
+  padding: 2px;
+  color: #4040c0;
+  text-decoration: none;
+}
+
+.sideNavi .selected a {
+  background: #e0e0ff;
+}
+
+.sideNavi li {
+  margin: 0px;
+  padding-bottom: 4px;
+}
+
+.sideNavi a {
+  font-size: smaller;
+}
+
+.sideNavi ul.naviButtons li {
+  margin: 4px;
+  padding: 0px 0px 0px 16px;
+}
+
+
+.sideNavi .feedbackLink a {
+  background: url('../images/feedbackButton.png');
+}
+
+.sideNavi .faqLink a {
+  background: url('../images/faqButton.png');
+}
+
+.sideNavi .settingsLink a {
+  background: url('../images/settingsButton.png');
+}
+
+/*********************
+  Topics  &  Messages
+ *********************/
+.topic h2 {
+  font-family: serif;
+  margin: 0px;
+  padding: 0px;
+  /*font-size: 120%;*/
+}

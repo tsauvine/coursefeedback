@@ -1,0 +1,10 @@
+<h1><%=h @survey.name %></h1>
+
+<% form_for :survey, :url => answer_survey_path(@course.code, @instance.path, @survey.id) do |f| %>
+  <!-- Questions -->
+  <div id="questions">
+    <%= render :partial => "survey_questions/survey_question", :collection => @survey.survey_questions, :as => :question %>
+  </div>
+
+  <p><%= f.submit t(:Send) %></p>
+<% end %>

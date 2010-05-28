@@ -1,0 +1,94 @@
+fi:
+  app_title: "PalauteProto"
+  login_button: "Login"
+  logout_button: "Logout"
+  not_logged_in: "Ei kirjautuneena"
+  
+  back: "Takaisin"
+  preview_button: "Esikatsele"
+  send_button: "Lähetä"
+  cancel_button: "Peruuta"
+  Send: "Lähetä"
+  Save: "Tallenna"
+  Edit: "Muokkaa"
+  Delete: "Poista"
+  Cancel: "Peruuta"
+  
+  thumb_up_tooltip: "Samaa mieltä"
+  thumb_down_tooltip: "Eri mieltä"
+  thumb_up_alttext: "Peukalo ylös"
+  thumb_down_alttext: "Peukalo alas"
+  
+  move_up_alttext: "Siirrä ylöspäin"
+  move_down_alttext: "Siirrä alaspäin"
+  
+  navi_instances: "Instanssit"
+  navi_settings: "Asetukset"
+  navi_faq: "FAQ"
+  navi_feedback: "Palaute"
+  navi_surveys: "Kyselyt"
+  navi_course_settings: "Kurssi"
+  navi_instance_settings: "Instanssi"
+  navi_my_preferences: "Omat asetukset"
+
+  # Used in array.to_sentence.
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " ja "
+      last_word_connector: " ja "
+
+
+  #################
+  # Active Record
+  #################
+  activerecord:
+    errors:
+      models:
+        course_instance:
+          attributes:
+            path:
+              invalid: "saa sisältää kirjaimia, numeroita, seuraavia merkkejä: \-+*_.,!$'(), ei välilyöntejä"
+              blank: "polku puuttuu"
+              taken: "polku on jo käytössä"
+            name:
+              blank: "nimi puuttuu"
+        course:
+          attributes:
+            code:
+              invalid: "saa sisältää kirjaimia, numeroita, seuraavia merkkejä: \-+*_.,!$'(), ei välilyöntejä"
+              blank: "koodi puuttuu"
+              taken: "koodi on jo käytössä"
+            name:
+              blank: "nimi puuttuu"
+        faq_entry:
+          attributes:
+            caption:
+              blank: "otsikko puuttuu"
+
+
+
+  ##############
+  # Time & Date
+  ##############
+  date:
+    formats:
+      # Use the strftime parameters for formats.
+      default: "%d.%m.%Y"
+      short: "%d.%m"
+      long: "%d.%m.%Y"
+    day_names: [sunnuntai, maanantai, tiistai, keskiviikko, torstai, perjantai, lauantai]
+    abbr_day_names: [su, ma, ti, ke, to, pe, la]
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, Tammikuu, Helmikuu, Maaliskuu, Huhtikuu, Toukokuu, Kes&auml;kuu, Hein&auml;kuu, Elokuu, Syyskuu, Lokakuu, Marraskuu, Joulukuu]
+    abbr_month_names: [~, tammi, helmi, maalis, huhti, touko, kes&auml;, hein&auml;, elo, syys, loka, marras, joulu]
+    # Used in date_select and datime_select.
+    order: [ :year, :month, :day ]
+
+  time:
+    formats:
+      default: "%a %d.%m. klo %H:%M"
+      short: "%d.%m. klo %H:%M"
+      long: "%a %d.%m.%Y klo %H:%M:%S"
+    am: "am"
+    pm: "pm"

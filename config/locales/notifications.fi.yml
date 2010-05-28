@@ -1,0 +1,5 @@
+fi:
+  ################
+  # Notifications
+  ################
+  notification_subject: "Palautetta kurssilta {{course}}"

@@ -1,0 +1,7 @@
+<h2><%=t :course_instances_heading %></h2>
+
+<ul>
+  <% @course.course_instances.each do |instance| %>
+    <li><%= link_to instance.name, instance_root_path(@course.code, instance.path) %></li>
+  <% end %>
+</ul>

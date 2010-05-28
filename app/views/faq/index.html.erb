@@ -1,0 +1,9 @@
+<h1><%=t :faq_index_heading %></h1>
+
+<div id="faqEntries">
+  <%= render :partial => 'entry', :collection => @entries %>
+</div>
+
+<% if @allow_edit %>
+  <p><%= link_to t(:new_entry_link), new_faq_path(:course_code => @course.code, :instance_path => @instance.path) %></p>
+<% end %>

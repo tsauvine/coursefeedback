@@ -1,0 +1,46 @@
+fi:
+  #########
+  # Survey
+  #########
+
+  # Index
+  surveys_heading: "Kyselyt"
+  new_survey: "Luo uusi kysely"
+  confirm_delete_survey: "Haluatko varmasti poistaa kyselyn {{name}}?"
+  survey_results: "Tulokset"
+
+  # New
+  new_survey_heading: "Uusi kysely"
+  survey_default_name: "Palautekysely"
+  survey_name: "Otsikko"
+  survey_opens: "Aukeaa"
+  survey_closes: "Sulkeutuu"
+  survey_answer_permission: "Vastausoikeus"
+  survey_read_numeric_permission: "Numeeristen tulosten katseluoikeus"
+  survey_read_text_permission: "Avointen palautteiden katseluoikeus"
+  survey_created: 'Kysely luotu'
+  
+  # Edit
+  edit_survey_heading: "Muokkaa kyselyä"
+  survey_updated: "Kysely päivitetty"
+  survey_question: "Kysymys"
+  survey_hint: "Vihje"
+  survey_mandatory: "Pakollinen"
+  survey_alternatives: "Vaihtoehdot"
+  survey_add_alternative: "Lisää vaihtoehto"
+  confirm_question_delete: "Haluatko varmasti poistaa kysymyksen {{name}}"
+  likert_scale_heading: "Asteikko"
+  likert_questions_heading: "Kysymykset"
+
+  # Answer
+  survey_closed: "Kysely ei ole auki"
+  survey_incomplete: "Tähdellä merkityt kohdat on täytettävä"
+  survey_post_message: "Kiitos palautteestasi!"
+
+  activerecord:
+    errors:
+      models:
+        survey:
+          attributes:
+            name:
+              blank: "nimi puuttuu"

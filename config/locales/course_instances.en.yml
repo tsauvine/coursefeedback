@@ -1,0 +1,37 @@
+en:
+  ##################
+  # Course instance
+  ##################
+
+  # Index
+  instance_index_heading: "Active courses"
+  no_instances: "There are no courses in the system yet"
+  show_all_courses: "Show all courses"
+  
+  new_instance_heading: "Create New Course Instance"
+  new_instance_name: "Name"
+  new_instance_path: "Path"
+  new_instance_active: "Active"
+  new_instance_name_hint: "(e.g. Spring 2010)"
+  new_instance_path_hint: "(e.g. 2010)"
+  
+  # Create, Update
+  instance_created: "Course instance created"
+  instance_updated: "Course instance saved"
+  
+  Settings: Settings
+  
+  course_not_found: "Course could not be found"
+  instance_not_found: "Course instance could not be found"
+  
+  activerecord:
+    errors:
+      models:
+        course_instance:
+          attributes:
+            code:
+              invalid: "may contain letters, numbers, following special characters: \-+*_.,!$'(), no whitespace"
+              blank: "path missing"
+              taken: "path is already in use"
+            name:
+              blank: "name missing"

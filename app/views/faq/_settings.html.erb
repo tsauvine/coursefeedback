@@ -1,0 +1,29 @@
+<% form_for(@entry) do |f| %>
+  <%= f.hidden_field :course_id %>
+  <%= hidden_field_tag :instance_path, @instance.path %>
+
+  <table>
+    <tr>
+      <td><%=t :new_caption %>:</td>
+      <td>
+        <%= f.text_field :caption %>
+        <% if @entry.errors.on(:caption) %>
+          <span class="error"><%= @entry.errors.on(:caption) %></span>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td><%=t :new_question %>:</td>
+      <td>
+        <%= f.text_field :question %>
+        <span class="hint"><%=t :new_question_hint %></span>
+      </td>
+    </tr>
+    <tr>
+      <td><%=t :new_answer %>:</td>
+      <td><%= f.text_area :answer, { :rows => 5, :cols => 80 } %></td>
+    </tr>
+  </table>
+
+  <p><%= f.submit t(:Save) %></p>
+<% end %>  

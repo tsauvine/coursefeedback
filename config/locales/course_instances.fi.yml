@@ -1,0 +1,37 @@
+fi:
+  ##################
+  # Course instance
+  ##################
+  
+  # Index
+  instance_index_heading: "Aktiiviset kurssit"
+  no_instances: "J&auml;rjestelm&auml;ss&auml; ei ole viel&auml; kursseja"
+  show_all_courses: "Näytä kaikki kurssit"
+  
+  new_instance_heading: "Luo kurssi-instanssi"
+  new_instance_name: Nimi
+  new_instance_path: Polku
+  new_instance_active: Aktiivinen
+  new_instance_name_hint: "(esim. Kevät 2010)"
+  new_instance_path_hint: "(esim. 2010)"
+  
+  # Create
+  instance_created: "Kurssi-instanssi luotu"
+  instance_updated: "Kurssi-instanssi tallennettu"
+  
+  Settings: Asetukset
+  
+  course_not_found: "Kurssia ei löytynyt"
+  instance_not_found: "Kurssi-instanssia ei löytynyt"
+  
+  activerecord:
+    errors:
+      models:
+        course_instance:
+          attributes:
+            path:
+              invalid: "saa sisältää kirjaimia, numeroita, seuraavia merkkejä: \-+*_.,!$'(), ei välilyöntejä"
+              blank: "polku puuttuu"
+              taken: "polku on jo käytössä"
+            name:
+              blank: "nimi puuttuu"

@@ -1,0 +1,17 @@
+<!-- Likert results -->
+<div id="likert<%= question.id %>">
+
+    <% question.payload[1].each do |q| %>
+      
+      <table>
+        <caption><%= q %></caption>
+        <% question.payload[0].each_with_index do |s, index| %>
+          <tr>
+            <td class="leftColumn"><%= s %></td>
+            <td><%= question.results[q][index] %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+
+</div>

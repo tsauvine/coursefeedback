@@ -1,0 +1,24 @@
+# Where to send error reports. Set to nil to disable.
+ERRORS_EMAIL = nil # 'admin@example.com'
+
+# Sender address of notification mails
+NOTIFICATIONS_SENDER_EMAIL = 'no-reply@example.com'
+
+# Automatically redirect from http to https
+ENABLE_SSL = false
+
+# Classname of the LDAP adaptor to use. Set to nil to disable LDAP.
+LDAP_ADAPTOR = nil
+
+# Trusted IP range for the "University network" access control option
+NETWORK_RANGE = nil  # e.g. "123.456.0.0/16"
+
+# used when constructing links in notification emails
+PATH_PREFIX = 'http://localhost:3000'
+
+# Regexp for validating url
+URL_FORMAT_ROUTE = /([a-zA-Z0-9\-+*_.,!$'()])+/
+URL_FORMAT_MODEL = /^([a-zA-Z0-9\-+*_.,!$'()])+$/
+
+# Mail delivery method
+ActionMailer::Base.delivery_method = :sendmail

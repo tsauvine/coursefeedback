@@ -1,0 +1,20 @@
+<div class="surveyQuestionEditor" id="question<%= question.id %>">
+  <h2>
+    <%= question.mandatory ? '*' : '' %>
+    <%=h question.question %>
+    <%= link_to_remote t(:Edit), :url => edit_survey_question_path(question.id), :method => :get %>
+    <%= link_to_remote t(:Delete), :url => survey_question_path(question.id), :method => :delete, :confirm => t(:confirm_question_delete, :name => question.question) %>
+    <%= link_to_remote image_tag('up.png', :alt => t(:move_up_alttext)), :url => move_survey_question_path(question.id, :offset => -1), :update => 'questions' %>
+    <%= link_to_remote image_tag('down.png', :alt => t(:move_down_alttext)), :url => move_survey_question_path(question.id, :offset => 1), :update => 'questions' %>
+  </h2>
+  
+  <% unless question.hint.blank? %>
+    <p class="hint"><%=h question.hint %></p>
+  <% end %>
+  
+  <% if question.public %>
+    <p>Public results</p>
+  <% end %>
+  
+  <%= render :partial => "survey_questions/#{question.type.underscore}", :locals => {:question => question} %>
+</div>

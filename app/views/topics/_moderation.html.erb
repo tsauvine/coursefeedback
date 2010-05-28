@@ -1,0 +1,3 @@
+<span class="acceptButton"><%= link_to t(:moderateAccept), moderate_topic_path(@topic, :status => 'accept') %></span>
+<span class="rejectButton"><%= link_to t(:moderateReject), moderate_topic_path(@topic, :status => 'reject') %></span>
+<span class="rejectButton"><%= link_to t(:moderateDelete), moderate_topic_path(@topic, :status => 'delete') %></span>

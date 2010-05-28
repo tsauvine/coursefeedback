@@ -1,0 +1,4 @@
+class RadioQuestion < MultiQuestion
+  
+  
+end

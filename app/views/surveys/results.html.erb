@@ -1,0 +1,5 @@
+<h1><%=h @survey.name %></h1> 
+
+<% @survey.survey_questions.each do |question| %>
+  <%= render :partial => "survey_questions/survey_results", :locals => { :question => question } %>
+<% end %>

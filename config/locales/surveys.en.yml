@@ -1,0 +1,46 @@
+en:
+  #########
+  # Survey
+  #########
+  
+  # Index
+  surveys_heading: "Surveys"
+  new_survey: "Create new survey"
+  confirm_delete_survey: "Delete survey {{name}}?"
+  survey_results: "Results"
+  
+  # New
+  new_survey_heading: "New survey"
+  survey_default_name: "Feedback survey"
+  survey_name: "Heading"
+  survey_opens: "Opens"
+  survey_closes: "Closes"
+  survey_answer_permission: "Permission to answer"
+  survey_read_numeric_permission: "Permission to view numeric results"
+  survey_read_text_permission: "Permission to view open feedback"
+  survey_created: 'Survey was successfully created'
+
+  # Edit
+  edit_survey_heading: "Edit survey"
+  survey_updated: 'Survey was successfully updated'
+  survey_question: "Question"
+  survey_hint: "Hint"
+  survey_mandatory: "Mandatory"
+  survey_alternatives: "Alternatives"
+  survey_add_alternative: "Add alternative"
+  confirm_question_delete: "Delete question {{name}}"
+  likert_scale_heading: "Scale"
+  likert_questions_heading: "Questions"
+  
+  # Answer
+  survey_closed: "Survey is not open"
+  survey_incomplete: "Questions marked with an asterisk (*) are mandatory"
+  survey_post_message: "Thank you for you feedback!"
+
+  activerecord:
+    errors:
+      models:
+        survey:
+          attributes:
+            name:
+              blank: "name missing"

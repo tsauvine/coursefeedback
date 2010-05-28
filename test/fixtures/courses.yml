@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  code: "T00001"
+  name: "Test 1"
+  feedback_read_permission: "staff"
+  headlines_read_permission: "public"
+  feedback_write_permission: "public"
+  moderate: false

@@ -1,0 +1,44 @@
+<% form_for(@local_course) do |f| %>
+  <table>
+    <tr>
+      <td><%=t :course_code %>:</td>
+      <td><%= f.text_field :code %></td>
+      <td>
+        <% if @local_course.errors.on(:code) %>
+          <span class="error"><%= @local_course.errors.on(:code) %></span>
+        <% elsif @local_course.new_record? %>
+          <span class="hint"><%=t :course_code_hint %></span>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td><%=t :course_name %>:</td>
+      <td><%= f.text_field :name %></td>
+      <td>
+        <% if @local_course.errors.on(:name) %>
+          <span class="error"><%= @local_course.errors.on(:name) %></span>
+        <% elsif @local_course.new_record? %>
+          <span class="hint"><%=t :course_name_hint %></span>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td><%=t :headlines_read_permission %>:</td>
+      <td><%= f.select :headlines_read_permission, [[t(:visibility_public),'public'],[t(:visibility_ip),'ip'],[t(:visibility_authenticated),'authenticated'],[t(:visibility_enrolled),'enrolled'],[t(:visibility_staff), 'staff']] %></td>
+    </tr>
+    <tr>
+      <td><%=t :feedback_read_permission %>:</td>
+      <td><%= f.select :feedback_read_permission, [[t(:visibility_public),'public'],[t(:visibility_ip),'ip'],[t(:visibility_authenticated),'authenticated'],[t(:visibility_enrolled),'enrolled'],[t(:visibility_staff), 'staff']] %></td>
+    </tr>
+    <tr>
+      <td><%=t :feedback_write_permission %>:</td>
+      <td><%= f.select :feedback_write_permission, [[t(:visibility_public),'public'],[t(:visibility_ip),'ip'],[t(:visibility_authenticated),'authenticated'],[t(:visibility_enrolled),'enrolled']] %></td>
+    </tr>
+    <tr>
+      <td><%=t :moderated %>:</td>
+      <td><%= f.check_box :moderate %></td>
+    </tr>
+  </table>
+
+  <p><%= f.submit t(:Save) %></p>
+<% end %> 
