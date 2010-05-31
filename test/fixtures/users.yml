@@ -6,8 +6,6 @@ quentin:
   crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
   created_at: <%= 5.days.ago.to_s :db %>
 
-
-
 aaron:
   id: 2
   login: aaron
@@ -15,5 +13,26 @@ aaron:
   salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
   crypted_password: 00742970dc9e6319f8019fd54864d3ea740f04b1 # test
   created_at: <%= 1.days.ago.to_s :db %>
+
+admin1:
+  id: 3
+  login: admin1
+  firstname: Admin
+  lastname: 1
+  email: admin1@example.com
+
+teacher1:
+  id: 4
+  login: teacher1
+  firstname: Teacher
+  lastname: 1
+  email: teacher1@example.com
+
+student1:
+  id: 5
+  login: student1
+  firstname: Student
+  lastname: 1
+  email: student1@example.com
 
 

@@ -12,10 +12,10 @@
 ActiveRecord::Schema.define(:version => 20100419123309) do
 
   create_table "course_instances", :force => true do |t|
-    t.integer  "course_id"
+    t.integer  "course_id",  :null => false
     t.integer  "position",   :default => 0
     t.string   "name"
-    t.string   "path",                         :null => false
+    t.string   "path",       :null => false
     t.boolean  "active",     :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(:version => 20100419123309) do
   end
 
   create_table "faq_entries", :force => true do |t|
-    t.integer  "course_id",                  :null => false
+    t.integer  "course_id",   :null => false
     t.integer  "position",    :default => 0
     t.string   "caption"
     t.string   "question"

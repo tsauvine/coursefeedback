@@ -1,8 +1,18 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  code: "T00001"
+  id: 1
+  code: "00001"
   name: "Test 1"
+  feedback_read_permission: "staff"
+  headlines_read_permission: "public"
+  feedback_write_permission: "public"
+  moderate: false
+
+two:
+  id: 2
+  code: "00002"
+  name: "Test 2"
   feedback_read_permission: "staff"
   headlines_read_permission: "public"
   feedback_write_permission: "public"

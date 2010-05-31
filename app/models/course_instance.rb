@@ -8,11 +8,7 @@ class CourseInstance < ActiveRecord::Base
   validates_format_of :path, :with => URL_FORMAT_MODEL
   validates_presence_of :name
 
-  def teachers
-    self.course.teachers
-  end
-
-  # Returns topics sorted by a criterion (date, answered, thumbs_up, thumbs_down)
+  # Returns topics sorted by a criterion (date, commented, answered, thumbs_up, thumbs_down)
   # Options:
   # include_private: includes messages that are sent for staff only
   def sorted_topics(order, options = {})

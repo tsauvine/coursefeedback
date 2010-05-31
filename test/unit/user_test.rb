@@ -27,12 +27,12 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  def test_should_require_password_confirmation
-    assert_no_difference 'User.count' do
-      u = create_user(:password_confirmation => nil)
-      assert u.errors.on(:password_confirmation)
-    end
-  end
+#   def test_should_require_password_confirmation
+#     assert_no_difference 'User.count' do
+#       u = create_user(:password_confirmation => nil)
+#       assert u.errors.on(:password_confirmation)
+#     end
+#   end
 
   def test_should_require_email
     assert_no_difference 'User.count' do
@@ -53,6 +53,10 @@ class UserTest < ActiveSupport::TestCase
 
   def test_should_authenticate_user
     assert_equal users(:quentin), User.authenticate('quentin', 'test')
+  end
+  
+  def test_should_fail_authentication
+    assert_nil User.authenticate('quentin', 'wrongpassword')
   end
 
   def test_should_set_remember_token

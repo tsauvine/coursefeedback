@@ -1,9 +1,22 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  course_instance: 
-  name: MyString
+open:
+  id: 1
+  course_instance_id: 1
+  name: "Open survey"
+  opens_at: <%= 5.days.ago.to_s :db %>
+  closes_at: <%= 5.days.since.to_s :db %>
 
-two:
-  course_instance: 
-  name: MyString
+not_yet_open:
+  id: 2
+  course_instance_id: 1
+  name: "Not yet open survey"
+  opens_at: <%= 5.days.since.to_s :db %>
+  closes_at: <%= 10.days.since.to_s :db %>
+
+closed:
+  id: 3
+  course_instance_id: 1
+  name: "Closed survey"
+  opens_at: <%= 10.days.ago.to_s :db %>
+  closes_at: <%= 5.days.ago.to_s :db %>

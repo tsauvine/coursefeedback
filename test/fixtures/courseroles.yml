@@ -1,0 +1,9 @@
+teacher1:
+ user_login: teacher1
+ course_id: 1
+ role: teacher
+
+teacher2:
+ user_login: teacher2
+ course_id: 1
+ role: teacher

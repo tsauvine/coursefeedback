@@ -29,7 +29,7 @@ class CreateCourses < ActiveRecord::Migration
     end
     
     create_table :course_instances do |t|
-      t.references :course
+      t.references :course,           :null => false
       t.integer :position, :default => 0
       t.string :name
       t.string :path,                 :null => false
