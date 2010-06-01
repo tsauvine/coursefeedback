@@ -5,5 +5,5 @@ teacher1:
 
 teacher2:
  user_login: teacher2
- course_id: 1
+ course_id: 2
  role: teacher

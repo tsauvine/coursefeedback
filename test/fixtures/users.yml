@@ -20,6 +20,7 @@ admin1:
   firstname: Admin
   lastname: 1
   email: admin1@example.com
+  admin: true
 
 teacher1:
   id: 4
@@ -28,11 +29,23 @@ teacher1:
   lastname: 1
   email: teacher1@example.com
 
-student1:
+teacher2:
   id: 5
+  login: teacher2
+  firstname: Teacher
+  lastname: 1
+  email: teacher1@example.com
+
+student1:
+  id: 6
   login: student1
   firstname: Student
   lastname: 1
   email: student1@example.com
 
-
+student2:
+  id: 7
+  login: student2
+  firstname: Student
+  lastname: 2
+  email: student2@example.com

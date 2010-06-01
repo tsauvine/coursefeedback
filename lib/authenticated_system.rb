@@ -114,6 +114,13 @@ module AuthenticatedSystem
     # If user is not authenticated, redirects to login. If user is authenticated but does not have teacher's role, renders "Forbidden".
     # Returns true if user is authenticated and is teacher on the current course.
     def authorize_teacher
+      is_teacher?(current_user, @course) || access_denied
+    end
+    
+    # Checks that user has teacher's role on current course (@course), or is admin.
+    # If user is not authenticated, redirects to login. If user is authenticated but does not have teacher's role, renders "Forbidden".
+    # Returns true if user is authenticated and is teacher on the current course.
+    def authorize_teacher_or_admin
       is_teacher?(current_user, @course) || is_admin?(current_user) || access_denied
     end
     

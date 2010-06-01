@@ -45,14 +45,14 @@ class CourseInstancesController < ApplicationController
   
   def new
     @course = Course.find(params[:course_id])
-    authorize_teacher or return
+    authorize_teacher_or_admin or return
     
     @local_instance = CourseInstance.new(:course_id => @course.id)
   end
   
   # GET /courses/1/edit
   def edit
-    authorize_teacher or return
+    authorize_teacher_or_admin or return
 
     @local_instance = @instance
   end
@@ -64,7 +64,7 @@ class CourseInstancesController < ApplicationController
     @local_instance = CourseInstance.new(params[:course_instance])
     @course = @local_instance.course
     
-    authorize_teacher or return
+    authorize_teacher_or_admin or return
 
     respond_to do |format|
       if @local_instance.save
@@ -83,7 +83,7 @@ class CourseInstancesController < ApplicationController
   def update
     @instance = CourseInstance.find(params[:id])
     @course = @instance.course if @instance
-    authorize_teacher or return
+    authorize_teacher_or_admin or return
     
     @local_instance = CourseInstance.find(params[:id])
   
@@ -93,8 +93,6 @@ class CourseInstancesController < ApplicationController
         format.html { redirect_to edit_course_path(@course) }
         format.xml  { head :ok }
       else
-        logger.info "FAILED TO UPDATE"
-        
         format.html { render :action => "edit" }
         format.xml  { render :xml => @local_instance.errors, :status => :unprocessable_entity }
       end
@@ -104,12 +102,12 @@ class CourseInstancesController < ApplicationController
   # DELETE /courses/1
   # DELETE /courses/1.xml
   def destroy
-    authorize_teacher or return
+    authorize_teacher_or_admin or return
 
     @instance.destroy
 
     respond_to do |format|
-      format.html { redirect_to(courses_url) }
+      format.html { redirect_to edit_course_path(@course) }
       format.xml  { head :ok }
     end
   end

@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     if @user.errors.empty?
       #self.current_user = @user
       #redirect_back_or_default(root_path)
-      flash[:notice] = "User successfully created"
+      flash[:success] = "User successfully created"
     end
     
     render :action => 'new'
