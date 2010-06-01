@@ -7,3 +7,11 @@ one:
   name: "Spring 2010"
   path: "s2010"
   active: true
+
+two:
+  id: 2
+  course_id: 2
+  position: 0
+  name: "Fall 2010"
+  path: "f2010"
+  active: false

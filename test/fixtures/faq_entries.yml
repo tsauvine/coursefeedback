@@ -1,0 +1,21 @@
+one:
+  id: 1
+  course_id: 1
+  position: 2
+  caption: "Caption 2"
+  question: "Question 2"
+  answer: "Answer 2"
+
+two:
+  id: 2
+  course_id: 1
+  position: 1
+  caption: "Caption 1"
+  answer: "Answer 1"
+  
+three:
+  id: 3
+  course_id: 1
+  position: 3
+  caption: "Caption 3"
+  question: "Question 3"

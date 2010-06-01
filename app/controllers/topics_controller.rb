@@ -233,16 +233,17 @@ class TopicsController < ApplicationController
   end
 
 
-  def allow_send?
-    authorized_level?(current_user, @course, @course.feedback_write_permission)
-  end
+  protected
+    def allow_send?
+      authorized_level?(current_user, @course, @course.feedback_write_permission)
+    end
 
-  def allow_read?
-    authorized_level?(current_user, @course, @course.feedback_read_permission)
-  end
-  
-  def allow_read_headlines?
-    authorized_level?(current_user, @course, @course.headlines_read_permission)
-  end
+    def allow_read?
+      authorized_level?(current_user, @course, @course.feedback_read_permission)
+    end
+    
+    def allow_read_headlines?
+      authorized_level?(current_user, @course, @course.headlines_read_permission)
+    end
 
 end
