@@ -1,3 +1,20 @@
+# Course has many instances such as "Spring 2010".
+# FAQ entries belong to course because the FAQ is accumulated over the years.
+#
+# When a user sends feedback (i.e. starts a new topic)
+#
+# Feedback visibility policies are defined in the following attributes:
+#  feedback_read_permission::   privilege level required to read feedback sent by others
+#  headlines_read_permission::  privilege level required to see topic headlines
+#  feedback_write_permission::  privilege level required to send feedback or comments
+# 
+# available privilege levels are:
+#  public::         Feedback is publicly visible.
+#  ip::             Feedback can be read from a specified IP range without authentication. The IP range is defined in config/initializers/settings.rb
+#  authenticated::  Any authenticated user can read feedback.
+#  enrolled::       Enrolled students can read feedback. NOT IMPLEMENTED
+#  staff::          Only teacher of the course can read feedback. In future, the might be a teaching assistant role. 
+
 class Course < ActiveRecord::Base
   has_many :course_instances, :order => 'created_at DESC', :dependent => :destroy
   has_many :faq_entries, :order => 'position DESC', :dependent => :destroy
