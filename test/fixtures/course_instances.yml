@@ -1,17 +1,27 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  id: 1
-  course_id: 1
-  position: 0
+  course: one
   name: "Spring 2010"
   path: "s2010"
-  active: true
 
 two:
-  id: 2
-  course_id: 2
-  position: 0
+  course: two
   name: "Fall 2010"
   path: "f2010"
   active: false
+
+public: 
+  course: public
+  path: "2010"
+  name: "Fall 2010"
+
+authenticated:
+  course: authenticated
+  path: "2010"
+  name: "Fall 2010"
+
+staff:
+  course: staff
+  path: "2010"
+  name: "Fall 2010"

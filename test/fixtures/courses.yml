@@ -1,19 +1,44 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  id: 1
   code: "00001"
   name: "Test 1"
   feedback_read_permission: "staff"
   headlines_read_permission: "public"
   feedback_write_permission: "public"
-  moderate: false
 
 two:
-  id: 2
   code: "00002"
   name: "Test 2"
   feedback_read_permission: "staff"
   headlines_read_permission: "public"
   feedback_write_permission: "public"
-  moderate: false
+
+public: 
+  code: "00003"
+  name: "Public course"
+  feedback_read_permission: "public"
+  headlines_read_permission: "public"
+  feedback_write_permission: "public"
+
+authenticated:
+  code: "00004"
+  name: "Secret course"
+  feedback_read_permission: "authenticated"
+  headlines_read_permission: "authenticated"
+  feedback_write_permission: "authenticated"
+
+staff:
+  code: "00005"
+  name: "Paranoid course"
+  feedback_read_permission: "staff"
+  headlines_read_permission: "staff"
+  feedback_write_permission: "authenticated"
+
+moderated:
+  code: "00006"
+  name: "Moderated course"
+  feedback_read_permission: "public"
+  headlines_read_permission: "public"
+  feedback_write_permission: "public"
+  moderate: true

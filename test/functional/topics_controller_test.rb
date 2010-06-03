@@ -1,6 +1,35 @@
 require 'test_helper'
 
 class TopicsControllerTest < ActionController::TestCase
+#   context "on GET to :show for first record" do
+#     setup do
+#       course = Course.new
+#       instance = Instance.new(:course => course)
+#       topic = Topic.new(:instance => instance)
+#       
+#       
+#       get :show, :id => 1
+#     end
+# 
+#     
+#     should_redirect_to new_session_path
+#     
+#     should_assign_to :user
+#     should_respond_with :success
+#     should_render_template :show
+#     should_not_set_the_flash
+# 
+#     should "do something else really cool" do
+#       assert_equal 1, assigns(:user).id
+#     end
+#   end
+
+
+  should "require login for show" do
+    get :show, :id => topics(:one).to_param
+    assert_redirected_to new_session_path
+  end
+
 #   test "should get index" do
 #     get :index
 #     assert_response :success

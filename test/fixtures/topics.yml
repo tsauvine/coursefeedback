@@ -1,64 +1,60 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 public:
-  id: 1
-  course_instance_id: 1
+  course_instance: public
   caption: "Feedback2544"
   text: "Public feedback"
   visibility: "public"
-  
-private:
-  id: 2
-  course_instance_id: 1
-  caption: "Feedback6684"
-  text: "Secret feedback"
+
+staff:
+  course_instance: public
+  caption: "Feedback7531"
+  text: "public course, feedback for staff"
   visibility: "staff"
 
+authenticated:
+  course_instance: authenticated
+  caption: "Feedback4863"
+  text: "authenticated course, public feedback"
+  visibility: "public"
+
 anonymous:
-  id: 3
-  course_instance_id: 1
+  course_instance: public
   caption: "Feedback9783"
   user_login: "student1"
   anonymous: true
 
 real_name:
-  id: 4
-  course_instance_id: 1
+  course_instance: public
   caption: "Feedback8347"
   user_login: "student1"
   anonymous: false
 
 deleted_user:
-  id: 5
-  course_instance_id: 1
+  course_instance: public
   user_login: "nonexistent"
   caption: "Feedback3867"
 
 without_caption:
-  id: 6
-  course_instance_id: 1
+  course_instance: public
   text: "Feedback without caption"
 
 moderated_published:
-  id: 7
-  course_instance_id: 1
+  course_instance: public
   caption: "Feedback9264"
   moderation_status: "published"
 
 moderated_pending:
-  id: 8
-  course_instance_id: 1
+  course_instance: public
   caption: "Feedback8255"
   moderation_status: "pending"
 
 moderated_censored:
-  id: 9
-  course_instance_id: 1
+  course_instance: public
   caption: "Feedback4781"
   moderation_status: "censored"
 
 moderated_deleted:
-  id: 10
-  course_instance_id: 1
+  course_instance: public
   caption: "Feedback2563"
   moderation_status: "deleted"
