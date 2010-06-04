@@ -1,9 +1,14 @@
-teacher1:
+teacher1_one:
  user_login: teacher1
- course_id: 1
+ course: one
  role: teacher
 
-teacher2:
+teacher1_public:
+ user_login: teacher1
+ course: public
+ role: teacher
+
+teacher2_two:
  user_login: teacher2
- course_id: 2
+ course: two
  role: teacher

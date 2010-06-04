@@ -1,32 +1,27 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 published:
-  id: 1
-  topic_id: 1
+  topic: public
   text: "Published message"
   moderation_status: published
 
 pending:
-  id: 2
-  topic_id: 1
+  topic: public
   text: "Pending message"
   moderation_status: pending
 
 censored:
-  id: 3
-  topic_id: 1
+  topic: public
   text: "Censored message"
   moderation_status: censored
   
 deleted:
-  id: 4
-  topic_id: 1
+  topic: public
   text: "Deleted message"
   moderation_status: deleted
 
 anonymous:
-  id: 5
-  topic_id: 1
+  topic: public
   text: "Anonymous message"
   user_login: student1
   nick: "Anonymous"
@@ -34,8 +29,7 @@ anonymous:
   moderation_status: published
 
 realname:
-  id: 6
-  topic_id: 1
+  topic: public
   text: "Anonymous message"
   user_login: student1
   nick: "Student 1"
@@ -43,8 +37,7 @@ realname:
   moderation_status: published
 
 staff:
-  id: 7
-  topic_id: 1
+  topic: public
   text: "Answer"
   user_login: teacher1
   nick: "Teacher 1"

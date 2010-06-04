@@ -1,5 +1,4 @@
 quentin:
-  id: 1
   login: quentin
   email: quentin@example.com
   salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
@@ -7,7 +6,6 @@ quentin:
   created_at: <%= 5.days.ago.to_s :db %>
 
 aaron:
-  id: 2
   login: aaron
   email: aaron@example.com
   salt: 7e3041ebc2fc05a40c60028e2c4901a81035d3cd
@@ -15,7 +13,6 @@ aaron:
   created_at: <%= 1.days.ago.to_s :db %>
 
 admin1:
-  id: 3
   login: admin1
   firstname: Admin
   lastname: 1
@@ -23,28 +20,24 @@ admin1:
   admin: true
 
 teacher1:
-  id: 4
   login: teacher1
   firstname: Teacher
   lastname: 1
   email: teacher1@example.com
 
 teacher2:
-  id: 5
   login: teacher2
   firstname: Teacher
   lastname: 1
   email: teacher1@example.com
 
 student1:
-  id: 6
   login: student1
   firstname: Student
   lastname: 1
   email: student1@example.com
 
 student2:
-  id: 7
   login: student2
   firstname: Student
   lastname: 2

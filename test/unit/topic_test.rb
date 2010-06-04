@@ -3,17 +3,17 @@ require 'test_helper'
 class TopicTest < ActiveSupport::TestCase
  
   test "add thumbs up" do
-    assert_difference('Topic.find_by_id(1).thumbs_up', 1) do
-      assert_difference('Topic.find_by_id(1).thumbs_down', 0) do
-        Topic.find_by_id(1).add_thumb_up
+    assert_difference('topics(:public).thumbs_up', 1) do
+      assert_difference('topics(:public).thumbs_down', 0) do
+        topics(:public).add_thumb_up
       end 
     end
   end
   
   test "add thumbs down" do
-    assert_difference('Topic.find_by_id(1).thumbs_up', 0) do
-      assert_difference('Topic.find_by_id(1).thumbs_down', 1) do
-        Topic.find_by_id(1).add_thumb_down
+    assert_difference('topics(:public).thumbs_up', 0) do
+      assert_difference('topics(:public).thumbs_down', 1) do
+        topics(:public).add_thumb_down
       end 
     end
   end
@@ -31,7 +31,7 @@ class TopicTest < ActiveSupport::TestCase
   end
   
   test "find answer (does not exist)" do
-    answer = topics(:private).find_answer
+    answer = topics(:moderated_pending).find_answer
     
     assert_nil answer
   end
