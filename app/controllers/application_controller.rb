@@ -1,5 +1,3 @@
-# Palaute
-
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
@@ -14,14 +12,17 @@ class ApplicationController < ActionController::Base
   
   layout 'tktl'
 
-  # SSL
-  #before_filter :redirect_to_ssl
+  before_filter :redirect_to_ssl
+  before_filter :set_locale
+  before_filter :load_css
+  before_filter :require_login?
+  
+  # Redirects from http to https if ENABLE_SSL is set.
   def redirect_to_ssl
     redirect_to :protocol => "https://" if ENABLE_SSL && !request.ssl?
   end
-
-  # Locale
-  before_filter :set_locale
+  
+  # Sets the locale based on params and user preferences.
   def set_locale
     #I18n.load_path << Dir[File.join(RAILS_ROOT, 'config', 'locales', controller_name, '*.{rb,yml}')]
 
@@ -43,8 +44,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  # CSS
-  before_filter :load_css
+  # Loads extra CSS stylesheets.
   def load_css
     @stylesheets = ['default']
     
@@ -54,9 +54,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  # Login
-  # If require_login parameter is set, this filter will store location and redirect to login. After successful login, the user is redirected back to original location.
-  before_filter :require_login?
+  # If require_login parameter is set, this filter will store location and redirect to login. After successful login, the user is redirected back to the original location.
   def require_login?
     if params[:require_login] && !logged_in?
       store_location
@@ -67,7 +65,7 @@ class ApplicationController < ActionController::Base
 
   protected
   
-  # Send email on exception
+  # Sends email to admin if an exception occurrs. Recipient is defined by the ERRORS_EMAIL constant.
   def log_error(exception)
     super(exception)
 

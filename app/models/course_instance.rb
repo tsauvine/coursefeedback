@@ -1,3 +1,12 @@
+# CourseInstance is the incarnation of a course on a specific semester. For example, course 'Programming 101' could have instances 'Fall 2010' and 'Spring 2010'.
+#
+# Attributes:
+#
+# name::     name of the instance, e.g. "Fall 2010"
+# path::     used in URLs, e.g. "f2010"
+# position:: instances are ordered by position [1,n]
+# active::   if false, new topics cannot be opened
+
 class CourseInstance < ActiveRecord::Base
   belongs_to :course
   has_many :topics, :order => 'created_at DESC', :dependent => :destroy
@@ -8,9 +17,13 @@ class CourseInstance < ActiveRecord::Base
   validates_format_of :path, :with => URL_FORMAT_MODEL
   validates_presence_of :name
 
-  # Returns topics sorted by a criterion (date, commented, answered, thumbs_up, thumbs_down)
-  # Options:
-  # include_private: includes messages that are sent for staff only
+  # Returns topics sorted by an attribute.
+  # Parameters: 
+  # order:: one of: 'date', 'commented', 'answered', 'thumbs_up', 'thumbs_down'
+  # options:: hash
+  #
+  # Possible options
+  # include_private:: includes messages that are sent for staff only
   def sorted_topics(order, options = {})
     # Sorting order
     case order
@@ -34,13 +47,14 @@ class CourseInstance < ActiveRecord::Base
   end
 
 
-  # Sends a notication email to the users who want to be notified about activity in this course instance
-  # Notifications are sent in a background process
+  # Sends a notication email to the users who want to be notified about activity on this course instance.
+  # Notifications are sent in a background process (delayed_job).
   def notify_subscribers_later
     # Put the task to queue
     self.send_later(:notify_subscribers, self.id)
   end
   
+  # used by delayed_job
   def notify_subscribers(instance_id)
     instance = CourseInstance.find(instance_id)
     

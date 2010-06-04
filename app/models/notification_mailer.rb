@@ -1,6 +1,10 @@
+# NotificationMailer sends notification emails to users who want to be informed about new activity.
 class NotificationMailer < ActionMailer::Base
 
-  # Sends a notification about new activity on a course
+  # Sends a notification email about new activity on a course instance.
+  # Params:
+  # user::     User object
+  # instance:: CourseInstance object
   def activity_notification(user, instance)
     # Set locale
     I18n.locale = user.locale
