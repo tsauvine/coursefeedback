@@ -1,3 +1,22 @@
+# Topic class represents a thread of messages. 
+#
+# Attributes:
+#
+# course_instance_id:: 
+# user_login::         username of the sender
+# nick::               pseudonym of the sender
+# anonymous::          if true, sender's identity must not be revealed even if it is recorded
+# visibility::         'public' if sender wants the topic to to be discussed publicly, 'staff' if the feedback meant for staff only
+# caption::            heading of the topic
+# text::               content (feedback)
+# moderation_status::  'pending', 'published', 'censored' or 'deleted'
+# action_status::      null or 'answered' if course staff has participated the discussion
+# thumbs_up::          thumb counter
+# thumbs_down::        thumb counter
+# commented_at::       timestamp of the latest message
+# created_at::         timestamp
+# updated_at::         timestamp
+
 class Topic < ActiveRecord::Base
   belongs_to :course_instance
   belongs_to :user, :primary_key => 'login', :foreign_key => 'user_login'
