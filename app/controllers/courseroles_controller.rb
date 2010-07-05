@@ -1,5 +1,6 @@
 class CourserolesController < ApplicationController
   before_filter :load_course
+  before_filter :authorize_teacher_or_admin
   
   def load_course
     @course = Course.find(params[:course_id])
@@ -16,15 +17,12 @@ class CourserolesController < ApplicationController
   
   
   def new
-    authorize_teacher_or_admin or return
     @courserole = Courserole.new
   
     render :action => 'new', :layout => false
   end
   
   def create
-    authorize_teacher_or_admin or return
-  
     @courserole = Courserole.new(params[:courserole])
     @courserole.course = @course
     @courserole.role = 'teacher'
@@ -38,8 +36,6 @@ class CourserolesController < ApplicationController
   # DELETE /courses/1
   # DELETE /courses/1.xml
   def destroy
-    authorize_teacher_or_admin or return
-  
     @courserole = Courserole.find(params[:id])
     @courserole.destroy
 
