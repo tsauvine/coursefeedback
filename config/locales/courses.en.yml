@@ -4,10 +4,12 @@ en:
   ##########
   courses_heading: "Courses"
   course_instances_heading: "Instances"
+  course_teachers_heading: "Teachers"
   no_courses: "There are no courses in the system yet"
   active_instance: active
   inactive_instance: inactive
-  new_instance: "New course instance"
+  new_instance: "Create course instance"
+  course_add_teacher: "Add teacher"
   Settings: "Settings"
   
   new_course: "Create new course"

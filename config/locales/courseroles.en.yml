@@ -1,0 +1,3 @@
+en:
+  courserole_username: "Username"
+  courserole_confirm_delete: "Remove teacher {{name}} from course {{course}}?"

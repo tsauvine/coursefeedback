@@ -13,9 +13,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :survey_answers
   
   #map.resources :courses, :requirements => { :id => /([a-zA-Z0-9\-+*_.,!$'()])*/ } do |courses|
-  #  courses.resources :topics #, :requirements => { :topic_id => /[0-9]*/ }
-  #  courses.resources :course_instances
-  #end 
+  map.resources :courses do |courses|
+    #course.resources :topics #, :requirements => { :topic_id => /[0-9]*/ }
+    #course.resources :course_instances
+    courses.resources :courseroles
+  end 
 
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'

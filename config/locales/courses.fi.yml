@@ -4,10 +4,12 @@ fi:
   ##########
   courses_heading: "Kurssit"
   course_instances_heading: "Instanssit"
+  course_teachers_heading: "Opettajat"
   no_courses: "J&auml;rjestelm&auml;ss&auml; ei ole viel&auml; kursseja"
   active_instance: "aktiivinen"
   inactive_instance: "suljettu"
-  new_instance: "Uusi kurssi-instanssi"
+  new_instance: "Luo kurssi-instanssi"
+  course_add_teacher: "Lisää opettaja"
   Settings: "Asetukset"
   
   new_course: "Luo uusi kurssi"

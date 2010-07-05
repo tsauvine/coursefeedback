@@ -8,4 +8,8 @@
 class Courserole < ActiveRecord::Base 
   belongs_to :user, :primary_key => 'login', :foreign_key => 'user_login'
   belongs_to :course
+  
+  validates_presence_of :user_login
+  validates_presence_of :course_id
+  validates_presence_of :role
 end

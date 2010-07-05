@@ -1,0 +1,3 @@
+fi:
+  courserole_username: "Käyttäjätunnus"
+  courserole_confirm_delete: "Poista teacher {{name}} kurssilta {{course}}?"
