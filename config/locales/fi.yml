@@ -1,5 +1,5 @@
 fi:
-  app_title: "PalauteProto"
+  app_title: "Palaute"
   login_button: "Login"
   logout_button: "Logout"
   not_logged_in: "Ei kirjautuneena"
