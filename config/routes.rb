@@ -1,76 +1,61 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resource :session
-  map.resources :users
+  devise_for :users
+
+  resources :users
   
-  map.resources :courses
-  map.resources :course_instances
-  map.resources :topics, :member => ['vote','moderate']
-  map.resources :messages, :member => ['vote', 'moderate']
-  map.resources :faq_entries, :controller => 'faq', :member => ['vote']
+  resources :courses do 
+    resources :courseroles
+  end
   
-  map.resources :surveys, :member => ['answer','results'], :path_prefix => ':course_code/:instance_path', :requirements => { :course_code => URL_FORMAT_ROUTE, :instance_path => URL_FORMAT_ROUTE }
-  map.resources :survey_questions, :member => ['move']
-  map.resources :survey_answers
+  resources :course_instances
   
-  #map.resources :courses, :requirements => { :id => /([a-zA-Z0-9\-+*_.,!$'()])*/ } do |courses|
-  map.resources :courses do |courses|
-    #course.resources :topics #, :requirements => { :topic_id => /[0-9]*/ }
-    #course.resources :course_instances
-    courses.resources :courseroles
-  end 
-
-  map.login '/login', :controller => 'sessions', :action => 'new'
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  resources :topics do
+    member do
+      get 'vote'
+      get 'moderate'
+    end
+  end
   
-  map.topic_index ':course/:instance/feedback', :controller => 'topics', :action => 'index', :requirements => { :course => URL_FORMAT_ROUTE, :instance => URL_FORMAT_ROUTE }
-  map.new_topic ':course/:instance/new_topic', :controller => 'topics', :action => 'new', :requirements => { :course => URL_FORMAT_ROUTE, :instance => URL_FORMAT_ROUTE }
+  resources :messages do
+    member do
+      get 'vote'
+      get 'moderate'
+    end
+  end
   
-  map.faq ':course_code/:instance_path/faq', :controller => 'faq', :action => 'index', :requirements => { :course_code => URL_FORMAT_ROUTE, :instance_path => URL_FORMAT_ROUTE }
-  map.new_faq ':course_code/:instance_path/new_faq', :controller => 'faq', :action => 'new', :requirements => { :course_code => URL_FORMAT_ROUTE, :instance_path => URL_FORMAT_ROUTE }
-
-  map.instance_root ':course/:instance', :controller => 'topics', :action => 'index', :requirements => { :course => URL_FORMAT_ROUTE, :instance => URL_FORMAT_ROUTE }
-  map.course_root ':course_code', :controller => 'courses', :action => 'show', :requirements => { :course_code => URL_FORMAT_ROUTE }
-
-
-  # The priority is based upon order of creation: first created -> highest priority.
-
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
+  resources :faq_entries, :controller => 'faq' do
+    member do
+      get 'vote'
+    end
+  end
   
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
+  #map.resources :surveys do , :path_prefix => ':course_code/:instance_path', :requirements => { :course_code => URL_FORMAT_ROUTE, :instance_path => URL_FORMAT_ROUTE }
+  #  member do
+  #    get 'answer'
+  #    get 'results'
+  #  end
+  #end
   
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
-
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
+  resources :survey_questions do
+    member do
+      get 'move'
+    end
+  end
   
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
+  resources :survey_answers
+#   
+  match ':course/:instance/feedback', :to => 'topics#index', :constraints => { :course => URL_FORMAT_ROUTE, :instance => URL_FORMAT_ROUTE }, :as => 'topic_index'
+  
+  match ':course/:instance/new_topic', :to => 'topics#new', :constraints => { :course => URL_FORMAT_ROUTE, :instance => URL_FORMAT_ROUTE }, :as => 'new_topic'
+  
+  match ':course_code/:instance_path/faq', :to => 'faq#index', :constraints => { :course_code => URL_FORMAT_ROUTE, :instance_path => URL_FORMAT_ROUTE }, :as => 'faq'
+  match ':course_code/:instance_path/new_faq', :to => 'faq#new', :constraints => { :course_code => URL_FORMAT_ROUTE, :instance_path => URL_FORMAT_ROUTE }, :as => 'new_faq'
 
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
+  match ':course/:instance' => 'topics#index', :as => 'instance_root', :constraints => { :course => URL_FORMAT_ROUTE, :instance => URL_FORMAT_ROUTE }
+  match ':course_code', :to => 'courses#show', :constraints => { :course_code => URL_FORMAT_ROUTE }, :as => 'course_root'
 
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  map.root :controller => 'course_instances', :action => 'index'
+  
 
-  # See how all your routes lay out with "rake routes"
-
-  # Install the default routes as the lowest priority.
-  # Note: These default routes make all actions in every controller accessible via GET requests. You should
-  # consider removing or commenting them out if you're using named routes and resources.
-  #map.connect ':controller/:action/:id'
-  #map.connect ':controller/:action/:id.:format'
+  root :to => 'course_instances#index'
+  
 end

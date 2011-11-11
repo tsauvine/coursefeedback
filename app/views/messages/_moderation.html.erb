@@ -1,3 +1,3 @@
-<span class="acceptButton"><%= link_to_remote t(:moderateAccept), {:url => moderate_message_url(message, :status => 'accept')} %></span>
-<span class="rejectButton"><%= link_to_remote t(:moderateReject), {:url => moderate_message_url(message, :status => 'reject')} %></span>
-<span class="rejectButton"><%= link_to_remote t(:moderateDelete), {:url => moderate_message_url(message, :status => 'delete')} %></span>
+<span class="acceptButton"><%= link_to t(:moderateAccept), moderate_message_url(message, :status => 'accept'), :remote => true %></span>
+<span class="rejectButton"><%= link_to t(:moderateReject), moderate_message_url(message, :status => 'reject'), :remote => true %></span>
+<span class="rejectButton"><%= link_to t(:moderateDelete), moderate_message_url(message, :status => 'delete'), :remote => true %></span>

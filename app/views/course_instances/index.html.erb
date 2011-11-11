@@ -5,13 +5,14 @@
 <% else %>
   <ul>
     <% @course_instances.each do |instance| %>
-      <li><%= link_to "#{instance.course.code} #{instance.course.name} (#{h instance.name})", instance_root_path(instance.course.code,instance.path) %></li>
+      <li><%= link_to "#{instance.course.code} #{instance.course.name} (#{h instance.name})", instance_root_path(instance.course.code, instance.path) %></li>
+
     <% end %>
   </ul>
 <% end %>
 
 <p><%= link_to t(:show_all_courses), courses_path %></p>
 
-<% if is_admin?(current_user) %>
+<% if can? :create, Course %>
   <p><%= link_to t(:new_course), new_course_path %></p>
 <% end %>

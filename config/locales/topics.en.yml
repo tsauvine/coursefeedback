@@ -11,13 +11,13 @@ en:
   new_topic_enrolled: "Only enrolled students are allowed to open new topics."
   topic_read_authenticated: "Log in to read feedback"
   topic_read_staff: "Feedback can only be read by course staff"
-  instance_inactive: "Feedback cannot be sent to course &quot;{{course}}&quot; because the course is not active."
-  
+  instance_inactive: "Feedback cannot be sent to course '{{course}}' because the course is not active."
+
   Topic: "Topic"
   Opened: "Opened"
   Commented: "Commented"
   Answered: "Answered"
-  
+
   # Show
   private_topic_hint: "This feedback is sent for staff only. Thread is not visible to students."
   new_comment: "Add comment"
@@ -36,7 +36,7 @@ en:
   topic_moderation_pending: "in queue"
   topic_moderation_published: "published"
   topic_moderation_censored: "censored"
-  
+
   # New
   new_topic_heading: "New topic"
   instace_closed: "Course instance is not active. Feedback can only be read."
@@ -56,11 +56,10 @@ en:
   Nick: Name
   new_message_heading: "New comment"
   new_message_hint: "Comment is handled anonymously if you use a pseudonym."
-  
+
   # Misc
   moderateAccept: "Publish"
   moderateReject: "Censor"
   moderateDelete: "Delete"
   edit_topic_heading: "Edit topic"
   topic_updated: "Topic updated"
-  

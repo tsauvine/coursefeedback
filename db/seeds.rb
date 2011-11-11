@@ -6,16 +6,42 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Major.create(:name => 'Daley', :city => cities.first)
 
-# Create admin user
-user = User.new(:login => 'admin', :password => 'admin', :password_confirmation => 'admin', :firstname => 'Admin', :lastname => 'User', :email => 'tzauvine@cs.helsinki.fi')
+# Users
+puts('Creating users')
+
+user = User.new(:password => 'admin', :password_confirmation => 'admin', :name => 'Admin', :email => 'admin@example.com')
+#user.studentnumber = '12345'
+user.login = 'admin'
 user.admin = true
 user.save
 
-# Create other users
-User.create(:login => 'teacher1', :password => 'teacher1', :password_confirmation => 'teacher1', :firstname => 'Teacher', :lastname => '1', :email => 'teacher1@cs.helsinki.fi')
-User.create(:login => 'student1', :password => 'student1', :password_confirmation => 'student1', :firstname => 'Student', :lastname => '1', :email => 'student1@cs.helsinki.fi')
+# Create teachers
+for i in 1..10 do
+  r = User.new
+  r.studentnumber = '1' + i.to_s.rjust(4, '0')
+  r.login = r.studentnumber
+  r.password = "teacher#{i}"
+  r.password_confirmation = "teacher#{i}"
+  r.name = "Teacher #{i}"
+  r.email = "teacher#{i}@example.com"
+  r.save
+end
+
+# Create students
+for i in 1..10 do
+  r = User.new
+  r.studentnumber = i.to_s.rjust(5, '0')
+  r.login = r.studentnumber
+  r.password = "student#{i}"
+  r.password_confirmation = "student#{i}"
+  r.name = "Student #{i}"
+  r.email = "student#{i}@example.com"
+  r.save
+end
+
 
 # Create courses
-course = Course.create(:code => '58123', :name => 'Perusteet')
-CourseInstance.create(:name => 'Syksy 2009', :path => 's2009', :active => false, :course => course)
-CourseInstance.create(:name => 'Kevät 2010', :path => 'k2010', :active => true, :course => course)
+puts('Creating courses')
+course = Course.create(:code => 'X-0.101', :name => 'Basics')
+CourseInstance.create(:name => 'Fall 2010', :path => 'f2010', :active => true, :course => course)
+CourseInstance.create(:name => 'Spring 2011', :path => 's2011', :active => false, :course => course)

@@ -1,6 +1,6 @@
 class CourseInstancesController < ApplicationController
   before_filter :load_course, :except => [:index, :new, :create, :update]
-  
+
   def load_course
     if params[:id]
       @instance = CourseInstance.find(params[:id])
@@ -15,44 +15,46 @@ class CourseInstancesController < ApplicationController
       redirect_to root_path
       return
     end
-    
+
     unless @instance
       flash[:error] = t(:instance_not_found)
       redirect_to @course
       return
     end
 
-    @is_teacher = is_teacher?(current_user, @course)
-    @is_admin = is_admin?(current_user)
+    #@is_teacher = is_teacher?(current_user, @course)
+    #@is_admin = is_admin?(current_user)
   end
 
-  
+
   def index
     courses = Course.all
     @course_instances = Array.new
-    
+
     courses.each do |course|
       instance = course.course_instances.first
       @course_instances << instance if instance
     end
   end
-  
-  
+
+
   def show
-    
+
   end
-  
-  
+
+
   def new
     @course = Course.find(params[:course_id])
-    authorize_teacher_or_admin or return
-    
+    #authorize_teacher_or_admin or return
+    authorize! :create, CourseInstance
+
     @local_instance = CourseInstance.new(:course_id => @course.id)
   end
-  
+
   # GET /courses/1/edit
   def edit
-    authorize_teacher_or_admin or return
+    #authorize_teacher_or_admin or return
+    authorize! :update, @instance
 
     @local_instance = @instance
   end
@@ -63,8 +65,10 @@ class CourseInstancesController < ApplicationController
   def create
     @local_instance = CourseInstance.new(params[:course_instance])
     @course = @local_instance.course
-    
-    authorize_teacher_or_admin or return
+
+    #authorize_teacher_or_admin or return
+    authorize! :create, CourseInstance
+
 
     respond_to do |format|
       if @local_instance.save
@@ -83,10 +87,11 @@ class CourseInstancesController < ApplicationController
   def update
     @instance = CourseInstance.find(params[:id])
     @course = @instance.course if @instance
-    authorize_teacher_or_admin or return
-    
+    #authorize_teacher_or_admin or return
+    authorize! :update, @instance
+
     @local_instance = CourseInstance.find(params[:id])
-  
+
     respond_to do |format|
       if @local_instance.update_attributes(params[:course_instance])
         flash[:success] = t(:instance_updated)
@@ -102,7 +107,8 @@ class CourseInstancesController < ApplicationController
   # DELETE /courses/1
   # DELETE /courses/1.xml
   def destroy
-    authorize_teacher_or_admin or return
+    #authorize_teacher_or_admin or return
+    authorize! :delete, @instance
 
     @instance.destroy
 
@@ -111,6 +117,6 @@ class CourseInstancesController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
-  
+
+
 end

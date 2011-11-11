@@ -11,13 +11,13 @@ fi:
   new_topic_enrolled: "Vain kurssille ilmoittautuneet opiskelijat voivat lähettää palautetta."
   topic_read_authenticated: "Kirjaudu sisään lukeaksesi palautetta"
   topic_read_staff: "Palaute on vain kurssihenkilökunnan luettavissa"
-  instance_inactive: "Kurssille &quot;{{course}}&quot; ei voi lähettää palautetta, koska kurssi ei ole käynnissä."
-  
+  instance_inactive: "Kurssille '{{course}}' ei voi lähettää palautetta, koska kurssi ei ole käynnissä."
+
   Topic: "Aihe"
   Opened: "Avattu"
   Commented: "Kommentoitu"
   Answered: "Vastattu"
-  
+
   # Show
   private_topic_hint: "Tämä palaute on lähetetty vain henkilökunnan luettavaksi. Viestiketju ei näy opiskelijoille."
   new_comment: "Kommentoi"

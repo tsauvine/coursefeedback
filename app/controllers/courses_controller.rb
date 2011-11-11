@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
   before_filter :load_course, :except => [:index, :new, :create]
-  
-  
+
+
   def load_course
     if params[:id]
       @course = Course.find(params[:id])
@@ -15,11 +15,11 @@ class CoursesController < ApplicationController
       return
     end
 
-    @is_teacher = is_teacher?(current_user, @course) || is_admin?(current_user)
-    @is_admin = is_admin?(current_user)
+    #@is_teacher = is_teacher?(current_user, @course) || is_admin?(current_user)
+    #@is_admin = is_admin?(current_user)
   end
-  
-  
+
+
   # GET /courses
   # GET /courses.xml
   def index
@@ -30,7 +30,7 @@ class CoursesController < ApplicationController
       format.xml  { render :xml => @courses }
     end
   end
-  
+
   # GET /courses/1
   # GET /courses/1.xml
   def show
@@ -39,23 +39,26 @@ class CoursesController < ApplicationController
   # GET /courses/new
   # GET /courses/new.xml
   def new
-    authorize :admin or return
-  
+    #authorize :admin or return
+    authorize! :create, Course
+
     @local_course = Course.new
   end
-  
+
   # GET /courses/1/edit
   def edit
-    authorize :teacher, :admin or return
-  
+    #authorize :teacher, :admin or return
+    authorize! :update, @course
+
     @local_course = Course.find(params[:id])
   end
 
   # POST /courses
   # POST /courses.xml
   def create
-    authorize :admin or return
-  
+    #authorize :admin or return
+    authorize! :create, Course
+
     @local_course = Course.new(params[:course])
 
     respond_to do |format|
@@ -73,8 +76,9 @@ class CoursesController < ApplicationController
   # PUT /courses/1
   # PUT /courses/1.xml
   def update
-    authorize :teacher, :admin or return
-  
+    #authorize :teacher, :admin or return
+    authorize! :update, @course
+
     @local_course = Course.find(params[:id])
 
     respond_to do |format|
@@ -92,9 +96,11 @@ class CoursesController < ApplicationController
   # DELETE /courses/1
   # DELETE /courses/1.xml
   def destroy
-    authorize :admin or return
-  
     @course = Course.find(params[:id])
+
+    #authorize :admin or return
+    authorize! :delete, @course
+
     @course.destroy
 
     respond_to do |format|

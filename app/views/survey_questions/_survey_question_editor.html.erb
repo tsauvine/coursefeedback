@@ -1,5 +1,5 @@
 <div class="surveyQuestionEditor" id="question<%= question.id %>">
-  <% remote_form_for :question, :url => survey_question_path(question, :survey_id => @survey.id), :method => :put do |f| %>
+  <%= remote_form_for :question, :url => survey_question_path(question, :survey_id => @survey.id), :method => :put do |f| %>
     <table>
       <tr>
         <td><%=t :survey_question %>:</td>

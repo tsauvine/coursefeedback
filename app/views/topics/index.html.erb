@@ -4,15 +4,15 @@
   <p class="hint"><%= t(:instance_inactive, :course => @instance.name) %></p>
 <% elsif @allow_send %>
   <p><%= link_to t(:new_topic), new_topic_path(@course.code, @instance.path) %></p>
-<% elsif !logged_in? %>
-  <p class="hint"><%= link_to t(:new_topic_login), url_for(:overwrite_params => {:require_login => true}) %></p>
+<% elsif !user_signed_in? %>
+  <p class="hint"><%= link_to t(:new_topic_login), url_for(:require_login => true) %></p>
 <% elsif @course.feedback_write_permission == 'enrolled' && !@is_enrolled %>
   <p class="hint"><%=t :new_topic_enrolled %></p>
 <% end %>
 
 <% if @allow_headlines %>
-  <% if !logged_in? && @course.feedback_read_permission == 'authenticated' %>
-    <p class="hint"><%= link_to t(:topic_read_authenticated), url_for(:overwrite_params => {:require_login => true}) %></p>
+  <% if !user_signed_in? && @course.feedback_read_permission == 'authenticated' %>
+    <p class="hint"><%= link_to t(:topic_read_authenticated), url_for(:require_login => true) %></p>
   <% elsif @course.feedback_read_permission == 'staff' %>
     <p class="hint"><%=t :topic_read_staff %></p>
   <% end %>
@@ -21,11 +21,11 @@
     <thead>
       <tr>
         <td><%=t :Topic %></td>
-        <td><%= link_to t(:Opened), url_for(:overwrite_params => {:sort => 'opened'}) %></td>
-        <td><%= link_to t(:Commented), url_for(:overwrite_params => {:sort => 'commented'}) %></td>
-        <td><%= link_to t(:Answered), url_for(:overwrite_params => {:sort => 'answered'}) %></td>
-        <td><%= link_to image_tag('thumb_up.png', :alt => 'Thumbs up'), url_for(:overwrite_params => {:sort => 'thumbs_up'}) %></td>
-        <td><%= link_to image_tag('thumb_down.png', :alt => 'Thumbs down'), url_for(:overwrite_params => {:sort => 'thumbs_down'}) %></td>
+        <td><%= link_to t(:Opened), url_for(:sort => 'opened') %></td>
+        <td><%= link_to t(:Commented), url_for(:sort => 'commented') %></td>
+        <td><%= link_to t(:Answered), url_for(:sort => 'answered') %></td>
+        <td><%= link_to image_tag('thumb_up.png', :alt => 'Thumbs up'), url_for(:sort => 'thumbs_up') %></td>
+        <td><%= link_to image_tag('thumb_down.png', :alt => 'Thumbs down'), url_for(:sort => 'thumbs_down') %></td>
       </tr>
     </thead>
     <tbody>
@@ -38,9 +38,9 @@
             <% else %>
               <td><%= topic.caption %></td>
             <% end %>
-            <td class="<%= logged_in? && current_user.previous_login_at && topic.created_at > current_user.previous_login_at ? 'recent' : ''%>"><%=l topic.created_at %></td>
+            <td class="<%= user_signed_in? && current_user.previous_login_at && topic.created_at > current_user.previous_login_at ? 'recent' : ''%>"><%=l topic.created_at %></td>
             <% if topic.commented_at %>
-              <td class="<%= logged_in? && current_user.previous_login_at && topic.commented_at > current_user.previous_login_at ? 'recent' : ''%>"><%=l topic.commented_at, :format => :short %></td>
+              <td class="<%= user_signed_in? && current_user.previous_login_at && topic.commented_at > current_user.previous_login_at ? 'recent' : ''%>"><%=l topic.commented_at, :format => :short %></td>
             <% else %>
               <td></td>
             <% end %>
@@ -76,7 +76,7 @@
             <td></td>
             <td></td>
           </tr>
-        <% end %>  
+        <% end %>
       <% end %>
     </tbody>
   </table>

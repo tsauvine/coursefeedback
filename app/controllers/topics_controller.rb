@@ -4,13 +4,13 @@ class TopicsController < ApplicationController
 
   def load_course
     @course = Course.find_by_code(params[:course])
-    
+
     unless @course
       flash[:error] = t(:course_not_found)
       redirect_to courses_url
       return
     end
-    
+
     @instance = CourseInstance.find_by_path_and_course_id(params[:instance], @course.id) if @course
 
     unless @instance
@@ -19,23 +19,23 @@ class TopicsController < ApplicationController
       return
     end
 
-    @is_teacher = is_teacher?(current_user, @course)
-    @is_admin = is_admin?(current_user)
-    
+    #@is_teacher = is_teacher?(current_user, @course)
+    #@is_admin = is_admin?(current_user)
+    @is_teacher = @course.has_teacher?(current_user)
+
     return true
   end
-  
-  
+
+
   # GET /topics
   # GET /topics.xml
   def index
     load_course or return
-    #authorize_level @course.feedback_read_permission or return
 
     # Allow sending?
-    @allow_send = @instance.active && allow_send?
-    @allow_read = allow_read?
-    @allow_headlines = allow_read_headlines?
+    @allow_send = @instance.active && can?(:write_feedback, @course)
+    @allow_read = can? :read_feedback, @course
+    @allow_headlines = can? :read_headlines, @course
 
     if @is_teacher
       @topics = @instance.sorted_topics(params[:sort], :include_private => true)
@@ -44,7 +44,7 @@ class TopicsController < ApplicationController
       @topics = @instance.sorted_topics(params[:sort])
       render :action => 'index'
     end
-    
+
     # @queue_length = Topic.count(:conditions => ["course_instance_id=? AND moderation_status='pending'", @instance.id])
   end
 
@@ -54,34 +54,27 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
     @instance = @topic.course_instance
     @course = @instance.course
-    
-    @allow_send = @instance.active && allow_send?
-    @allow_vote = @allow_send && !is_teacher?(current_user, @course)
-    
+
+    @allow_send = @instance.active && can?(:write_feedback, @course)
+    @allow_vote = @allow_send && !@course.has_teacher?(current_user)
+
     # Check reading privileges
-    authorize_level @course.feedback_read_permission or return
-    
-    # Censorship
-    return access_denied unless @topic.moderation_status == 'published' || is_teacher?(current_user, @course)
-    
-    @is_teacher = is_teacher?(current_user, @course)
+    #authorize_level @course.feedback_read_permission or return
+    authorize! :read, @topic
+
+    @is_teacher = @course.has_teacher?(current_user)
   end
 
   # GET /topics/new
   # GET /topics/new.xml
   def new
     load_course or return
-    authorize_level @course.feedback_write_permission or return
-    
-    # If instance is closed
-    unless @instance.active
-      flash[:error] = t(:instance_closed)
-      redirect_to instace_path(@course.code, @instance.path)
-      return
-    end
-  
-    @topic = Topic.new(:course_instance_id => @instance.id, :nick => 'Anonymous')
+    #authorize_level @course.feedback_write_permission or return
+
+    @topic = Topic.new(:course_instance => @instance, :nick => 'Anonymous')
     #@topic.nick = logged_in? ? current_user.name : 'Anonymous'
+
+    authorize! :create, @topic
 
     respond_to do |format|
       format.html # new.html.erb
@@ -94,8 +87,9 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
     @instance = @topic.course_instance
     @course = @instance.course
-    
-    authorize_teacher or return
+
+    #authorize_teacher or return
+    authorize! :update, @topic
   end
 
   # POST /topics
@@ -105,46 +99,39 @@ class TopicsController < ApplicationController
     @topic = Topic.new(params[:topic])
     @instance = @topic.course_instance
     @course = @instance.course
-    @is_teacher = is_teacher?(current_user, @course)
-    
+    @is_teacher = @course.has_teacher?(current_user)
+
     # Check writing permissions
-    authorize_level @course.feedback_write_permission or return
-    
-    # If instance is closed
-    unless @instance.active
-      flash[:error] = t(:instance_closed)
-      redirect_to instace_path(@course.code, @instance.path)
-      return
-    end
-    
-    
+    #authorize_level @course.feedback_write_permission or return
+    authorize! :create, @topic
+
     @topic.moderation_status = (@course.moderate && !@is_teacher && @topic.visibility == 'public') ? 'pending' : 'published'
     @topic.action_status = 'unanswered'
     @topic.nick = 'Anonymous' if @topic.nick.blank?
-    
+
     # User
-    if logged_in? && !@topic.anonymous
+    if user_signed_in? && !@topic.anonymous
       #@topic.anonymous = (@topic.nick != current_user.name)
       @topic.user = current_user
       @topic.nick = current_user.name
     end
-    
+
     # Save topic
     unless @topic.save
       flash[:error] = 'Failed to send feedback'
       render :action => "new"
       return
     end
-    
+
     if @topic.moderation_status == 'pending'
-      flash[:success] = t(:added_to_queue) 
+      flash[:success] = t(:added_to_queue)
     else
       flash[:success] = t(:topic_opened)
     end
-    
+
     # Email notification
     @instance.notify_subscribers_later
-    
+
     redirect_to topic_index_path(@course.code, @instance.path)
   end
 
@@ -154,7 +141,9 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
     @instance = @topic.course_instance
     @course = @instance.course
-    authorize_teacher or return
+
+    #authorize_teacher or return
+    authorize! :update, @topic
 
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
@@ -171,9 +160,11 @@ class TopicsController < ApplicationController
   # DELETE /topics/1
   # DELETE /topics/1.xml
   def destroy
-    authorize_admin or return
-
+    #authorize_admin or return
     @topic = Topic.find(params[:id])
+
+    authorize! :delete, @topic
+
     @topic.destroy
 
     respond_to do |format|
@@ -181,30 +172,32 @@ class TopicsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def vote
     @topic = Topic.find(params[:id])
     @instance = @topic.course_instance
     @course = @instance.course
-    
-    authorize_level @course.feedback_write_permission or return
-    
+
+    #authorize_level @course.feedback_write_permission or return
+    authorize! :write_feedback, @course
+
     if params[:amount].to_i > 0
       @topic.add_thumb_up
     else
       @topic.add_thumb_down
     end
-    
+
     render :partial => 'messages/thumbs', :locals => {:message => @topic}
   end
-  
+
   def moderate
     @topic = Topic.find(params[:id])
     @instance = @topic.course_instance
     @course = @instance.course
-    
-    authorize_teacher or return
-  
+
+    #authorize_teacher or return
+    authorize! :update, @instance
+
     case params[:status]
       when 'accept':
         new_status = 'published'
@@ -216,13 +209,13 @@ class TopicsController < ApplicationController
         render :partial => 'moderation'
         return
     end
-    
+
     @topic.moderation_status = new_status
     @topic.save
-    
+
     # Update messages
     #Message.update_all("moderation_status='#{new_status}'", "topic_id=#{@topic.id}")
-    
+
     if request.xhr?
       # TODO
       render :text => new_status
@@ -231,19 +224,5 @@ class TopicsController < ApplicationController
       redirect_to @topic
     end
   end
-
-
-  protected
-    def allow_send?
-      authorized_level?(current_user, @course, @course.feedback_write_permission)
-    end
-
-    def allow_read?
-      authorized_level?(current_user, @course, @course.feedback_read_permission)
-    end
-    
-    def allow_read_headlines?
-      authorized_level?(current_user, @course, @course.headlines_read_permission)
-    end
 
 end

@@ -25,8 +25,9 @@ class Topic < ActiveRecord::Base
 
   def caption
     caption = read_attribute(:caption)
+    text = read_attribute(:text)
     
-    if caption.blank?
+    if caption.blank? && !text.blank?
       # Show the beginning of the feedback if no caption is given
       read_attribute(:text)[0,30] + '...'
     else
@@ -36,6 +37,7 @@ class Topic < ActiveRecord::Base
 
   # Returns the first answer from staff or nil if an answer is not found
   def find_answer
+    # FIXME
     Message.find_by_topic_id(id, :conditions => 'staff=true')
   end
 

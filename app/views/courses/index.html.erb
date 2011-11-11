@@ -11,7 +11,7 @@
 <% end %>
 
 
-<% if is_admin?(current_user) %>
+<% if can? :create, Course %>
   <p><%= link_to t(:new_course), new_course_path %></p>
 <% end %>
 

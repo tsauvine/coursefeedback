@@ -43,6 +43,7 @@ class CourseInstance < ActiveRecord::Base
     condition_sql = "moderation_status != 'deleted'"
     condition_sql << " AND visibility = 'public'" unless options.has_key? :include_private
 
+    # FIXME
     topics.find_all_by_course_instance_id(self.id, :conditions => condition_sql, :order => order_sql)
   end
 
@@ -56,9 +57,11 @@ class CourseInstance < ActiveRecord::Base
   
   # used by delayed_job
   def notify_subscribers(instance_id)
+    # FIXME
     instance = CourseInstance.find(instance_id)
     
     # Find the list of users who want to be notified
+    # FIXME
     roles = Courserole.find_all_by_course_id(instance.course_id, :conditions => "role='teacher'")
     
     roles.each do |role|

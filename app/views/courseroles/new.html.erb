@@ -1,4 +1,5 @@
-<% remote_form_for([@course, @courserole], :update => 'courseroles') do |f| %>
+<%= form_for([@course, @courserole], :remote => true) do |f| %>
+<!-- :update => 'courseroles' -->
   <%=t :courserole_username %>:
   <%= f.text_field :user_login %>
   <%= f.submit t(:Save) %>

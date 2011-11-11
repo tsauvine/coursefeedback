@@ -1,6 +1,6 @@
 <h2><%=t :new_survey_heading %></h2>
 
-<% form_for(@survey) do |f| %>
+<%= form_for(@survey) do |f| %>
   <%= render :partial => 'settings', :locals => { :f => f } %>
 <% end %>
 

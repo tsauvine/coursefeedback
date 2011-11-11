@@ -1,18 +1,14 @@
 <h1><%=t :new_user_heading %></h1>
 
-<% form_for @user do |f| %>
+<%= form_for @user do |f| %>
   <table>
     <tr>
       <td><%=t :user_login %>:</td>
       <td><%= f.text_field :login %></td>
     </tr>
     <tr>
-      <td><%=t :user_firstname %>:</td>
-      <td><%= f.text_field :firstname %></td>
-    </tr>
-    <tr>
-      <td><%=t :user_lastname %>:</td>
-      <td><%= f.text_field :lastname %></td>
+      <td><%=t :user_name %>:</td>
+      <td><%= f.text_field :name %></td>
     </tr>
     <tr>
       <td><%=t :user_email %>:</td>
@@ -27,10 +23,6 @@
       <td><%= f.password_field :password_confirmation %></td>
     </tr>
   </table>
-  
-  <p>
-    <%= f.check_box :notify_by_email %> <%=t :user_notify %>
-  </p>
 
   <%= f.submit t(:Save) %>
 <% end %>

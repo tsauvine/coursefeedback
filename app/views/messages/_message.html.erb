@@ -4,23 +4,29 @@
     <% if message.moderation_status == 'published' %>
       <% if @allow_vote %>
         <div class="thumbs" id="messageThumbs<%= message.id %>">
-          <%= link_to_remote image_tag('thumb_up.png', :alt => t(:thumb_up_alttext)) + ' ' + message.thumbs_up.to_s, {:url => vote_message_url(message, :amount => '1'), :update => "messageThumbs#{message.id}"}, {:class => 'thumbsUp', :title => t(:thumb_up_tooltip)} %>
-          <%= link_to_remote image_tag('thumb_down.png', :alt => t(:thumb_down_alttext)) + ' ' + message.thumbs_down.to_s, {:url => vote_message_url(message, :amount => '-1'), :update => "messageThumbs#{message.id}"}, {:class => 'thumbsDown', :title => t(:thumb_down_tooltip)} %>
+          <%= link_to image_tag('thumb_up.png', :alt => t(:thumb_up_alttext)) + ' ' + message.thumbs_up.to_s, vote_message_url(message, :amount => '1'), :remote => true, {:class => 'thumbsUp', :title => t(:thumb_up_tooltip)}
+          #:update => "messageThumbs#{message.id}"}
+          %>
+          <%= link_to image_tag('thumb_down.png', :alt => t(:thumb_down_alttext)) + ' ' + message.thumbs_down.to_s, vote_message_url(message, :amount => '-1'), :remote => true, {:class => 'thumbsDown', :title => t(:thumb_down_tooltip)}
+          #:update => "messageThumbs#{message.id}"}
+          %>
         </div>
       <% else %>
         <%= render :partial => 'messages/thumbs', :locals => {:message => message} %>
       <% end %>
     <% end %>
-      
-    <% if @is_teacher %>
+
+    <% if can? :manage, @course %>
       <ul class="messageActions">
         <li><%= link_to t(:add_to_faq), new_faq_path(:course_code => @course.code, :instance_path => @instance.path, :message_id => message.id) %></li>
-        <li><%= link_to_remote t(:re_moderate), {:url => moderate_message_url(message), :update => "messageModeration#{message.id}"} %></li>
+        <li><%= link_to t(:re_moderate), moderate_message_url(message), :remote => true
+        #:update => "messageModeration#{message.id}"}
+        %></li>
       </ul>
     <% end %>
   </div>
-  
-  <% if @is_teacher || message.moderation_status == 'published' %>
+
+  <% if can? :manage, @course || message.moderation_status == 'published' %>
     <!-- Header -->
     <p class="sender">
       <%=h message.nick %>
@@ -31,7 +37,7 @@
       <% end %>
       &mdash; <%=l message.created_at, :format => :long %>
     </p>
-    
+
     <!-- Message body -->
     <p class="text">
       <% if message.moderation_status == 'censored' %>
@@ -39,9 +45,9 @@
       <% end %>
       <%= h(message.text).gsub(/\n/, '<br />') %>
     </p>
-    
+
     <!-- Moderation -->
-    <% if @is_teacher %>
+    <% if can? :manage, @course %>
       <div id="messageModeration<%= message.id %>">
         <% if message.moderation_status == 'pending' %>
           <%= render :partial => 'messages/moderation', :locals => {:message => message} # Needs to be messages/mderation because this is rendered from Topics

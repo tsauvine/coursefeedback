@@ -34,8 +34,9 @@
   
 <!-- User -->
 <div class="loginInfo">
-  <% if logged_in? %>
-    <%= link_to current_user.name, edit_user_path(current_user) %>
+  <% if user_signed_in? %>
+    <%= link_to current_user.name, edit_user_path(current_user) 
+    %>
   <% else %>
     <%=t :not_logged_in %>
   <% end %>
@@ -186,7 +187,7 @@ if flash[:notice] %>
     </div>
     
     <!-- Settings -->
-    <% if @is_teacher || @is_admin %>
+    <% if can? :update, @course %>
       <div class="panel-pane vihrea">
         <h2><%=t :navi_settings %></h2>
         
@@ -195,10 +196,12 @@ if flash[:notice] %>
           <li><%= link_to t(:navi_course_settings), edit_course_path(@course) %></li>
           <% if @instance %>
             <li><%= link_to t(:navi_instance_settings), edit_course_instance_path(@instance) %></li>
-            <li><%= link_to t(:navi_surveys), surveys_path(@course.code, @instance.path) %></li>
+            <li><%= #link_to t(:navi_surveys), surveys_path(@course.code, @instance.path) 
+            %></li>
           <% end %>
           
-          <li><%= link_to t(:navi_my_preferences), edit_user_path(current_user) %></li>
+          <li><%= # link_to t(:navi_my_preferences), edit_user_path(current_user) 
+          %></li>
         </ul>
       </div>
     <% end %>
@@ -226,13 +229,13 @@ if flash[:notice] %>
   </div>
 
   <!-- Login -->
-  <% if logged_in? %>
-    <%= link_to t(:logout_button), logout_url %>
+  <% if user_signed_in? %>
+    <%= link_to t(:logout_button), destroy_user_session_path %>
   <% else %>
     <% if request.get? %>
-      <%= link_to t(:login_button), url_for(:overwrite_params => {:require_login => true}) %>
+      <%= link_to t(:login_button), url_for(:require_login => true) %>
     <% else %>
-      <%= link_to t(:login_button), login_url %>
+      <%= link_to t(:login_button), destroy_user_session_path %>
     <% end %>
   <% end %>
   | <a href="mailto:it-web[at-remove]cs.helsinki.fi">Webmaster</a>

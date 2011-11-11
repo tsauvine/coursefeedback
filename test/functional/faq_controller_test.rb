@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class FaqControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
   test "should get index without authentication" do
     get :index, :course_code => courses(:one).code, :instance_path => course_instances(:one).path
     assert_response :success

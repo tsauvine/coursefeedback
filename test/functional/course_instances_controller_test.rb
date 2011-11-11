@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class CourseInstancesControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+  
   test "should get index without authentication" do
     get :index
     assert_response :success
@@ -20,25 +22,25 @@ class CourseInstancesControllerTest < ActionController::TestCase
   end
   
   test "teacher of the course should get new" do
-    login_as(:teacher1)
+    sign_in User.find_by_login('teacher1')
     get :new, :course_id => courses(:one).to_param
     assert_response :success
   end
   
   test "teacher of another course should not get new" do
-    login_as(:teacher2)
+    sign_in User.find_by_login('teacher2')
     get :new, :course_id => courses(:one).to_param
     assert_response :forbidden
   end
   
   test "student should not get new" do
-    login_as(:student1)
+    sign_in User.find_by_login('student1')
     get :new, :course_id => courses(:one).to_param
     assert_response :forbidden
   end  
 
   test "admin should get new" do
-    login_as(:admin1)
+    sign_in User.find_by_login('admin1')
     get :new, :course_id => courses(:one).to_param
     assert_response :success
   end
@@ -50,25 +52,25 @@ class CourseInstancesControllerTest < ActionController::TestCase
   end
 
   test "student should not get edit" do
-    login_as(:student1)
+    sign_in User.find_by_login('student1')
     get :edit, :id => course_instances(:one).to_param
     assert_response :forbidden
   end
   
   test "teacher of the course should get edit" do
-    login_as(:teacher1)
+    sign_in User.find_by_login('teacher1')
     get :edit, :id => course_instances(:one).to_param
     assert_response :success
   end
   
   test "teacher of another course should not get edit" do
-    login_as(:teacher2)
+    sign_in User.find_by_login('teacher2')
     get :edit, :id => course_instances(:one).to_param
     assert_response :forbidden
   end
 
   test "admin should get edit" do
-    login_as(:admin1)
+    sign_in User.find_by_login('admin1')
     get :edit, :id => course_instances(:one).to_param
     assert_response :success
   end
@@ -80,7 +82,7 @@ class CourseInstancesControllerTest < ActionController::TestCase
   end
   
   test "admin should create instance" do
-    login_as(:admin1)
+    sign_in User.find_by_login('admin1')
     assert_difference('CourseInstance.count') do
       post :create, :course_instance => {:course_id => courses(:one).id, :path => 'spring', :name => 'Spring'}
     end
@@ -89,7 +91,7 @@ class CourseInstancesControllerTest < ActionController::TestCase
   end
   
   test "teacher of the course should create instance" do
-    login_as(:teacher1)
+    sign_in User.find_by_login('teacher1')
     assert_difference('CourseInstance.count', 1) do
       post :create, :course_instance => {:course_id => courses(:one).id, :path => 'spring', :name => 'Spring'}
     end
@@ -98,7 +100,7 @@ class CourseInstancesControllerTest < ActionController::TestCase
   end
   
   test "teacher of another course should not create instance" do
-    login_as(:teacher2)
+    sign_in User.find_by_login('teacher2')
     assert_difference('CourseInstance.count', 0) do
       post :create, :course_instance => {:course_id => courses(:one).id, :path => 'spring', :name => 'Spring'}
     end
@@ -107,7 +109,7 @@ class CourseInstancesControllerTest < ActionController::TestCase
   end
   
   test "student should not create instance" do
-    login_as(:student1)
+    sign_in User.find_by_login('student1')
     assert_difference('CourseInstance.count', 0) do
       post :create, :course_instance => {:course_id => courses(:one).id, :path => 'spring', :name => 'Spring'}
     end
@@ -122,25 +124,25 @@ class CourseInstancesControllerTest < ActionController::TestCase
   end
   
   test "admin should update instance" do
-    login_as(:admin1)
+    sign_in User.find_by_login('admin1')
     put :update, :id => course_instances(:one).to_param, :course_instance => {:path => 'fall', :name => 'Fall'}
     assert_redirected_to edit_course_path(assigns(:course))
   end
   
   test "teacher of the course should update instance" do
-    login_as(:teacher1)
+    sign_in User.find_by_login('teacher1')
     put :update, :id => course_instances(:one).to_param, :course_instance => {:path => 'fall', :name => 'Fall'}
     assert_redirected_to edit_course_path(assigns(:course))
   end
   
   test "teacher of another course should not update instance" do
-    login_as(:teacher2)
+    sign_in User.find_by_login('teacher2')
     put :update, :id => course_instances(:one).to_param, :course_instance => {:path => 'fall', :name => 'Fall'}
     assert_response :forbidden
   end
 
   test "student should not update instance" do
-    login_as(:student1)
+    sign_in User.find_by_login('student1')
     put :update, :id => course_instances(:one).to_param, :course_instance => {:path => 'fall', :name => 'Fall'}
     assert_response :forbidden
   end
@@ -155,7 +157,7 @@ class CourseInstancesControllerTest < ActionController::TestCase
   end
   
   test "admin should destroy instance" do
-    login_as(:admin1)
+    sign_in User.find_by_login('admin1')
     
     assert_difference('CourseInstance.count', -1) do
       delete :destroy, :id => course_instances(:one).to_param
@@ -165,7 +167,7 @@ class CourseInstancesControllerTest < ActionController::TestCase
   end
   
   test "teacher should destroy instance" do
-    login_as(:teacher1)
+    sign_in User.find_by_login('teacher1')
     
     assert_difference('CourseInstance.count', -1) do
       delete :destroy, :id => course_instances(:one).to_param
@@ -175,7 +177,7 @@ class CourseInstancesControllerTest < ActionController::TestCase
   end
   
   test "teacher of another course should not destroy instance" do
-    login_as(:teacher2)
+    sign_in User.find_by_login('teacher2')
     
     assert_difference('CourseInstance.count', 0) do
       delete :destroy, :id => course_instances(:one).to_param
@@ -185,7 +187,7 @@ class CourseInstancesControllerTest < ActionController::TestCase
   end
   
   test "student should not destroy instance" do
-    login_as(:student1)
+    sign_in User.find_by_login('student1')
     
     assert_difference('CourseInstance.count', 0) do
       delete :destroy, :id => course_instances(:one).to_param

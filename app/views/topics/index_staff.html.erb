@@ -11,11 +11,11 @@
     <tr>
       <td><%=t :Topic %></td>
       <td></td>
-      <td><%= link_to t(:Opened), url_for(:overwrite_params => {:sort => 'opened'}) %></td>
-      <td><%= link_to t(:Commented), url_for(:overwrite_params => {:sort => 'commented'}) %></td>
-      <td><%= link_to t(:Answered), url_for(:overwrite_params => {:sort => 'answered'}) %></td>
-      <td><%= link_to image_tag('thumb_up.png', :alt => 'Thumbs up'), url_for(:overwrite_params => {:sort => 'thumbs_up'}) %></td>
-      <td><%= link_to image_tag('thumb_down.png', :alt => 'Thumbs down'), url_for(:overwrite_params => {:sort => 'thumbs_down'}) %></td>
+      <td><%= link_to t(:Opened), url_for(:sort => 'opened') %></td>
+      <td><%= link_to t(:Commented), url_for(:sort => 'commented') %></td>
+      <td><%= link_to t(:Answered), url_for(:sort => 'answered') %></td>
+      <td><%= link_to image_tag('thumb_up.png', :alt => 'Thumbs up'), url_for(:sort => 'thumbs_up') %></td>
+      <td><%= link_to image_tag('thumb_down.png', :alt => 'Thumbs down'), url_for(:sort => 'thumbs_down') %></td>
     </tr>
   </thead>
   <tbody>

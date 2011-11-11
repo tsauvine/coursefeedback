@@ -2,14 +2,18 @@
   <% @course.courseroles.each do |role| %>
     <tr>
       <td><%=h role.user_login %></td>
-      <td><%= link_to_remote t(:Delete), :confirm => t(:courserole_confirm_delete, :name => role.user_login, :course => @course.name), :update => "courseroles", :url => course_courserole_path(@course.id, role.id), :method => :delete %></td>
+      <td><%= link_to t(:Delete), :confirm => t(:courserole_confirm_delete, :name => role.user_login, :course => @course.name), :remote => true, :url => course_courserole_path(@course.id, role.id), :method => :delete
+      #:update => "courseroles",
+      %></td>
     </tr>
   <% end %>
 
   <tr>
     <td>
       <span id="add-teacher">
-        <%= link_to_remote t(:course_add_teacher), :update => "add-teacher", :url => new_course_courserole_path(@course.id), :method => :get %>
+        <%= link_to t(:course_add_teacher), new_course_courserole_path(@course.id), :remote => true, :method => :get
+        #:update => "add-teacher"
+        %>
       </span>
     </td>
     <td></td>

@@ -1,7 +1,6 @@
 <h1><%=t :new_topic_heading %></h1>
 
-<% form_for(@topic) do |f| %>
-  <%= f.error_messages %>
+<%= form_for(@topic) do |f| %>
   <%= f.hidden_field :course_instance_id %>
 
   <table>
@@ -26,7 +25,7 @@
   
   <p>
     <%= f.radio_button :anonymous, true %> <%=t :send_with_pseudonym %>: <%= f.text_field :nick %>
-    <% if logged_in? %>
+    <% if user_signed_in? %>
       <br /><%= f.radio_button :anonymous, false %> <%=t :send_with_real_name %>: <b><%=h current_user.name %></b>
     <% end %>
   </p>

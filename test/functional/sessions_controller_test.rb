@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class SessionsControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
 
   def test_should_login_and_redirect
     post :create, :login => 'quentin', :password => 'test'

@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class TopicsControllerTest < ActionController::TestCase
- 
+ include Devise::TestHelpers
+
   # Require login
   [:show, :edit, :vote, :moderate].each do |action|
     define_method "test_#{action}_should_recuire_login" do  

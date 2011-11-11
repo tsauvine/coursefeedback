@@ -20,10 +20,16 @@ class Course < ActiveRecord::Base
   has_many :faq_entries, :order => 'position DESC', :dependent => :destroy
   
   has_many :courseroles
-  #has_many :teachers, :through => :courseroles, :source => :user, :conditions => {:role => 'teacher'}
+  
+  #has_many :teacher_roles, :class_name => 'Courserole', :conditions => {:role => 'teacher'} #, :primary_key => 'user_login'
+  has_many :teachers, :class_name => 'User', :finder_sql => "SELECT users.* FROM users INNER JOIN courseroles ON users.login = courseroles.user_login WHERE courseroles.course_id = #{id} AND courseroles.role = 'teacher' LIMIT 1"
 
   validates_presence_of :code
   validates_uniqueness_of :code
   validates_format_of :code, :with => URL_FORMAT_MODEL
   validates_presence_of :name
+  
+  def has_teacher?(user)
+    user && Courserole.exists?(:user_login => user.login, :course_id => self.id, :role => 'teacher')
+  end
 end
