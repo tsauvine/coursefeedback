@@ -11,7 +11,7 @@ en:
   new_topic_enrolled: "Only enrolled students are allowed to open new topics."
   topic_read_authenticated: "Log in to read feedback"
   topic_read_staff: "Feedback can only be read by course staff"
-  instance_inactive: "Feedback cannot be sent to course '{{course}}' because the course is not active."
+  instance_inactive: "Feedback cannot be sent to course '%{course}' because the course is not active."
 
   Topic: "Topic"
   Opened: "Opened"

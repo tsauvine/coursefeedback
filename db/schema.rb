@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101101150556) do
+ActiveRecord::Schema.define(:version => 20111111131237) do
 
   create_table "course_instances", :force => true do |t|
     t.integer  "course_id",                    :null => false
@@ -84,6 +84,16 @@ ActiveRecord::Schema.define(:version => 20101101150556) do
     t.datetime "updated_at"
   end
 
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
   create_table "survey_answer_sets", :force => true do |t|
     t.integer  "survey_id",  :null => false
     t.integer  "pseudonym"
@@ -139,27 +149,22 @@ ActiveRecord::Schema.define(:version => 20101101150556) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",                                                  :null => false
+    t.string   "login"
     t.string   "studentnumber"
     t.string   "name"
-    t.string   "email",                               :default => "",    :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
-    t.string   "password_salt",                       :default => "",    :null => false
-    t.string   "reset_password_token"
-    t.string   "remember_token"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                       :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "locale",               :limit => 5,   :default => "fi"
-    t.boolean  "admin",                               :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "email"
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.boolean  "admin",               :default => false
+    t.string   "persistence_token",                      :null => false
+    t.string   "single_access_token",                    :null => false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
   end
 
-  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
+  add_index "users", ["login"], :name => "index_users_on_login"
+  add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
 
 end

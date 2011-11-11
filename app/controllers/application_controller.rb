@@ -2,16 +2,14 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  #include Authorization
-
   helper :all # include all helpers, all the time
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  helper_method :current_session, :current_user, :logged_in?, :user_signed_in?
 
-  #layout 'tktl'
+  protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   before_filter :redirect_to_ssl
   before_filter :set_locale
-  before_filter :load_css
+  # before_filter :load_css
   before_filter :require_login?
 
   # Redirects from http to https if ENABLE_SSL is set.
@@ -30,31 +28,26 @@ class ApplicationController < ActionController::Base
       session[:locale] = params[:locale]
 
       # Save the locale in user's preferences
-      if user_signed_in?
+      if current_user
         current_user.locale = params[:locale]
         current_user.save
-      end
-      elsif user_signed_in? && !current_user.locale.blank?  # Get locale from user's preferences
+      elsif current_user && !current_user.locale.blank?  # Get locale from user's preferences
         I18n.locale = current_user.locale
       elsif !session[:locale].blank?  # Get locale from session
         I18n.locale = session[:locale]
+      end
     end
   end
 
   # Loads extra CSS stylesheets.
-  def load_css
-    @stylesheets = ['default']
-
-    # If directory exists
-    if File.exists?(File.join(RAILS_ROOT, 'public', 'stylesheets', controller_name + '.css'))
-      @stylesheets << controller_name
-    end
-  end
-
-  # If require_login GET-parameter is set, this filter redirect to login. After successful login, the user is redirected back to the original location.
-  def require_login?
-    authenticate_user! if params[:require_login] && !user_signed_in?
-  end
+#   def load_css
+#     @stylesheets = ['default']
+#
+#     # If directory exists
+#     if File.exists?(File.join(RAILS_ROOT, 'public', 'stylesheets', controller_name + '.css'))
+#       @stylesheets << controller_name
+#     end
+#   end
 
 
   protected
@@ -75,13 +68,86 @@ class ApplicationController < ActionController::Base
 
   # Handle authorization failure
   rescue_from CanCan::AccessDenied do |exception|
-    unless user_signed_in?
-      # If user is not authenticated, redirect to login
-      authenticate_user!
-    else
+    if current_user
       # If user is authenticated, show "Forbidden"
       render :template => "shared/forbidden", :status => 403
+    else
+      # If user is not authenticated, redirect to login
+      login_required
     end
+  end
+
+
+  def current_session
+    return @current_session if defined?(@current_session)
+    @current_session = Session.find
+  end
+
+  def current_user
+    return @current_user if defined?(@current_user)
+    @current_user = current_session && current_session.record
+  end
+
+  def user_signed_in?
+    !current_user.nil?
+  end
+  alias :logged_in? :user_signed_in?
+
+  # If require_login GET-parameter is set, this filter redirect to login. After successful login, the user is redirected back to the original location.
+  def require_login?
+    login_required if params[:require_login] && !user_signed_in?
+  end
+
+  def login_required
+    unless current_user
+      store_location
+
+      # TODO: use shibboleth
+      redirect_to new_session_url
+
+      return false
+    end
+  end
+
+#   def access_denied
+#     if request.xhr?
+#       head :forbidden
+#     elsif logged_in?
+#       render :template => 'shared/forbidden', :status => 403
+#     else
+#       # If not logged in, redirect to login
+#       respond_to do |format|
+#         format.html do
+#           store_location
+#           redirect_to new_session_path
+#         end
+#         format.any do
+#           request_http_basic_authentication 'Web Password'
+#         end
+#       end
+#     end
+#
+#     return false
+#   end
+#
+# #   def require_no_user
+# #     if current_user
+# #       store_location
+# #
+# #       flash[:error] = "You must be logged out to access"
+# #       redirect_to root_url
+# #
+# #       return false
+# #     end
+# #   end
+#
+  def store_location
+    session[:return_to] = request.fullpath
+  end
+
+  def redirect_back_or_default(default)
+    redirect_to(session[:return_to] || default)
+    session[:return_to] = nil
   end
 
 end

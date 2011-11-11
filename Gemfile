@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.0'
+gem 'rails', '3.1.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -24,13 +24,19 @@ gem 'mongrel'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 gem 'jquery-rails'
-
-gem 'devise'
+gem 'therubyracer'
+#gem 'devise'
+gem 'authlogic', :git => 'https://github.com/binarylogic/authlogic'
 gem 'cancan'
 
 gem 'delayed_job', '~> 2.1.4' #, :git => 'git://github.com/collectiveidea/delayed_job.git',
 gem 'acts_as_list'
 
+group :assets do
+  gem 'sass-rails', "  ~> 3.1.0"
+  gem 'coffee-rails', "~> 3.1.0"
+  gem 'uglifier'
+end
 
 group :test do
   gem "shoulda"

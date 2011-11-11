@@ -12,11 +12,8 @@
       - <%= @instance.name %>
     <% end %>
   </title>
+  <%= stylesheet_link_tag 'default' %>
   <%= stylesheet_link_tag 'theme' %>
-  <% @stylesheets.each do |stylesheet| %>
-    <%= stylesheet_link_tag stylesheet %>
-  <% end %>
-
   <%= javascript_include_tag  :defaults %>
 </head>
 <body>
@@ -39,13 +36,13 @@
 
     <!-- Login -->
     <ul class="buttons">
-      <% if user_signed_in? %>
-        <li><%= link_to t(:logout_button), destroy_user_session_path %></li>
+      <% if current_user %>
+        <li><%= link_to t(:logout_button), logout_path %></li>
       <% else %>
         <% if request.get? %>
           <li><%= link_to t(:login_button), url_for(:require_login => true) %></li>
         <% else %>
-          <li><%= link_to t(:login_button), new_user_session_path %></li>
+          <li><%= link_to t(:login_button), login_path %></li>
         <% end %>
       <% end %>
     </ul>
@@ -66,7 +63,7 @@
 
 <!-- User -->
 <div class="loginInfo">
-  <% if user_signed_in? %>
+  <% if current_user %>
     <%= link_to current_user.name, edit_user_path(current_user) %>
   <% else %>
     <%=t :not_logged_in %>
