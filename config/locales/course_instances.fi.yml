@@ -5,7 +5,7 @@ fi:
   
   # Index
   instance_index_heading: "Aktiiviset kurssit"
-  no_instances: "J&auml;rjestelm&auml;ss&auml; ei ole viel&auml; kursseja"
+  no_instances: "Järjestelmässä ei ole vielä kursseja"
   show_all_courses: "Näytä kaikki kurssit"
   
   new_instance_heading: "Luo kurssi-instanssi"
