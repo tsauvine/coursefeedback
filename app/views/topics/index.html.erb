@@ -21,11 +21,11 @@
     <thead>
       <tr>
         <td><%=t :Topic %></td>
-        <td><%= link_to t(:Opened), url_for(:sort => 'opened') %></td>
-        <td><%= link_to t(:Commented), url_for(:sort => 'commented') %></td>
-        <td><%= link_to t(:Answered), url_for(:sort => 'answered') %></td>
-        <td><%= link_to image_tag('thumb_up.png', :alt => 'Thumbs up'), url_for(:sort => 'thumbs_up') %></td>
-        <td><%= link_to image_tag('thumb_down.png', :alt => 'Thumbs down'), url_for(:sort => 'thumbs_down') %></td>
+        <td><%= link_to t(:Opened), instance_root_path(@instance.course.code, @instance.path, :sort => 'opened') %></td>
+        <td><%= link_to t(:Commented), instance_root_path(@instance.course.code, @instance.path, :sort => 'commented') %></td>
+        <td><%= link_to t(:Answered), instance_root_path(@instance.course.code, @instance.path, :sort => 'answered') %></td>
+        <td><%= link_to image_tag('thumb_up.png', :alt => 'Thumbs up'), instance_root_path(@instance.course.code, @instance.path, :sort => 'thumbs_up') %></td>
+        <td><%= link_to image_tag('thumb_down.png', :alt => 'Thumbs down'), instance_root_path(@instance.course.code, @instance.path, :sort => 'thumbs_down') %></td>
       </tr>
     </thead>
     <tbody>
@@ -38,9 +38,9 @@
             <% else %>
               <td><%= topic.caption %></td>
             <% end %>
-            <td class="<%= user_signed_in? && current_user.previous_login_at && topic.created_at > current_user.previous_login_at ? 'recent' : ''%>"><%=l topic.created_at %></td>
+            <td class="<%= user_signed_in? && current_user.last_login_at && topic.created_at > current_user.last_login_at ? 'recent' : ''%>"><%=l topic.created_at %></td>
             <% if topic.commented_at %>
-              <td class="<%= user_signed_in? && current_user.previous_login_at && topic.commented_at > current_user.previous_login_at ? 'recent' : ''%>"><%=l topic.commented_at, :format => :short %></td>
+              <td class="<%= user_signed_in? && current_user.last_login_at && topic.commented_at > current_user.last_login_at ? 'recent' : ''%>"><%=l topic.commented_at, :format => :short %></td>
             <% else %>
               <td></td>
             <% end %>

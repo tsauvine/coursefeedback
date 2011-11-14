@@ -1,5 +1,5 @@
 <h2><%=t :new_message_heading %></h2>
-<% form_for @message do |f| %>
+<%= form_for @message do |f| %>
   <%= f.hidden_field :topic_id %>
 
   <p>

@@ -6,8 +6,8 @@
       <td><%=t :new_instance_name %>:</td>
       <td><%= f.text_field :name %></td>
       <td>
-        <% if @local_instance.errors.on(:name) %>
-          <span class="error"><%= @local_instance.errors.on(:name) %></span>
+        <% if @local_instance.errors[:name] %>
+          <span class="error"><%= @local_instance.errors[:name] %></span>
         <% else %>
           <span class="hint"><%=t :new_instance_name_hint %></span>
         <% end %>
@@ -17,8 +17,8 @@
       <td><%=t :new_instance_path %>:</td>
       <td><%= f.text_field :path %></td>
       <td>
-        <% if @local_instance.errors.on(:path) %>
-          <span class="error"><%= @local_instance.errors.on(:path) %></span>
+        <% if @local_instance.errors[:path] %>
+          <span class="error"><%= @local_instance.errors[:path] %></span>
         <% else %>
           <span class="hint"><%=t :new_instance_path_hint %></span>
         <% end %>

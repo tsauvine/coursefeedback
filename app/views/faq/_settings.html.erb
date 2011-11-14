@@ -7,8 +7,8 @@
       <td><%=t :new_caption %>:</td>
       <td>
         <%= f.text_field :caption %>
-        <% if @entry.errors.on(:caption) %>
-          <span class="error"><%= @entry.errors.on(:caption) %></span>
+        <% if @entry.errors[:caption] %>
+          <span class="error"><%= @entry.errors[:caption] %></span>
         <% end %>
       </td>
     </tr>

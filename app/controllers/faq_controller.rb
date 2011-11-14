@@ -1,6 +1,5 @@
 class FaqController < ApplicationController
   before_filter :load_course, :except => [:create]
-  before_filter :authorize_teacher_or_admin, :except => [:index, :create]
   
   def load_course
     if params[:id]
@@ -23,9 +22,8 @@ class FaqController < ApplicationController
       return
     end
 
-    @is_teacher = is_teacher?(current_user, @course)
-    @is_admin = is_admin?(current_user)
-    @allow_edit = is_teacher?(current_user, @course)
+    @allow_edit = @is_teacher = @course.has_teacher?(current_user)
+    @is_admin = false # is_admin?(current_user)
     
     return true
   end
@@ -37,7 +35,7 @@ class FaqController < ApplicationController
   
   
   def new
-    authorize_teacher_or_admin or return
+    authorize! :manage, @course
     
     @entry = FaqEntry.new(:course_id => @course.id)
     
@@ -66,7 +64,7 @@ class FaqController < ApplicationController
   end
   
   def edit
-    authorize_teacher_or_admin or return
+    authorize! :manage, @course
   end
 
 
@@ -75,7 +73,7 @@ class FaqController < ApplicationController
     @course = @entry.course
     @instance = CourseInstance.find_by_path_and_course_id(params[:instance_path], @course.id) if @course
     
-    authorize_teacher_or_admin or return
+    authorize! :manage, @course
     
     @entry.position = @course.faq_entries.size + 1
     
@@ -94,7 +92,7 @@ class FaqController < ApplicationController
   # PUT /courses/1
   # PUT /courses/1.xml
   def update
-    authorize_teacher_or_admin or return
+    authorize! :manage, @course
   
     respond_to do |format|
       if @entry.update_attributes(params[:faq_entry])
@@ -111,7 +109,7 @@ class FaqController < ApplicationController
   # DELETE /courses/1
   # DELETE /courses/1.xml
   def destroy
-    authorize_teacher_or_admin or return
+    authorize! :manage, @course
   
     @entry.destroy
 

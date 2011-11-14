@@ -8,7 +8,9 @@ class MessagesController < ApplicationController
     
     @message.nick = logged_in? ? current_user.name : 'Anonymous'
 
-    render :partial => 'new_ajax'
+    respond_to do |format|
+      format.js { render 'new' }
+    end
   end
 
   # GET /messages/1/edit
@@ -25,10 +27,10 @@ class MessagesController < ApplicationController
     @topic = @message.topic
     @instance = @topic.course_instance
     @course = @instance.course
-    @is_teacher = is_teacher?(current_user, @course)
+    @is_teacher = @course.has_teacher?(current_user)
   
     # Authorization
-    authorize_level @course.feedback_write_permission or return
+    authorize! :write_feedback, @course
 
     unless @instance.active
       flash[:error] = t(:instance_closed)
@@ -106,7 +108,7 @@ class MessagesController < ApplicationController
     @message = Message.find(params[:id])
     @instance = @message.topic.course_instance
     @course = @instance.course
-    @is_teacher = is_teacher?(current_user, @course)
+    @is_teacher = @course.has_teacher?(current_user)
     
     authorize_teacher or return
   
@@ -144,7 +146,7 @@ class MessagesController < ApplicationController
     @course = @message.topic.course_instance.course
     
     # Authorization
-    authorize_level @course.feedback_write_permission or return
+    authorize! :write_feedback, @course
     return access_denied unless @message.moderation_status == 'published'
     
     if params[:amount].to_i > 0
@@ -153,7 +155,12 @@ class MessagesController < ApplicationController
       @message.add_thumb_down
     end
     
-    render :partial => 'thumbs', :locals => {:message => @message}
+    respond_to do |format|
+      #format.html { render :partial => 'thumbs', :locals => {:message => @message} }
+      format.js { render :thumbs, :locals => {:message => @message} }
+    end
+    
+    
   end
   
 end

@@ -20,7 +20,7 @@
 
 <!-- Logo -->
 <div class="logo">
-  <h1><%=t :app_title %></h1>
+  <h1><%=t :app_title %><sub>(beta)</sub></h1>
 </div>
 
 <!-- Top navigation bar -->
@@ -100,15 +100,15 @@ if flash[:notice] %>
       <% end %>
     </ul>
 
+    <% if @instance %>
+      <ul class="naviButtons">
+        <% if @course.faq_entries.length > 0 %>
+          <li class="faqLink"><%= link_to 'FAQ', faq_path(@course.code, @instance.path) %></li>
+        <% end %>
 
-    <ul class="naviButtons">
-      <% if @course.faq_entries.length > 0 %>
-        <li class="faqLink"><%= link_to 'FAQ', faq_path(@course.code) %></li>
-      <% end %>
-      <% if @instance %>
         <li class="feedbackLink"><%= link_to 'Feedback', topic_index_path(@instance.course.code, @instance.path) %></li>
-      <% end %>
-    </ul>
+      </ul>
+    <% end %>
 
     <ul class="naviButtons">
       <% if can? :update, @course %>

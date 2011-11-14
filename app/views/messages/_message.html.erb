@@ -2,14 +2,11 @@
 
   <div class="messageButtons">
     <% if message.moderation_status == 'published' %>
+    
       <% if @allow_vote %>
         <div class="thumbs" id="messageThumbs<%= message.id %>">
-          <%= link_to image_tag('thumb_up.png', :alt => t(:thumb_up_alttext)) + ' ' + message.thumbs_up.to_s, vote_message_url(message, :amount => '1'), :remote => true, {:class => 'thumbsUp', :title => t(:thumb_up_tooltip)}
-          #:update => "messageThumbs#{message.id}"}
-          %>
-          <%= link_to image_tag('thumb_down.png', :alt => t(:thumb_down_alttext)) + ' ' + message.thumbs_down.to_s, vote_message_url(message, :amount => '-1'), :remote => true, {:class => 'thumbsDown', :title => t(:thumb_down_tooltip)}
-          #:update => "messageThumbs#{message.id}"}
-          %>
+          <%= link_to image_tag('thumb_up.png', :alt => t(:thumb_up_alttext)) + ' ' + message.thumbs_up.to_s, vote_message_url(message, :amount => '1'), {:remote => true, :class => 'thumbsUp', :title => t(:thumb_up_tooltip)} %>
+          <%= link_to image_tag('thumb_down.png', :alt => t(:thumb_down_alttext)) + ' ' + message.thumbs_down.to_s, vote_message_url(message, :amount => '-1'), {:remote => true, :class => 'thumbsDown', :title => t(:thumb_down_tooltip)} %>
         </div>
       <% else %>
         <%= render :partial => 'messages/thumbs', :locals => {:message => message} %>
@@ -26,7 +23,7 @@
     <% end %>
   </div>
 
-  <% if can? :manage, @course || message.moderation_status == 'published' %>
+  <% if can?(:manage, @course) || message.moderation_status == 'published' %>
     <!-- Header -->
     <p class="sender">
       <%=h message.nick %>
@@ -43,7 +40,9 @@
       <% if message.moderation_status == 'censored' %>
         <%= image_tag('censored.png', :alt => 'Censored', :class => 'moderationStatus', :id => "moderationStatus#{message.id}") %>
       <% end %>
-      <%= h(message.text).gsub(/\n/, '<br />') %>
+      <pre><%= message.text
+      #).gsub(/\n/, '<br />')
+      %></pre>
     </p>
 
     <!-- Moderation -->

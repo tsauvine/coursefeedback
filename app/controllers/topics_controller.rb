@@ -19,8 +19,6 @@ class TopicsController < ApplicationController
       return
     end
 
-    #@is_teacher = is_teacher?(current_user, @course)
-    #@is_admin = is_admin?(current_user)
     @is_teacher = @course.has_teacher?(current_user)
 
     return true
@@ -37,10 +35,12 @@ class TopicsController < ApplicationController
     @allow_read = can? :read_feedback, @course
     @allow_headlines = can? :read_headlines, @course
 
-    if @is_teacher
+    if @course.has_teacher?(current_user)
+      logger.info 'Teacher'
       @topics = @instance.sorted_topics(params[:sort], :include_private => true)
       render :action => 'index_staff'
     else
+      logger.info 'Not teacher'
       @topics = @instance.sorted_topics(params[:sort])
       render :action => 'index'
     end
@@ -187,7 +187,11 @@ class TopicsController < ApplicationController
       @topic.add_thumb_down
     end
 
-    render :partial => 'messages/thumbs', :locals => {:message => @topic}
+    respond_to do |format|
+      #render :partial => 'messages/thumbs', :locals => {:message => @topic}
+      format.js { render 'thumbs', :locals => {:topic => @topic} }
+    end
+    
   end
 
   def moderate

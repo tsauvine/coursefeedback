@@ -43,6 +43,10 @@ div.logo h1 {
   border: none;
 }
 
+div.logo sub {
+  font-size: 40%;
+  color: gray;
+}
 
 /*******************
   Header

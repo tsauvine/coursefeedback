@@ -25,7 +25,7 @@
         <ul class="messageActions">
           <li><%= link_to t(:add_to_faq), new_faq_path(:course_code => @course.code, :instance_path => @instance.path, :topic_id => @topic.id) %></li>
           <% if @topic.visibility == 'public' %>
-            <li><%= link_to_remote t(:re_moderate), {:url => moderate_topic_url(@topic), :update => "topicModeration"} %></li>
+            <li><%= link_to t(:re_moderate), moderate_topic_url(@topic), :update => "topicModeration" %></li>
           <% end %>
           <li><%= link_to t(:edit_topic), edit_topic_url(@topic) %></li>
         </ul>
@@ -54,7 +54,7 @@
     </p>
 
     <!-- Message body -->
-    <p class="text"><%=h @topic.text %></p>
+    <pre class="text"><%= @topic.text %></pre>
 
     <!-- Moderation -->
     <% if can? :manage, @course %>

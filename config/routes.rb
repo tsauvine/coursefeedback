@@ -47,7 +47,10 @@ Rails.application.routes.draw do
   end
 
   resources :survey_answers
-#
+  
+  match '/login' => 'sessions#new', :as => :login
+  match '/logout' => 'sessions#destroy', :as => :logout
+
   match ':course/:instance/feedback', :to => 'topics#index', :constraints => { :course => URL_FORMAT_ROUTE, :instance => URL_FORMAT_ROUTE }, :as => 'topic_index'
 
   match ':course/:instance/new_topic', :to => 'topics#new', :constraints => { :course => URL_FORMAT_ROUTE, :instance => URL_FORMAT_ROUTE }, :as => 'new_topic'
@@ -57,9 +60,6 @@ Rails.application.routes.draw do
 
   match ':course/:instance' => 'topics#index', :as => 'instance_root', :constraints => { :course => URL_FORMAT_ROUTE, :instance => URL_FORMAT_ROUTE }
   match ':course_code', :to => 'courses#show', :constraints => { :course_code => URL_FORMAT_ROUTE }, :as => 'course_root'
-
-  match '/login' => 'sessions#new', :as => :login
-  match '/logout' => 'sessions#destroy', :as => :logout
 
   root :to => 'course_instances#index'
 

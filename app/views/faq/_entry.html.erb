@@ -3,7 +3,7 @@
     <% if @allow_edit %>
       <ul class="messageActions">
         <li><%= link_to t(:edit_entry_link), edit_faq_entry_path(entry, :instance_path => @instance.path) %></li>
-        <li><%= link_to t(:delete_entry_link), faq_entry_url(entry, :instance_path => @instance.path), :remote => true, :method => :delete, :confirm => t(:faq_confirm_delete)} %></li>
+        <li><%= link_to t(:delete_entry_link), faq_entry_url(entry, :instance_path => @instance.path), {:remote => true, :method => :delete, :confirm => t(:faq_confirm_delete)} %></li>
       </ul>
     <% end %>
   </div>
