@@ -48,7 +48,7 @@ div.topNavi {
 
 .topNavi ul.buttons a {
   background: url('../images/topButtonRight.png') right no-repeat;
-  
+
 }
 
 .topNavi ul.language a {
@@ -246,7 +246,7 @@ div.course-instance {
 /**********************
   Topics, messages
  **********************/
- 
+
 .topic h2 {
   margin: 0px;
   padding: 0px;
@@ -432,5 +432,10 @@ span.rejectButton:hover a {
 
 .message img.moderationStatus {
   float: left;
-  margin: 0em 1em .5em 0em; 
+  margin: 0em 1em .5em 0em;
+}
+
+.message .text{
+  white-space: pre-wrap;
+  font-family: monospace;
 }
