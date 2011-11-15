@@ -17,8 +17,8 @@ NETWORK_RANGE = nil  # e.g. "123.456.0.0/16"
 PATH_PREFIX = 'http://localhost:3000'
 
 # Regexp for validating url
-URL_FORMAT_ROUTE = /([a-zA-Z0-9\-+*_.,!$'()])+/
-URL_FORMAT_MODEL = /^([a-zA-Z0-9\-+*_.,!$'()])+$/
+URL_FORMAT_ROUTE = /(\w|[\-+*.,!$'])+/
+URL_FORMAT_MODEL = /^(\w|[\-+*.,!$'])+$/
 
 # Mail delivery method
 ActionMailer::Base.delivery_method = :sendmail
