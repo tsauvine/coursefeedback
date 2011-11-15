@@ -97,26 +97,23 @@ if flash[:notice] %>
         <li class="<%= instance.active ? 'active' : 'inactive' %> <%= @instance && @instance.id == instance.id ? 'selected' : '' %>" >
           <%= link_to instance.name, instance_root_path(instance.course.code, instance.path) %>
         </li>
-      <% end %>
-    </ul>
+        <ul>
+          <% if @instance == instance %>
+            <% if @course.faq_entries.length > 0 %>
+              <li><%= link_to 'FAQ', faq_path(@course.code, @instance.path) %></li>
+            <% end %>
 
-    <% if @instance %>
-      <ul class="naviButtons">
-        <% if @course.faq_entries.length > 0 %>
-          <li class="faqLink"><%= link_to 'FAQ', faq_path(@course.code, @instance.path) %></li>
-        <% end %>
-
-        <li class="feedbackLink"><%= link_to 'Feedback', topic_index_path(@instance.course.code, @instance.path) %></li>
-      </ul>
-    <% end %>
-
-    <ul class="naviButtons">
-      <% if can? :update, @course %>
-        <!--li class="settingsLink"><%= link_to 'Roles', edit_course_path(@course) %></li-->
-        <li class="button settingsLink"><%= link_to 'Course', edit_course_path(@course) %></li>
-        <% if @instance %>
-          <li class="settingsLink"><%= link_to 'Instance', edit_course_instance_path(@instance) %></li>
-        <% end %>
+            <li><%= link_to 'Feedback', topic_index_path(@instance.course.code, @instance.path) %></li>
+            <% if can? :update, @course %>
+              <li><%= link_to 'Instance settings', edit_course_instance_path(@instance) %></li>
+            <% end %>
+          
+            <% if can? :update, @course %>
+              <!--li class="settingsLink"><%= link_to 'Roles', edit_course_path(@course) %></li-->
+              <li><%= link_to 'Course settings', edit_course_path(@course) %></li>
+            <% end %>
+          <% end %>
+        </ul>
       <% end %>
     </ul>
   </div>

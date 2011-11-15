@@ -116,6 +116,10 @@ ul.breadcrumbs {
  padding: 0px;
 }
 
+.sideNavi > ul > ul {
+  margin-left: 1em;
+}
+
 
 .sideNavi .inactive a {
   color: gray;
