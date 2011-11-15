@@ -26,7 +26,7 @@ gem 'mongrel'
 gem 'jquery-rails'
 gem 'therubyracer'
 #gem 'devise'
-gem 'authlogic', :git => 'git://github.com/binarylogic/authlogic'
+gem 'authlogic', '3.1' #:git => 'git://github.com/binarylogic/authlogic'
 gem 'cancan'
 
 gem 'delayed_job', '~> 2.1.4' #, :git => 'git://github.com/collectiveidea/delayed_job.git',
