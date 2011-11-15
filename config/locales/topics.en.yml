@@ -50,6 +50,7 @@ en:
   topic_opened: "Thank you for your feedback!"
   send_with_pseudonym: "Send with pseudonym"
   send_with_real_name: "Send with real name"
+  pseudonym: "Nick"
   new_topic_hint: "Feedback is handled anonymously is you use a pseudonym."
 
   # New message

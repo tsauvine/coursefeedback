@@ -50,6 +50,7 @@ fi:
   topic_opened: "Kiitos palautteestasi!"
   send_with_pseudonym: "Lähetä nimimerkillä"
   send_with_real_name: "Lähetä omalla nimellä"
+  pseudonym: "Nimimerkki"
   new_topic_hint: "Jos lähetät palautetta nimimerkillä, palautteeseen ei tallenneta lähettäjän tietoja."
 
   # New message
