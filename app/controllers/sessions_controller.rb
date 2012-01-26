@@ -95,7 +95,6 @@ class SessionsController < ApplicationController
       user = User.new(shibinfo)
       user.login = shibinfo[:login]
       user.studentnumber = shibinfo[:studentnumber]
-      user.organization = shibinfo[:organization]
       if user.save
         logger.info("Created new user #{user.login} (#{user.studentnumber}) (shibboleth)")
       else
