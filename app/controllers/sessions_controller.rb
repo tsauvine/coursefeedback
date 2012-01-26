@@ -1,16 +1,16 @@
 class SessionsController < ApplicationController
   #before_filter :require_no_user, :only => [:new, :create]
   #before_filter :require_user, :only => :destroy
-  
+
   def new
     @session = Session.new
   end
-  
+
   def create
     @session = Session.new(params[:session])
-    
+
     session[:logout_url] = nil
-    
+
     if @session.save
       logger.info "Login successful"
       redirect_back_or_default root_url
@@ -19,48 +19,44 @@ class SessionsController < ApplicationController
       render :action => :new
     end
   end
-  
+
   def destroy
     logout_url = session[:logout_url]
-    
+
     session = current_session
     return unless session
-    
+
     session.destroy
     flash[:success] = "Logout successful"
-    
+
     if logout_url
       redirect_to(logout_url)
     else
       redirect_to(root_url)
     end
   end
-  
-  
+
+
   def shibboleth
     shibinfo = {
       :login => request.env['HTTP_EPPN'],
       :studentnumber => (request.env['HTTP_SCHACPERSONALUNIQUECODE'] || '').split(':').last,
-      :firstname => request.env['HTTP_DISPLAYNAME'],
-      :lastname => request.env['HTTP_SN'],
+      :name => "#{request.env['HTTP_DISPLAYNAME']} #{request.env['HTTP_SN']}",
       :email => request.env['HTTP_MAIL'],
-      :organization => request.env['HTTP_SCHACHOMEORGANIZATION']
     }
     logout_url = request.env['HTTP_LOGOUTURL']
 
 #     shibinfo = {
 #       :login => '00002', #'student1@hut.fi',
 #       :studentnumber => ('urn:mace:terena.org:schac:personalUniqueCode:fi:tkk.fi:student:00002' || '').split(':').last,
-#       :firstname => 'Teemu',
-#       :lastname => 'Teekkari',
+#       :name => 'Teemu Teekkari',
 #       :email => 'tteekkar@cs.hut.fi',
-#       :organization => 'hut.fi'
 #     }
 #     logout_url= 'http://www.aalto.fi/'
-    
+
     shibboleth_login(shibinfo, logout_url)
   end
-  
+
 
   def shibboleth_login(shibinfo, logout_url)
     if shibinfo[:login].blank? && shibinfo[:studentnumber].blank?
@@ -68,8 +64,15 @@ class SessionsController < ApplicationController
       render :action => 'new'
       return
     end
-    
+
     session[:logout_url] = logout_url
+
+    if shibinfo[:login].blank? && shibinfo[:studentnumber].blank?
+      flash[:error] = "Shibboleth login failed. No username or studentnumber was received."
+      logger.warn("Shibboleth login failed (missing attributes). #{shibinfo}")
+      render :action => 'new'
+      return
+    end
 
     # Find user by username (eppn)
     unless shibinfo[:login].blank?
@@ -87,7 +90,7 @@ class SessionsController < ApplicationController
     # Create new account or update an existing
     unless user
       logger.debug "User not found. Trying to create."
-      
+
       # New user
       user = User.new(shibinfo)
       user.login = shibinfo[:login]
@@ -103,23 +106,20 @@ class SessionsController < ApplicationController
       end
     else
       logger.debug "User found. Updating attributes."
-      
+
       # Update metadata
-      user.login = shibinfo[:login] if user.login.blank?
-      user.studentnumber = shibinfo[:studentnumber] if user.studentnumber.blank?
-      user.firstname = shibinfo[:firstname] if user.firstname.blank?
-      user.lastname = shibinfo[:lastname] if user.lastname.blank?
-      user.email = shibinfo[:email] if user.email.blank?
-      user.organization = shibinfo[:organization] if user.organization.blank?
-      
+      shibinfo.each do |key, value|
+        user.write_attribute(key, value) if user.read_attribute(key).blank?
+      end
+
       #user.save
     end
 
     # Create session
     user.reset_persistence_token  # Authlogic won't work if persistence token is empty
     if Session.create(user)
-      logger.info("Logged in #{user.login} (#{user.studentnumber}) (shibboleth) (Pers.token: #{user.persistence_token})")
-      
+      logger.info("Logged in #{user.login} (#{user.studentnumber}) (shibboleth)")
+
       redirect_back_or_default root_url
     else
       logger.warn("Failed to create session for #{user.login} (#{user.studentnumber}) (shibboleth)")

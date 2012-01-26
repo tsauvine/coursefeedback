@@ -209,6 +209,24 @@ div.course-instance {
   color: #800000;
 }
 
+div.sessions-login-method {
+  margin-bottom: 3em;
+}
+
+div.shibboleth-login .hint {
+  margin-bottom: 2em;
+}
+
+div.shibboleth-login a {
+  border: 2px solid black;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  padding: 10px;
+
+  font-size: larger;
+  text-decoration: none;
+}
+
 
 /*******************
   Flash messages
