@@ -46,27 +46,19 @@ class SessionsController < ApplicationController
     }
     logout_url = request.env['HTTP_LOGOUTURL']
 
-#     shibinfo = {
-#       :login => '00002', #'student1@hut.fi',
-#       :studentnumber => ('urn:mace:terena.org:schac:personalUniqueCode:fi:tkk.fi:student:00002' || '').split(':').last,
-#       :name => 'Teemu Teekkari',
-#       :email => 'tteekkar@cs.hut.fi',
-#     }
-#     logout_url= 'http://www.aalto.fi/'
+    shibinfo = {
+      :login => 'student1@hut.fi', #'student1@hut.fi',
+      :studentnumber => ('urn:mace:terena.org:schac:personalUniqueCode:fi:tkk.fi:student:20001' || '').split(':').last,
+      :name => 'Teemu Teekkari',
+      :email => 'tteekkar@cs.hut.fi',
+    }
+    logout_url= 'http://www.aalto.fi/'
 
     shibboleth_login(shibinfo, logout_url)
   end
 
 
   def shibboleth_login(shibinfo, logout_url)
-    if shibinfo[:login].blank? && shibinfo[:studentnumber].blank?
-      flash[:error] = "Shibboleth login failed (no studentnumber or username received)."
-      render :action => 'new'
-      return
-    end
-
-    session[:logout_url] = logout_url
-
     if shibinfo[:login].blank? && shibinfo[:studentnumber].blank?
       flash[:error] = "Shibboleth login failed. No username or studentnumber was received."
       logger.warn("Shibboleth login failed (missing attributes). #{shibinfo}")
@@ -82,10 +74,10 @@ class SessionsController < ApplicationController
 
     # If user was not found by login, search with student number. (User may have been created as part of a group, but has never actually logged in.)
     # Login must be null, otherwise the account may belong to someone else from another organization.
-    if !user && !shibinfo[:studentnumber].blank?
-      logger.debug "Trying to find by studentnumber #{shibinfo[:studentnumber]}"
-      user = User.find_by_studentnumber(shibinfo[:studentnumber], :conditions => "login IS NULL")
-    end
+    #if !user && !shibinfo[:studentnumber].blank?
+    #  logger.debug "Trying to find by studentnumber #{shibinfo[:studentnumber]}"
+    #  user = User.find_by_studentnumber(shibinfo[:studentnumber], :conditions => "login IS NULL")
+    #end
 
     # Create new account or update an existing
     unless user
@@ -95,7 +87,9 @@ class SessionsController < ApplicationController
       user = User.new(shibinfo)
       user.login = shibinfo[:login]
       user.studentnumber = shibinfo[:studentnumber]
-      if user.save
+      user.reset_persistence_token
+      user.reset_single_access_token
+      if user.save(:validate => false) # Don't validate because Authlogic would complain about missing password.
         logger.info("Created new user #{user.login} (#{user.studentnumber}) (shibboleth)")
       else
         logger.info("Failed to create new user (shibboleth) #{shibinfo} Errors: #{user.errors.full_messages.join('. ')}")
@@ -111,12 +105,14 @@ class SessionsController < ApplicationController
         user.write_attribute(key, value) if user.read_attribute(key).blank?
       end
 
+      user.reset_persistence_token if user.persistence_token.blank?  # Authlogic won't work if persistence token is empty
+      user.reset_single_access_token if user.single_access_token.blank?
       #user.save
     end
 
     # Create session
-    user.reset_persistence_token  # Authlogic won't work if persistence token is empty
     if Session.create(user)
+      session[:logout_url] = logout_url
       logger.info("Logged in #{user.login} (#{user.studentnumber}) (shibboleth)")
 
       redirect_back_or_default root_url

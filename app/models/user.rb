@@ -10,8 +10,7 @@ class User < ActiveRecord::Base
   end
 
   validates_uniqueness_of :login, :allow_nil => true
-
-  attr_accessible :login, :email, :name, :locale, :password, :password_confirmation, :remember_me, :notify_by_email
+  attr_accessible :email, :name, :locale, :password, :password_confirmation, :remember_me, :notify_by_email
 
   #has_many :courses_as_teacher, :through => :courseroles, :source => :course, :conditions => {:role => 'teacher'}, :primary_key => 'login', :foreign_key => 'user_login'
 

@@ -13,22 +13,22 @@
 # ip::             Feedback can be read from a specific IP range without authentication. The IP range is defined in config/initializers/settings.rb
 # authenticated::  Authenticated users can read feedback.
 # enrolled::       Only enrolled students can read feedback. NOT IMPLEMENTED
-# staff::          Only teacher of the course can read feedback. In future, there might be a teaching assistant role. 
+# staff::          Only teacher of the course can read feedback. In future, there might be a teaching assistant role.
 
 class Course < ActiveRecord::Base
   has_many :course_instances, :order => 'created_at DESC', :dependent => :destroy
   has_many :faq_entries, :order => 'position DESC', :dependent => :destroy
-  
+
   has_many :courseroles
-  
+
   #has_many :teacher_roles, :class_name => 'Courserole', :conditions => {:role => 'teacher'} #, :primary_key => 'user_login'
-  has_many :teachers, :class_name => 'User', :finder_sql => "SELECT users.* FROM users INNER JOIN courseroles ON users.login = courseroles.user_login WHERE courseroles.course_id = #{id} AND courseroles.role = 'teacher' LIMIT 1"
+  has_many :teachers, :class_name => 'User', :finder_sql => "SELECT users.* FROM users INNER JOIN courseroles ON users.login = courseroles.user_login WHERE courseroles.course_id = #{self.id} AND courseroles.role = 'teacher' LIMIT 1"
 
   validates_presence_of :code
   validates_uniqueness_of :code
   validates_format_of :code, :with => URL_FORMAT_MODEL
   validates_presence_of :name
-  
+
   def has_teacher?(user)
     user && Courserole.exists?(:user_login => user.login, :course_id => self.id, :role => 'teacher')
   end
