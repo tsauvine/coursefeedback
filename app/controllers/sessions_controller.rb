@@ -98,8 +98,8 @@ class SessionsController < ApplicationController
       if user.save
         logger.info("Created new user #{user.login} (#{user.studentnumber}) (shibboleth)")
       else
-        logger.info("Failed to create new user (shibboleth) #{shibinfo} Errors: #{user.errors}")
-        flash[:error] = 'Failed to create new user'
+        logger.info("Failed to create new user (shibboleth) #{shibinfo} Errors: #{user.errors.full_messages.join('. ')}")
+        flash[:error] = "Failed to create new user. #{user.errors.full_messages.join('. ')}"
         render :action => 'new'
         return
       end
