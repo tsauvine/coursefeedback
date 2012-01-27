@@ -46,13 +46,13 @@ class SessionsController < ApplicationController
     }
     logout_url = request.env['HTTP_LOGOUTURL']
 
-    shibinfo = {
-      :login => 'student1@hut.fi', #'student1@hut.fi',
-      :studentnumber => ('urn:mace:terena.org:schac:personalUniqueCode:fi:tkk.fi:student:20001' || '').split(':').last,
-      :name => 'Teemu Teekkari',
-      :email => 'tteekkar@cs.hut.fi',
-    }
-    logout_url= 'http://www.aalto.fi/'
+#     shibinfo = {
+#       :login => 'student1@hut.fi', #'student1@hut.fi',
+#       :studentnumber => ('urn:mace:terena.org:schac:personalUniqueCode:fi:tkk.fi:student:20001' || '').split(':').last,
+#       :name => 'Teemu Teekkari',
+#       :email => 'tteekkar@cs.hut.fi',
+#     }
+#     logout_url= 'http://www.aalto.fi/'
 
     shibboleth_login(shibinfo, logout_url)
   end
