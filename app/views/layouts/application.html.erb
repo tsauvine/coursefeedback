@@ -66,7 +66,7 @@
   <% if current_user %>
     <%= link_to current_user.name, edit_user_path(current_user) %>
   <% else %>
-    <%=t :not_logged_in %>
+    <%= link_to t(:login_button), login_url(:protocol => 'https') %>
   <% end %>
 </div>
 
@@ -107,7 +107,7 @@ if flash[:notice] %>
             <% if can? :update, @course %>
               <li><%= link_to 'Instance settings', edit_course_instance_path(@instance) %></li>
             <% end %>
-          
+
             <% if can? :update, @course %>
               <!--li class="settingsLink"><%= link_to 'Roles', edit_course_path(@course) %></li-->
               <li><%= link_to 'Course settings', edit_course_path(@course) %></li>
