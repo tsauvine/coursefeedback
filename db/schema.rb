@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111111131237) do
+ActiveRecord::Schema.define(:version => 20120216193404) do
 
   create_table "course_instances", :force => true do |t|
     t.integer  "course_id",                    :null => false
@@ -82,6 +82,9 @@ ActiveRecord::Schema.define(:version => 20111111131237) do
     t.integer  "thumbs_down",       :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "edited_at"
+    t.string   "editor_login"
+    t.text     "edit_reason"
   end
 
   create_table "sessions", :force => true do |t|

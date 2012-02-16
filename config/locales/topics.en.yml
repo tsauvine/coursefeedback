@@ -64,3 +64,5 @@ en:
   moderateDelete: "Delete"
   edit_topic_heading: "Edit topic"
   topic_updated: "Topic updated"
+  message_edit_reason: "Reason for editing (shown to users)"
+  edited_by: "Edited by"

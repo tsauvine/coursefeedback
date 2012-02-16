@@ -271,11 +271,15 @@ div.shibboleth-login a {
   /*font-size: 120%;*/
 }
 
-.topic .sender {
+.topic .sender, .topic .editor {
   color: #808080;
   font-size: smaller;
   margin: 0px;
   padding: 0px;
+}
+
+.topic .editor {
+  margin-top: 1em;
 }
 
 .topic .text {

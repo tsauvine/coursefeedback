@@ -1,11 +1,20 @@
 class MessagesController < ApplicationController
 
+  before_filter :load_message, :only => [:edit, :update, :moderate]
+
+  def load_message
+    @message = Message.find(params[:id])
+    @topic = @message.topic
+    @instance = @topic.course_instance
+    @course = @instance.course
+  end
+
   # GET /messages/new
   # GET /messages/new.xml
   def new
     @message = Message.new
     @message.topic = Topic.find(params[:topic_id])
-    
+
     @message.nick = logged_in? ? current_user.name : 'Anonymous'
 
     respond_to do |format|
@@ -15,9 +24,7 @@ class MessagesController < ApplicationController
 
   # GET /messages/1/edit
   def edit
-    authorize_admin or return
-  
-    @message = Message.find(params[:id])
+    authorize! :manage, @course
   end
 
   # POST /messages
@@ -28,7 +35,7 @@ class MessagesController < ApplicationController
     @instance = @topic.course_instance
     @course = @instance.course
     @is_teacher = @course.has_teacher?(current_user)
-  
+
     # Authorization
     authorize! :write_feedback, @course
 
@@ -37,11 +44,11 @@ class MessagesController < ApplicationController
       redirect_to @topic
       return
     end
-  
+
 
     # Sender
     @message.nick = 'Anonymous' if @topic.nick.blank?
-    
+
     if logged_in?
       @message.anonymous = (@message.nick != current_user.name)
       @message.user = current_user unless @message.anonymous
@@ -51,16 +58,16 @@ class MessagesController < ApplicationController
         @topic.action_status = 'answered'
       end
     end
-    
+
     @message.moderation_status = (@course.moderate && !@is_teacher) ? 'pending' : 'published'
-    
+
     # Update topic
     @topic.commented_at = Time.now
     @topic.save
-    
+
     # Email notification
     @instance.notify_subscribers_later
-    
+
     # Save message
     if @message.save
       flash[:success] = t(:added_to_queue) if @message.moderation_status == 'pending'
@@ -74,14 +81,14 @@ class MessagesController < ApplicationController
   # PUT /messages/1
   # PUT /messages/1.xml
   def update
-    authorize_admin or return
+    authorize! :manage, @course
 
-    @message = Message.find(params[:id])
+    @message.editor_login = current_user.login
+    @message.edited_at = Time.now
 
     respond_to do |format|
       if @message.update_attributes(params[:message])
-        flash[:success] = 'Message was successfully updated.'
-        format.html { redirect_to(@message) }
+        format.html { redirect_to(@topic) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -94,7 +101,7 @@ class MessagesController < ApplicationController
   # DELETE /messages/1.xml
   def destroy
     authorize_admin or return
-  
+
     @message = Message.find(params[:id])
     @message.destroy
 
@@ -103,15 +110,10 @@ class MessagesController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def moderate
-    @message = Message.find(params[:id])
-    @instance = @message.topic.course_instance
-    @course = @instance.course
-    @is_teacher = @course.has_teacher?(current_user)
-    
-    authorize_teacher or return
-  
+    authorize! :manage, @course
+
     case params[:status]
       when 'accept':
         @message.moderation_status = 'published'
@@ -123,14 +125,13 @@ class MessagesController < ApplicationController
         render :partial => 'moderation', :locals => {:message => @message}
         return
     end
-    
+
     @message.save
-    logger.info "Saving message"
-    
+
     # Update page
     if request.xhr?
       render :update do |page|
-        if @message.moderation_status == 'deleted' 
+        if @message.moderation_status == 'deleted'
           page.remove "message#{@message.id}"
         else
           page.replace "message#{@message.id}", :partial => 'message', :object => @message
@@ -140,27 +141,25 @@ class MessagesController < ApplicationController
       render :action => 'show'
     end
   end
-  
+
   def vote
     @message = Message.find(params[:id])
     @course = @message.topic.course_instance.course
-    
+
     # Authorization
     authorize! :write_feedback, @course
     return access_denied unless @message.moderation_status == 'published'
-    
+
     if params[:amount].to_i > 0
       @message.add_thumb_up
     else
       @message.add_thumb_down
     end
-    
+
     respond_to do |format|
       #format.html { render :partial => 'thumbs', :locals => {:message => @message} }
       format.js { render :thumbs, :locals => {:message => @message} }
     end
-    
-    
   end
-  
+
 end

@@ -16,9 +16,10 @@
     <% if can? :manage, @course %>
       <ul class="messageActions">
         <li><%= link_to t(:add_to_faq), new_faq_path(:course_code => @course.code, :instance_path => @instance.path, :message_id => message.id) %></li>
-        <li><%= link_to t(:re_moderate), moderate_message_url(message), :remote => true
+        <li><%= link_to t(:re_moderate), moderate_message_path(message), :remote => true
         #:update => "messageModeration#{message.id}"}
-        %></li>
+        %>
+        <li><%= link_to t(:Edit), edit_message_path(message) %></li>
       </ul>
     <% end %>
   </div>
@@ -37,10 +38,16 @@
 
     <!-- Message body -->
     <p class="text"><% if message.moderation_status == 'censored' %>
-        <%= image_tag('censored.png', :alt => 'Censored', :class => 'moderationStatus', :id => "moderationStatus#{message.id}") %>
-      <% end %><%= message.text
-      #).gsub(/\n/, '<br />')
-      %></p>
+      <%= image_tag('censored.png', :alt => 'Censored', :class => 'moderationStatus', :id => "moderationStatus#{message.id}") %>
+    <% end %><%= message.text %></p>
+
+    <!-- Edits -->
+    <% if message.edited_at %>
+      <p class="editor">
+        <%=t :edited_by %> <%= message.editor.name %> &mdash; <%=l message.edited_at, :format => :long %><br />
+        <%= message.edit_reason %>
+      </p>
+    <% end %>
 
     <!-- Moderation -->
     <% if can? :manage, @course %>

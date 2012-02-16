@@ -64,3 +64,5 @@ fi:
   moderateDelete: "Poista"
   edit_topic_heading: "Muokkaa viestiketjua"
   topic_updated: "Viestiketju päivitetty"
+  message_edit_reason: "Muokkauksen syy (näkyy käyttäjille)"
+  edited_by: "Muokannut"
