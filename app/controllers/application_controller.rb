@@ -28,14 +28,13 @@ class ApplicationController < ActionController::Base
       session[:locale] = params[:locale]
 
       # Save the locale in user's preferences
-      if current_user
-        current_user.locale = params[:locale]
-        current_user.save
-      elsif current_user && !current_user.locale.blank?  # Get locale from user's preferences
-        I18n.locale = current_user.locale
-      elsif !session[:locale].blank?  # Get locale from session
-        I18n.locale = session[:locale]
-      end
+#       if current_user
+#         current_user.locale = params[:locale]
+#         current_user.save
+#       elsif current_user && !current_user.locale.blank?  # Get locale from user's preferences
+#         I18n.locale = current_user.locale
+    elsif !session[:locale].blank?  # Get locale from session
+      I18n.locale = session[:locale]
     end
   end
 
