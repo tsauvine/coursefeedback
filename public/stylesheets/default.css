@@ -288,14 +288,19 @@ div.shibboleth-login a {
 }
 
 .topic .message {
-  margin: 0em 0em 0em 0em;
+  margin: 0px 0px 0px 0px;
   padding: .5em .5em;
   border-bottom: 1px solid #e0e0e0;
 }
 
+/*.topic .message + .topic .message {
+  margin-top: 4px;
+}*/
+
 .topic .staffMessage {
   background: #e0e0ff;
-  border-bottom: 1px solid #c0c0c0;
+  border-bottom: none; /*1px solid #c0c0c0;*/
+  margin-bottom: 4px;
 }
 
 .topic .messageEditor {
