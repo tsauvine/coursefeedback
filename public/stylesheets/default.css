@@ -293,10 +293,6 @@ div.shibboleth-login a {
   border-bottom: 1px solid #e0e0e0;
 }
 
-/*.topic .message + .topic .message {
-  margin-top: 4px;
-}*/
-
 .topic .staffMessage {
   background: #e0e0ff;
   border-bottom: none; /*1px solid #c0c0c0;*/
