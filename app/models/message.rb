@@ -14,18 +14,22 @@
 class Message < ActiveRecord::Base
   belongs_to :topic
   belongs_to :user, :primary_key => 'login', :foreign_key => 'user_login'
-  
+
+  has_one :editor, :class_name => 'User', :primary_key => 'editor_login', :foreign_key => 'login'
+
   # Increases the thums_up counter by one.
   def add_thumb_up
     Message.increment_counter(:thumbs_up, id)
     #User.increment_counter(:thumbs_up, user_id) if user_id
     self.thumbs_up += 1
   end
-  
+
   # Increases the thums_down counter by one.
   def add_thumb_down
     Message.increment_counter(:thumbs_down, id)
     #User.increment_counter(:thumbs_down, user_id) if user_id
     self.thumbs_down += 1
   end
+
+
 end

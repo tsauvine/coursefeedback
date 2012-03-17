@@ -1,12 +1,25 @@
-<h1>Editing message</h1>
+<h1><%= @topic.caption %></h1>
 
-<%= form_for(@message) do |f| %>
-  <%= f.error_messages %>
+<div class="message">
+  <%= form_for @message do |f| %>
+    <%= f.hidden_field :topic_id %>
 
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
-<% end %>
+    <p class="sender">
+      <%=h @message.nick %>
+      &mdash; <%=l @message.created_at, :format => :long %>
+    </p>
 
-<%= link_to 'Show', @message %> |
-<%= link_to 'Back', messages_path %>
+    <%= f.text_area :text, { :rows => 5, :cols => 80 } %><br />
+
+    <p>
+    <%= f.label :edit_reason, t(:message_edit_reason) %><br />
+    <%= f.text_field :edit_reason, :size => 60 %><br />
+    </p>
+
+
+    <p><%= f.submit t(:Save) %></p>
+
+  <% end %>
+</div>
+
+<%= link_to t(:back), @topic %>

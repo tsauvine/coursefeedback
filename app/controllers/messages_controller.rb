@@ -1,5 +1,14 @@
 class MessagesController < ApplicationController
 
+  before_filter :load_message, :only => [:edit, :update, :moderate]
+
+  def load_message
+    @message = Message.find(params[:id])
+    @topic = @message.topic
+    @instance = @topic.course_instance
+    @course = @instance.course
+  end
+
   # GET /messages/new
   # GET /messages/new.xml
   def new
@@ -15,9 +24,7 @@ class MessagesController < ApplicationController
 
   # GET /messages/1/edit
   def edit
-    authorize_admin or return
-
-    @message = Message.find(params[:id])
+    authorize! :manage, @course
   end
 
   # POST /messages
@@ -74,14 +81,14 @@ class MessagesController < ApplicationController
   # PUT /messages/1
   # PUT /messages/1.xml
   def update
-    authorize_admin or return
+    authorize! :manage, @course
 
-    @message = Message.find(params[:id])
+    @message.editor_login = current_user.login
+    @message.edited_at = Time.now
 
     respond_to do |format|
       if @message.update_attributes(params[:message])
-        flash[:success] = 'Message was successfully updated.'
-        format.html { redirect_to(@message) }
+        format.html { redirect_to(@topic) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -105,12 +112,7 @@ class MessagesController < ApplicationController
   end
 
   def moderate
-    @message = Message.find(params[:id])
-    @instance = @message.topic.course_instance
-    @course = @instance.course
-    @is_teacher = @course.has_teacher?(current_user)
-
-    authorize_teacher or return
+    authorize! :manage, @course
 
     case params[:status]
       when 'accept'
@@ -125,7 +127,6 @@ class MessagesController < ApplicationController
     end
 
     @message.save
-    logger.info "Saving message"
 
     # Update page
     if request.xhr?
@@ -159,8 +160,6 @@ class MessagesController < ApplicationController
       #format.html { render :partial => 'thumbs', :locals => {:message => @message} }
       format.js { render :thumbs, :locals => {:message => @message} }
     end
-
-
   end
 
 end
