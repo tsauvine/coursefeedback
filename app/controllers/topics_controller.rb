@@ -191,7 +191,7 @@ class TopicsController < ApplicationController
       #render :partial => 'messages/thumbs', :locals => {:message => @topic}
       format.js { render 'thumbs', :locals => {:topic => @topic} }
     end
-    
+
   end
 
   def moderate
@@ -203,11 +203,11 @@ class TopicsController < ApplicationController
     authorize! :update, @instance
 
     case params[:status]
-      when 'accept':
+      when 'accept'
         new_status = 'published'
-      when 'reject':
+      when 'reject'
         new_status = 'censored'
-      when 'delete':
+      when 'delete'
         new_status = 'deleted'
       else
         render :partial => 'moderation'

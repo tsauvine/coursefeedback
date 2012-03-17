@@ -10,7 +10,7 @@ gem 'pg'
 
 # Use unicorn as the web server
 # gem 'unicorn'
-gem 'mongrel'
+#gem 'mongrel'
 
 # Deploy with Capistrano
 # gem 'capistrano'

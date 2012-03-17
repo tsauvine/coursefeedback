@@ -89,7 +89,7 @@ class Ability
     when 'public'
       return true
     when 'ip'
-      return !!user || trusted_ip_range?()
+      return !!user || trusted_ip_range?()
     when 'authenticated'
       !!user
     when 'enrolled'
