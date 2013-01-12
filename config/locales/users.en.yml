@@ -14,14 +14,3 @@ en:
   user_notify: "Notify me by e-mail about new messages"
   user_updated: "Settings saved"
   
-  activerecord:
-    errors:
-      models:
-        user:
-          attributes:
-            code:
-              invalid: "may contain letters, numbers, following special characters: \-+*_.,!$'(), no whitespace"
-              blank: "code missing"
-              taken: "code is already in use"
-            name:
-              blank: "name missing"

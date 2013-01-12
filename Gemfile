@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1'
+gem 'rails', '3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -10,7 +10,6 @@ gem 'pg'
 
 # Use unicorn as the web server
 # gem 'unicorn'
-gem 'mongrel'
 
 # Deploy with Capistrano
 # gem 'capistrano'
@@ -24,18 +23,14 @@ gem 'mongrel'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 gem 'jquery-rails'
-gem 'therubyracer'
 #gem 'devise'
-gem 'authlogic', '3.1' #:git => 'git://github.com/binarylogic/authlogic'
-gem 'cancan'
-
-gem 'delayed_job', '~> 2.1.4' #, :git => 'git://github.com/collectiveidea/delayed_job.git',
-gem 'acts_as_list'
 
 group :assets do
-  gem 'sass-rails', "~> 3.1"
-  gem 'coffee-rails', "~> 3.1"
-  gem 'uglifier'
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
+  gem 'uglifier',     '>= 1.0.3'
+  gem 'therubyracer'
+  gem 'jquery-ui-rails'
 end
 
 group :test do
@@ -50,3 +45,9 @@ end
 # group :development, :test do
 #   gem 'webrat'
 # end
+
+gem 'acts_as_list'
+gem 'authlogic'
+gem 'cancan'
+gem 'delayed_job_active_record', :git => 'git://github.com/collectiveidea/delayed_job_active_record.git'
+gem 'daemons'

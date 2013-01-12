@@ -3,6 +3,7 @@
   <div class="messageButtons">
     <% if message.moderation_status == 'published' %>
 
+      <!-- Voting -->
       <% if @allow_vote %>
         <div class="thumbs" id="messageThumbs<%= message.id %>">
           <%= link_to image_tag('thumb_up.png', :alt => t(:thumb_up_alttext)) + ' ' + message.thumbs_up.to_s, vote_message_url(message, :amount => '1'), {:remote => true, :class => 'thumbsUp', :title => t(:thumb_up_tooltip)} %>

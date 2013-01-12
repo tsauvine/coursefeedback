@@ -19,7 +19,7 @@ en:
   instance_created: "Course instance created"
   instance_updated: "Course instance saved"
   
-  Settings: Settings
+  Settings: "Settings"
   
   course_not_found: "Course could not be found"
   instance_not_found: "Course instance could not be found"
@@ -30,8 +30,9 @@ en:
         course_instance:
           attributes:
             code:
-              invalid: "may contain letters, numbers, following special characters: \-+*_.,!$'(), no whitespace"
+              invalid: "may contain letters, numbers, following special characters: no whitespace"
               blank: "path missing"
               taken: "path is already in use"
             name:
               blank: "name missing"
+  # \-+*_.,!$'(),

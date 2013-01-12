@@ -48,7 +48,7 @@ fi:
         course_instance:
           attributes:
             path:
-              invalid: "saa sisältää kirjaimia, numeroita, seuraavia merkkejä: \-+*_.,!$'(), ei välilyöntejä"
+              invalid: "saa sisältää kirjaimia, numeroita, seuraavia merkkejä: ei välilyöntejä"
               blank: "polku puuttuu"
               taken: "polku on jo käytössä"
             name:
@@ -56,7 +56,7 @@ fi:
         course:
           attributes:
             code:
-              invalid: "saa sisältää kirjaimia, numeroita, seuraavia merkkejä: \-+*_.,!$'(), ei välilyöntejä"
+              invalid: "saa sisältää kirjaimia, numeroita, seuraavia merkkejä: ei välilyöntejä"
               blank: "koodi puuttuu"
               taken: "koodi on jo käytössä"
             name:
@@ -83,7 +83,7 @@ fi:
     month_names: [~, Tammikuu, Helmikuu, Maaliskuu, Huhtikuu, Toukokuu, Kes&auml;kuu, Hein&auml;kuu, Elokuu, Syyskuu, Lokakuu, Marraskuu, Joulukuu]
     abbr_month_names: [~, tammi, helmi, maalis, huhti, touko, kes&auml;, hein&auml;, elo, syys, loka, marras, joulu]
     # Used in date_select and datime_select.
-    order: [ :year, :month, :day ]
+    order: [ year, month, day ]
 
   time:
     formats:

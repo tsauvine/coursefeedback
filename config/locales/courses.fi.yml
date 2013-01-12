@@ -37,8 +37,9 @@ fi:
         course:
           attributes:
             code:
-              invalid: "saa sisältää kirjaimia, numeroita, seuraavia merkkejä: \-+*_.,!$'(), ei välilyöntejä"
+              invalid: "saa sisältää kirjaimia, numeroita, seuraavia merkkejä: ei välilyöntejä"
               blank: "koodi puuttuu"
               taken: "koodi on jo käytössä"
             name:
               blank: "nimi puuttuu"
+  # \-+*_.,!$'(),

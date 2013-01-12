@@ -30,8 +30,9 @@ fi:
         course_instance:
           attributes:
             path:
-              invalid: "saa sisältää kirjaimia, numeroita, seuraavia merkkejä: \-+*_.,!$'(), ei välilyöntejä"
+              invalid: "saa sisältää kirjaimia, numeroita, seuraavia merkkejä: ei välilyöntejä"
               blank: "polku puuttuu"
               taken: "polku on jo käytössä"
             name:
               blank: "nimi puuttuu"
+  # \-+*_.,!$'(),

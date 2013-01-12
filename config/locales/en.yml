@@ -44,7 +44,7 @@ en:
         course_instance:
           attributes:
             code:
-              invalid: "may contain letters, numbers, following special characters: \-+*_.,!$'(), no whitespace"
+              invalid: "may contain letters, numbers, following special characters: no whitespace"
               blank: "path missing"
               taken: "path is already in use"
             name:
@@ -52,7 +52,7 @@ en:
         course:
           attributes:
             code:
-              invalid: "may contain letters, numbers, following special characters: \-+*_.,!$'(), no whitespace"
+              invalid: "may contain letters, numbers, following special characters: no whitespace"
               blank: "code missing"
               taken: "code is already in use"
             name:
@@ -61,7 +61,7 @@ en:
           attributes:
             caption:
               blank: "caption missing"
-
+  # \-+*_.,!$'(),
 
 
   ##############
