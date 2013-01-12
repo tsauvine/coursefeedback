@@ -1,5 +1,0 @@
-class StringQuestion < SurveyQuestion
-  
-  
-  
-end

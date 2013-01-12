@@ -1,3 +1,0 @@
-class TextQuestion < SurveyQuestion
-  
-end

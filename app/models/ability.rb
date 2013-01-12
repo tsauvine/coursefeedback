@@ -54,19 +54,19 @@ class Ability
 
     if user
       can [:create], Course do |course|
-        Courserole.exists?(:user_login => user.login, :role => 'teacher')
+        Courserole.exists?(:user_id => user.id, :role => 'teacher')
       end
 
       can [:update, :read_headlines, :read_feedback, :write_feedback, :manage], Course do |course|
-        Courserole.exists?(:user_login => user.login, :course_id => course.id, :role => 'teacher')
+        Courserole.exists?(:user_id => user.id, :course_id => course.id, :role => 'teacher')
       end
 
       can [:create, :update, :delete, :manage], CourseInstance do |course_instance|
-        Courserole.exists?(:user_login => user.login, :course_id => course_instance.course.id, :role => 'teacher')
+        Courserole.exists?(:user_id => user.id, :course_id => course_instance.course.id, :role => 'teacher')
       end
 
       can [:create, :read, :update], Topic do |topic|
-        Courserole.exists?(:user_login => user.login, :course_id => topic.course_instance.course.id, :role => 'teacher')
+        Courserole.exists?(:user_id => user.id, :course_id => topic.course_instance.course.id, :role => 'teacher')
       end
 
       # Admin
@@ -81,7 +81,7 @@ class Ability
 
 
   def is_teacher?(user, course)
-    Courserole.exists?(:user_login => user.login, :course_id => course.id, :role => 'teacher')
+    Courserole.exists?(:user_id => user.id, :course_id => course.id, :role => 'teacher')
   end
 
   def course_headlines_permission?(course, user)
@@ -89,13 +89,13 @@ class Ability
     when 'public'
       return true
     when 'ip'
-      return !!user || trusted_ip_range?()
+      return !!user || trusted_ip_range?()
     when 'authenticated'
       !!user
     when 'enrolled'
       return false
     when 'staff'
-      !!user && Courserole.exists?(:user_login => user.login, :course_id => course.id, :role => 'teacher')
+      !!user && Courserole.exists?(:user_id => user.id, :course_id => course.id, :role => 'teacher')
     else
       false
     end
@@ -112,7 +112,7 @@ class Ability
     when 'enrolled'
       return false
     when 'staff'
-      !!user && Courserole.exists?(:user_login => user.login, :course_id => course.id, :role => 'teacher')
+      !!user && Courserole.exists?(:user_id => user.id, :course_id => course.id, :role => 'teacher')
     else
       false
     end
@@ -129,7 +129,7 @@ class Ability
     when 'enrolled'
       return false
     when 'staff'
-      !!user && Courserole.exists?(:user_login => user.login, :course_id => course.id, :role => 'teacher')
+      !!user && Courserole.exists?(:user_id => user.id, :course_id => course.id, :role => 'teacher')
     else
       false
     end

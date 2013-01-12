@@ -83,7 +83,7 @@ class MessagesController < ApplicationController
   def update
     authorize! :manage, @course
 
-    @message.editor_login = current_user.login
+    @message.editor = current_user
     @message.edited_at = Time.now
 
     respond_to do |format|

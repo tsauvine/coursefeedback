@@ -1,7 +1,7 @@
 # Message represents a comment to a topic.
 
 # Attributes:
-# user_login::        login name of sender
+# user_id::           sender
 # nick::              pseudonym of the sender
 # anonymous::         true indicates that the username must not be published even if it's recorded
 # staff::             true indicates that this comment is from course staff
@@ -13,9 +13,9 @@
 
 class Message < ActiveRecord::Base
   belongs_to :topic
-  belongs_to :user, :primary_key => 'login', :foreign_key => 'user_login'
+  belongs_to :user
 
-  has_one :editor, :class_name => 'User', :primary_key => 'editor_login', :foreign_key => 'login'
+  has_one :editor, :class_name => 'User'
 
   # Increases the thums_up counter by one.
   def add_thumb_up

@@ -20,7 +20,9 @@ class Course < ActiveRecord::Base
   has_many :faq_entries, :order => 'position DESC', :dependent => :destroy
 
   has_many :courseroles
-
+  
+  attr_accessible :code, :name, :feedback_read_permission, :headlines_read_permission, :feedback_write_permission, :moderate
+    
   #has_many :teacher_roles, :class_name => 'Courserole', :conditions => {:role => 'teacher'} #, :primary_key => 'user_login'
   # has_many :teachers, :class_name => 'User', :finder_sql => "SELECT users.* FROM users INNER JOIN courseroles ON users.login = courseroles.user_login WHERE courseroles.course_id = #{self.id} AND courseroles.role = 'teacher' LIMIT 1"
 
@@ -30,6 +32,6 @@ class Course < ActiveRecord::Base
   validates_presence_of :name
 
   def has_teacher?(user)
-    user && Courserole.exists?(:user_login => user.login, :course_id => self.id, :role => 'teacher')
+    user && Courserole.exists?(:user_id => user.id, :course_id => self.id, :role => 'teacher')
   end
 end

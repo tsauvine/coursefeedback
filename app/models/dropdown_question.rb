@@ -1,4 +1,0 @@
-class DropdownQuestion < MultiQuestion
-  
-  
-end

@@ -10,13 +10,15 @@
 class CourseInstance < ActiveRecord::Base
   belongs_to :course
   has_many :topics, :order => 'created_at DESC', :dependent => :destroy
-  has_many :surveys, :order => 'closes_at ASC', :dependent => :destroy
+  #has_many :surveys, :order => 'closes_at ASC', :dependent => :destroy
   
   validates_presence_of :path
   validates_uniqueness_of :path, :scope => :course_id
   validates_format_of :path, :with => URL_FORMAT_MODEL
   validates_presence_of :name
 
+  attr_accessible :course, :name, :path, :position, :active
+  
   # Returns topics sorted by an attribute.
   # Parameters: 
   # order:: one of: 'date', 'commented', 'answered', 'thumbs_up', 'thumbs_down'

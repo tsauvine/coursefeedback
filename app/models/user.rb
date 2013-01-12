@@ -1,8 +1,4 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable, :lockable and :timeoutable
-  #devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
-
   acts_as_authentic do |c|
     c.login_field = :studentnumber
     #c.validate_password_field = false
@@ -23,11 +19,6 @@ class User < ActiveRecord::Base
 #       return self.login
 #     end
 #   end
-
-  # Returns true if all the relevant information about the user (name, email) is defined
-  def information_complete?
-    return !(name.blank? || email.blank?)
-  end
 
   def admin?
     self.admin

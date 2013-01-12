@@ -43,5 +43,5 @@ end
 # Create courses
 puts('Creating courses')
 course = Course.create(:code => 'X-0.101', :name => 'Basics')
-CourseInstance.create(:name => 'Fall 2010', :path => 'f2010', :active => true, :course => course)
-CourseInstance.create(:name => 'Spring 2011', :path => 's2011', :active => false, :course => course)
+CourseInstance.create(:name => 'Fall 2013', :path => 'f2013', :active => true, :course => course)
+CourseInstance.create(:name => 'Spring 2013', :path => 's2013', :active => false, :course => course)

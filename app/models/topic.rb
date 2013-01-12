@@ -19,7 +19,7 @@
 
 class Topic < ActiveRecord::Base
   belongs_to :course_instance
-  belongs_to :user, :primary_key => 'login', :foreign_key => 'user_login'
+  belongs_to :user
   
   has_many :messages, :order => 'created_at ASC', :conditions => "moderation_status != 'deleted'", :dependent => :destroy
 

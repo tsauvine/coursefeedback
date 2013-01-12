@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 20120216193404) do
   end
 
   create_table "courseroles", :force => true do |t|
-    t.string  "user_login", :null => false
+    t.integer "user_id", :null => false
     t.integer "course_id"
     t.string  "role",       :null => false
   end
@@ -65,14 +65,14 @@ ActiveRecord::Schema.define(:version => 20120216193404) do
   end
 
   create_table "instanceroles", :force => true do |t|
-    t.string  "user_login",         :null => false
+    t.integer  "user_id",           :null => false
     t.integer "course_instance_id"
     t.string  "role",               :null => false
   end
 
   create_table "messages", :force => true do |t|
     t.integer  "topic_id"
-    t.string   "user_login"
+    t.integer  "user_id"
     t.string   "nick"
     t.boolean  "anonymous",         :default => true
     t.boolean  "staff",             :default => false
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(:version => 20120216193404) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "edited_at"
-    t.string   "editor_login"
+    t.integer  "editor_id"
     t.text     "edit_reason"
   end
 
@@ -97,46 +97,9 @@ ActiveRecord::Schema.define(:version => 20120216193404) do
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
-  create_table "survey_answer_sets", :force => true do |t|
-    t.integer  "survey_id",  :null => false
-    t.integer  "pseudonym"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "survey_answers", :force => true do |t|
-    t.integer "survey_answer_set_id", :null => false
-    t.integer "survey_question_id",   :null => false
-    t.text    "answer"
-  end
-
-  create_table "survey_questions", :force => true do |t|
-    t.integer "survey_id",                    :null => false
-    t.integer "position",  :default => 0
-    t.string  "question"
-    t.string  "hint"
-    t.string  "type"
-    t.text    "payload"
-    t.boolean "mandatory", :default => false, :null => false
-    t.boolean "public",    :default => false
-  end
-
-  create_table "surveys", :force => true do |t|
-    t.integer  "course_instance_id"
-    t.string   "name"
-    t.string   "locale"
-    t.string   "answer_permission",       :default => "authenticated"
-    t.string   "read_numeric_permission", :default => "authenticated"
-    t.string   "read_text_permission",    :default => "staff"
-    t.datetime "opens_at"
-    t.datetime "closes_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "topics", :force => true do |t|
     t.integer  "course_instance_id",                        :null => false
-    t.string   "user_login"
+    t.integer  "user_id"
     t.string   "nick"
     t.boolean  "anonymous",          :default => true
     t.string   "caption"
