@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>
+    <% if @course %>
+      <%= @course.code %> -
+    <% end %>
+    <% if @instance %>
+      <%= @instance.name %>
+    <% end %>
+  </title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <% if content_for? :javascript %>
+    <%= content_for :javascript %>
+  <% end %>
+</head>
+<body>
+
+<div class="content">
+  <div class="sheet-shadow">
+    <div class="sheet">
+<%= yield %>
+    </div>
+  </div>
+</div>
+
+</body>
+</html> 

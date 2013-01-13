@@ -12,6 +12,7 @@
  *= require default
  *= require theme
  *= require_self
+ *= require orientation
  
  require_tree .
  */

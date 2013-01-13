@@ -1,0 +1,46 @@
+<h1><%= @course.code %> - <%= @course.name %></h1>
+
+<p>Tietorakenteet ja algoritmit -kurssin ilmoittautumisen yhteydessä pidämme tänä vuonna kyselyn, jossa selvitetään opiskelijoiden opiskelutapoja. Vastaamalla kyselyyn annat samalla suostumuksesi siihen, että voimme käyttää kyselyn vastauksiasi ja kurssin suoritustietojasi tutkimustarkoitukseen. Käytämme tutkimuksen tuloksia opetuksen kehittämistyössä, joten vastauksesi on meille erittäin tärkeä.</p>
+
+<p>Kyselyyn vastaamiseen menee noin 5-10 minuuttia. Käsitelemme vastaukset luottamuksellisesti ja raportoimme ne niin, ettei yksittäistä opiskelijaa voi raportista tunnistaa. Vastuksesi ei vaikuta kurssista saamaasi arvosanaan millään lailla.</p>
+
+<p>Kyselyyn vastaamisen jälkeen saat linkin A+ -järjestelmään.</p>
+
+<p>Lisätietoja opetuksen kehittämistutkimuksesta saa <a href="mailto:ari.korhonen@aalto.fi">Ari Korhoselta</a>. Mikäli et halua vastata kyselyyn/antaa tutkimuslupaa, ota yhteyttä kurssin henkilökuntaan.</p>
+
+<hr />
+
+<h2>
+  Valitse se vaihtoehto, joka parhaiten vastaa omaa mielikuvaasi tai käsitystä itsestäsi<br />
+  (1=Ei pidä paikkaansa ... 7=Pitää täysin paikkansa).
+</h2>
+
+<%= form_tag course_instance_orientation_path do |f|%>
+  <p>
+  <table class="orientation">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <% for i in 1..7 do %>
+          <th><%= i %></th>
+        <% end %>      
+      </tr>
+    </thead>
+    <tbody>
+      <% @questions.each_with_index do |question, index| %>
+        <tr>
+          <td><%= index + 1 %>.</td>
+          <td><%= question.html_safe %></td>
+          <% for i in 1..7 do %>
+            <td><input type="radio" name="questions[<%= index %>]" value="<%= i %>" /></td>
+          <% end %>
+          <td></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </p>
+
+  <p><%= submit_tag 'Lähetä', :class => 'btn btn-success' %></p>
+<% end %>

@@ -101,8 +101,9 @@ class ApplicationController < ActionController::Base
     unless current_user
       store_location
 
-      # TODO: use shibboleth
-      redirect_to new_session_url
+      # FIXME: make this configurable
+      #redirect_to new_session_url
+      redirect_to "/Shibboleth.sso/aalto?target=" + shibboleth_session_url(:protocol => 'https')
 
       return false
     end

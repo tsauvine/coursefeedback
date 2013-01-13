@@ -173,4 +173,11 @@ ActiveRecord::Schema.define(:version => 20120216193404) do
     t.text     "payload"
   end
   
+  create_table "orientations", :force => true do |t|
+    t.integer  "user_id",           :null => false
+    t.integer  "course_instance_id"
+    t.string   "studentnumber"
+    t.text     "payload",           :null => false
+    t.datetime "created_at"
+  end
 end

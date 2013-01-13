@@ -18,7 +18,9 @@ Rails.application.routes.draw do
       end
     end
     
-    
+    resource :orientation, :only => [:show, :create] do
+      get :completed
+    end
   end
 
   resources :topics do
