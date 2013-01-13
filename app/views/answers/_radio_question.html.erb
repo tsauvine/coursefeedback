@@ -1,0 +1,13 @@
+<p>
+  <%= form.hidden_field :question_id %>
+  <%= question.text %>
+
+  <ul>
+    <% question.payload.each_with_index do |alternative, index| %>
+      <li><label><%= form.radio_button :value, index %> <%= alternative %></label></li>
+    <% end %>
+    <% if question.params == 'custom' %>
+      <li><%= form.text_field :text %></li>
+    <% end %>
+  </ul>
+</p>

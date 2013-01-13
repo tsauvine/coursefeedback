@@ -1,0 +1,31 @@
+<% if @questionnaire.race_instance %>
+  <%= content_for :title do %><%= @questionnaire.race_instance.name %><% end %>
+<% end %>
+
+<div class="page-header">
+  <h1>
+    <% if @questionnaire.race_instance %>
+      <%= @questionnaire.race_instance.name %>
+    <% else %>
+      Questionnaire
+    <% end %>
+  </h1>
+</div>
+
+
+<%= form_for @answer_set, :url => feedback_path(@race_instance.path || @race_instance.id), :html => {:method => :post, :class => 'form-inline'} do |answer_set_form| %>
+  <%= answer_set_form.hidden_field :questionnaire_id %>
+
+  <%= answer_set_form.fields_for :answers do |answer_form| %>
+    <%= render :partial => "answers/#{answer_form.object.question.type.underscore}", :locals => {:form => answer_form, :question => answer_form.object.question } %>
+  <% end %>
+
+  <%= answer_set_form.submit 'Lähetä', :class => 'btn btn-success' %>
+<% end %>
+
+
+<% if @questionnaire.race_instance %>
+  <%= link_to t(:Back), @questionnaire.race_instance %>
+<% else %>
+  <%= link_to t(:Back), questionnaires_path %>
+<% end %>

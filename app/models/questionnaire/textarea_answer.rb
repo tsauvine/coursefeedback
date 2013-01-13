@@ -1,0 +1,2 @@
+class TextareaAnswer < Answer
+end

@@ -1,0 +1,2 @@
+class TextfieldAnswer < Answer
+end

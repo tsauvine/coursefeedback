@@ -1,0 +1,31 @@
+<p>Vastauksia: <%= questionnaire.answers_count %></p>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Kysymys</th>
+      <th>Mediaani</th>
+      <% if @own_answer_set %>
+        <th>Oma vastaus</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% questionnaire.questions.each do |question| %>
+      <% if ['DefaultQuestion', 'RateQuestion'].include?(question.type) && questionnaire.summary[question.id.to_s] %>
+        <tr>
+          <td>
+            <%= question.text %>
+            <a href="#" class="view-comments-button" data-url="<%= comments_questionnaire_question_url(questionnaire_id: questionnaire.id, id: question.id) %>"><i class="icon-comment pull-right"></i></a>
+          </td>
+          <td><%= render :partial => "questions/#{question.type.underscore}_summary", :locals => {:question => question, :payload => questionnaire.summary[question.id.to_s]} %></td>
+          <% if @own_answer_set %>
+            <td>
+              <%= stars(@own_answer_set.payload[question.id.to_s]['value'].to_i) %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

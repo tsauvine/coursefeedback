@@ -1,0 +1,184 @@
+<% if @questionnaire.race_instance %>
+  <%= content_for :title do %><%= @questionnaire.race_instance.name %><% end %>
+<% end %>
+<% content_for :javascript do %>
+  <%= javascript_include_tag 'questionnaire-editor' %>
+<% end %>
+
+<script id="alternative-template" type="text/x-handlebars-template">
+<li class="alternative">
+  <span>{{text}}</span>
+  <div class="buttons">
+    <a href="#" class="edit-alternative"><i class="icon-pencil" title="Muokkaa"></i></a>
+    <a href="#" class="move-alternative"><i class="icon-resize-vertical" title="Vaihda vaihtoehtojen järjestystä vetämällä"></i></a>
+    <a href="#" class="delete-alternative"><i class="icon-trash" title="Poista vaihtoehto"></i></a>
+  </div>
+</li>
+</script>
+
+<script id="question-template" type="text/x-handlebars-template">
+<div class="question">
+  <div class="buttons pull-right">
+    <a href="#" class="edit-question"><i class="icon-pencil" title="Muokkaa"></i></a>
+    <a href="#" class="move-question"><i class="icon-resize-vertical" title="Vaihda kysymysten järjestystä vetämällä"></i></a>
+    <a href="#" class="delete-question"><i class="icon-trash" title="Poista kysymys"></i></a>
+  </div>
+</div>
+</script>
+
+<script id="DefaultQuestion-template" type="text/x-handlebars-template">
+<p>
+  {{text}}
+  <input type="radio" name="radio-{{id}}" \>
+  <input type="radio" name="radio-{{id}}" \>
+  <input type="radio" name="radio-{{id}}" \>
+  <input type="radio" name="radio-{{id}}" \>
+  <input type="radio" name="radio-{{id}}" \>
+</p>
+<textarea rows="2"></textarea>
+</script>
+
+<script id="RateQuestion-template" type="text/x-handlebars-template">
+<p>
+  {{text}}
+  <input type="radio" name="radio-{{id}}" \>
+  <input type="radio" name="radio-{{id}}" \>
+  <input type="radio" name="radio-{{id}}" \>
+  <input type="radio" name="radio-{{id}}" \>
+  <input type="radio" name="radio-{{id}}" \>
+</p>
+</script>
+
+<script id="TextfieldQuestion-template" type="text/x-handlebars-template">
+<p>{{text}} <input type="text" /></p>
+</script>
+
+<script id="TextareaQuestion-template" type="text/x-handlebars-template">
+<p>{{text}}</p>
+<textarea rows="2"></textarea>
+</script>
+
+<script id="CheckboxQuestion-template" type="text/x-handlebars-template">
+<p>{{text}}</p>
+<ul>
+  {{#each payload}}
+    <li><label><input type="checkbox" \> {{this}}</label></li>
+  {{/each}}
+</ul>
+</script>
+
+<script id="RadioQuestion-template" type="text/x-handlebars-template">
+<p>{{text}}</p>
+<ul>
+  {{#each payload}}
+    <li><label><input type="radio" name="radio-{{id}}" \> {{this}}</label></li>
+  {{/each}}
+</ul>
+</script>
+
+
+<h1>Kyselyn muokkaus</h1>
+
+<form class="form-inline questionnaire-editor" id="questionnaire-editor" data-questionnaire-id="<%= @questionnaire.id %>" data-questionnaire-url="<%= questionnaire_path(@questionnaire) %>">
+
+</form>
+
+<p>
+  <button id="create-question-button" class="btn btn-primary">Luo uusi kysymys</button>
+  <button id="copy-question-button" class="btn btn-primary" data-url="<%=
+    if @race then race_questions_url(@race.id) elsif @race_instance then race_instance_questions_url(@race_instance.id) else '' end %>">Kopioi kysymyksiä muista kyselyistä</button>
+</p>
+<p><button id="save-questionnaire-button" class="btn btn-success"><%=t :Save %></button></p>
+
+<div>
+  <%= link_to t(:Back), @race_instance %>
+</div>
+
+
+<!-- Create/Edit question dialog -->
+<div class="modal hide" id="modalCreateQuestion">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3 id="new-question-title">Luo uusi kysymys</h3>
+  </div>
+
+  <div class="modal-body">
+    <div class="row-fluid">
+      <div class="span2">Tyyppi</div>
+      <div class="span10">
+        <!-- Question type -->
+        <div class="btn-group">
+          <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+            <span id="new-question-current-type">Kysymyksen tyyppi</span>
+            <span class="caret"></span>
+          </button>
+
+          <ul class="dropdown-menu" id="new-question-type">
+            <li><a href="#" data-value="RateQuestion"><i class="icon-star"></i> Tähdet</a></li>
+            <li><a href="#" data-value="DefaultQuestion"><i class="icon-star"></i> Tähdet ja sanallinen palaute</a></li>
+            <li><a href="#" data-value="TextfieldQuestion"><i class="icon-minus"></i> Pieni tekstikenttä</a></li>
+            <li><a href="#" data-value="TextareaQuestion"><i class="icon-align-justify"></i> Monirivinen tekstikenttä</a></li>
+            <li><a href="#" data-value="RadioQuestion"><i class="icon-check"></i> Valitse yksi vaihtoehto (radio)</a></li>
+            <li><a href="#" data-value="CheckboxQuestion"><i class="icon-ok-sign"></i> Valitse monta vaihtoehtoa (checkbox)</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span2">Teksti</div>
+      <div class="span10">
+        <!-- Text and hint -->
+        <input type="textfield" id="new-question-text" value="Kysymyksen teksti" /><br />
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span2">Vihje</div>
+      <div class="span10">
+        <input type="textfield" id="new-question-hint" value="Vihje, tarkennus, ym." />
+      </div>
+    </div>
+
+    <div class="row-fluid" id="new-question-alternatives-container" class="hide">
+      <div class="span2">Vaihtoehdot</div>
+      <div class="span10">
+        <!-- Options -->
+        <ul id="new-question-alternatives">
+        </ul>
+        <input id="new-question-alternative" type="textfield" />
+        <button id="new-question-alternative-ok" class="btn btn-small"><i class="icon-plus"></i> Lisää vaihtoehto</button>
+      </div>
+    </div>
+
+    <!--div class="row-fluid">
+      <div class="span2">Esikatselu</div>
+      <div class="span10" id="new-question-preview">
+      </div>
+    </div-->
+  </div>
+
+  <div class="modal-footer">
+    <a href="#" class="btn btn-success" id="create-question-ok-button">Tallenna</a>
+    <a href="#" class="btn" data-dismiss="modal">Peruuta</a>
+  </div>
+</div>
+
+<!-- Copy old question question dialog -->
+<div class="modal hide" id="modalCopyQuestion">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Valitse kysymykset</h3>
+  </div>
+
+  <div class="modal-body">
+    <form id="copy-question-options" class="form-inline">
+
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <a href="#" class="btn btn-primary" id="copy-question-ok-button">Lisää kysymykset</a>
+    <a href="#" class="btn" data-dismiss="modal">Peruuta</a>
+  </div>
+</div>

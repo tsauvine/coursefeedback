@@ -1,0 +1,2 @@
+class DefaultAnswer < Answer
+end

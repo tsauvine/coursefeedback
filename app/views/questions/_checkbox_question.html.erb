@@ -1,0 +1,12 @@
+<p>
+  <%= question.text %>
+
+  <ul>
+    <% question.payload.each_with_index do |alternative, index| %>
+      <li><label><%= check_box_tag :values, index, false %> <%= alternative %></label></li>
+    <% end %>
+    <% if question.params == 'custom' %>
+      <li><%= text_field_tag :text %></li>
+    <% end %>
+  </ul>
+</p>

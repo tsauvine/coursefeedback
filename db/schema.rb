@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(:version => 20120216193404) do
     t.string   "studentnumber"
     t.string   "name"
     t.string   "email"
+    t.string   "locale"
     t.string   "crypted_password"
     t.string   "password_salt"
     t.boolean  "admin",               :default => false
@@ -133,4 +134,45 @@ ActiveRecord::Schema.define(:version => 20120216193404) do
   add_index "users", ["login"], :name => "index_users_on_login"
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
 
+  
+  create_table "answer_sets", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "questionnaire_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.text     "payload"
+  end
+
+  add_index "answer_sets", ["questionnaire_id"], :name => "index_answer_sets_on_questionnaire_id"
+
+  create_table "answers", :force => true do |t|
+    t.integer "answer_set_id"
+    t.integer "questionnaire_question_id"
+    t.integer "question_id"
+    t.text    "payload"
+  end
+
+  add_index "answers", ["answer_set_id"], :name => "index_answers_on_answer_set_id"
+  
+    create_table "questionnaires", :force => true do |t|
+    t.integer  "race_instance_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.text     "payload"
+    t.text     "summary"
+  end
+
+  add_index "questionnaires", ["race_instance_id"], :name => "index_questionnaires_on_race_instance_id"
+
+  create_table "questions", :force => true do |t|
+    t.string   "type"
+    t.text     "text"
+    t.string   "hint"
+    t.text     "params"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "questionnaire_id"
+    t.text     "payload"
+  end
+  
 end

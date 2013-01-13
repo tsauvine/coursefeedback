@@ -1,0 +1,2 @@
+class DefaultQuestion < Question
+end

@@ -1,0 +1,10 @@
+<p>
+  <%= form.hidden_field :question_id %>
+  <%= question.text %>
+
+  <% (1..5).each do |i| %>
+    <%= form.radio_button :value, i %>
+  <% end %>
+
+  <%= form.text_area :text, :rows => 5, :cols => 80 %>
+</p>

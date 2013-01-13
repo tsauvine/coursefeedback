@@ -16,6 +16,7 @@ user.admin = true
 user.save
 
 # Create teachers
+teachers = []
 for i in 1..10 do
   r = User.new
   r.studentnumber = '1' + i.to_s.rjust(4, '0')
@@ -25,6 +26,7 @@ for i in 1..10 do
   r.name = "Teacher #{i}"
   r.email = "teacher#{i}@example.com"
   r.save
+  teachers[i] = r
 end
 
 # Create students
@@ -43,5 +45,7 @@ end
 # Create courses
 puts('Creating courses')
 course = Course.create(:code => 'X-0.101', :name => 'Basics')
-CourseInstance.create(:name => 'Fall 2013', :path => 'f2013', :active => true, :course => course)
-CourseInstance.create(:name => 'Spring 2013', :path => 's2013', :active => false, :course => course)
+CourseInstance.create(:name => 'Fall 2012', :path => 'f2012', :active => false, :course => course, :position => 1)
+CourseInstance.create(:name => 'Spring 2013', :path => 's2013', :active => true, :course => course, :position => 2)
+
+Courserole.create(:course => course, :user => teachers[1], :role => 'teacher')

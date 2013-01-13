@@ -31,21 +31,13 @@ Rails.application.routes.draw do
       get 'vote'
     end
   end
-
-  #map.resources :surveys do , :path_prefix => ':course_code/:instance_path', :requirements => { :course_code => URL_FORMAT_ROUTE, :instance_path => URL_FORMAT_ROUTE }
-  #  member do
-  #    get 'answer'
-  #    get 'results'
-  #  end
-  #end
-
-  resources :survey_questions do
+  
+  resources :questionnaires do # , :except => [:index]
     member do
-      get 'move'
+      post :answer
     end
   end
 
-  resources :survey_answers
   
   match '/login' => 'sessions#new', :as => :login
   match '/logout' => 'sessions#destroy', :as => :logout

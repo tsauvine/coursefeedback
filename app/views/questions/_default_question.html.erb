@@ -1,0 +1,8 @@
+<p>
+  <%= question.text %>
+  <% (1..5).each do |i| %>
+    <%= radio_button_tag :value, i %>
+  <% end %>
+
+  <%= text_area_tag :text, '', :rows => 2, :cols => 80 %>
+</p>

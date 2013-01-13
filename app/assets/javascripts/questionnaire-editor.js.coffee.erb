@@ -1,0 +1,537 @@
+#= require handlebars-1.0.0.beta.6
+#= require bootstrap
+
+class Question
+  humanReadableTypes: {
+    'DefaultQuestion': 'Tähdet ja sanallinen palaute',
+    'RateQuestion': 'Tähdet',
+    'TextfieldQuestion': 'Pieni tekstikenttä',
+    'TextareaQuestion': 'Monirivinen tekstikenttä',
+    'RadioQuestion': 'Valitse yksi vaihtoehto (radiobutton)',
+    'CheckboxQuestion': 'Valitse monta vaihtoehtoa (checkbox)'
+  }
+
+  constructor: (options) ->
+    options ||= {question: {}}
+
+    @id = options['id']
+    @type = options['type'] || 'DefaultQuestion'
+    @payload = options['payload']
+    @text = options['text'] || ''
+    @hint = options['hint']
+
+  #
+  # Returns a human readable description of the question type
+  #
+  humanReadableType: () ->
+    return @humanReadableTypes[@type]
+
+  #
+  # Returns parameter to be passed to the HTML template when rendering the question
+  #
+  templateParams: () ->
+    { id: @id, text: @text, payload: @payload }
+
+
+class QuestionEditor
+  constructor: () ->
+    @question = false  # Question being edited
+    @newIdCounter = 0
+
+    # Prepare handlebars templates
+    @alternativeTemplate = Handlebars.compile($("#alternative-template").html())
+
+    # Event handlers
+    $('#new-question-type a').click($.proxy(@clickQuestionType, this))                      # Select question type
+    $('#new-question-alternative-ok').click($.proxy(@clickAddAlternative, this))            # Add alternative OK
+    $(document).on('click', 'a.delete-alternative', $.proxy(@clickDeleteAlternative, this)) # Delete alternative
+    $(document).on('click', 'a.edit-alternative', $.proxy(@clickEditAlternative, this))     # Edit alternative
+
+    $('#new-question-alternative').keyup (event) =>                                         # Add alternative keyboard event
+        switch event.keyCode
+          when 13
+            this.clickAddAlternative(event)
+          when 27
+            $('#new-question-alternative').val('')
+            event.stopPropagation()
+
+    # Alternatives can be dragged
+    $('#new-question-alternatives').sortable({
+      axis: 'y',
+      containment: '#new-question-alternatives',
+      distance: 5
+    })
+
+  #
+  # Shows the question editor dialog.
+  # question: Question to edit. Leave empty to create a new question.
+  #
+  show: (question) ->
+    if question
+      # Edit existing question
+      $('#new-question-title').text('Muokkaa kysymystä')
+      @question = question
+    else
+      # Create new question
+      $('#new-question-title').text('Luo kysymys')
+      @question = new Question
+      @question.id = "new-#{@newIdCounter}"
+      @newIdCounter++
+
+    # Update content of the editor
+    $('#new-question-text').val(@question.text)
+    $('#new-question-hint').val(@question.hint)
+
+    this.updateCurrentQuestionType()
+
+    # Show the editor
+    $('#modalCreateQuestion').modal('show')
+
+
+  #
+  # Updates the editor to reflect current question type
+  #
+  updateCurrentQuestionType: (type) ->
+    return unless @question
+
+    # Show current question type in the dropdown button
+    $('#new-question-current-type').html(@question.humanReadableType())
+
+    # Show or hide the alternatives editor
+    switch @question.type
+      when 'RadioQuestion', 'CheckboxQuestion'
+        $('#new-question-alternatives-container').show()
+        this.makeAlternatives()
+
+      else
+        $('#new-question-alternatives-container').hide()
+
+  #
+  # Puts alternatives to the alternative editor
+  #
+  makeAlternatives: () ->
+    alternativesUl = $('#new-question-alternatives')
+    alternativesUl.empty()
+
+    @question.payload ||= []
+
+    for alternative in @question.payload
+      new_element = $(@alternativeTemplate({text: alternative}))
+      new_element.find('span').data('value', alternative)  # Store the unescaped string in data
+
+      alternativesUl.append(new_element)
+
+
+  #
+  # EventHandler: User selects the question type
+  #
+  clickQuestionType: (event) ->
+    @question.type = $(event.target).data('value')
+
+    # Default alternatives
+    #unless @question.payload
+    #  @question.payload = ['Vaihtoehto 1', 'Vaihtoehto 2', 'Vaihtoehto 3']
+
+    this.updateCurrentQuestionType()
+
+    event.preventDefault()
+
+  #
+  # Event handler: User clicks the "Add alternative" button
+  #
+  clickAddAlternative: (event) ->
+    # Read user-entered value
+    editorElement = $('#new-question-alternative')
+    value = editorElement.val()
+
+    # Create and append element
+    new_element = $(@alternativeTemplate({text: value}))
+    new_element.find('span').data('value', value)         # Store the unescaped value in data
+    $('#new-question-alternatives').append(new_element)
+
+    # Reset editor and set focus
+    editorElement.val('')
+    editorElement.focus()
+
+    event.preventDefault()
+
+  #
+  # Event handler: User clicks a "Delete alternative" button
+  #
+  clickDeleteAlternative: (event) ->
+    # Remove element from DOM
+    $(event.currentTarget).parent().parent().remove()
+
+    event.preventDefault()
+
+  #
+  # Event handler: User clicks an "Edit alternative" button
+  #
+  clickEditAlternative: (event) ->
+    # Select the span
+    span = $(event.currentTarget).parent().siblings('span')
+
+    # Make an in-place editor
+    input = $("<input type='textfield' value='#{span.data('value')}' />")
+
+    # Event handlers
+    okHandler = () ->
+      span.text(input.val()).data('value', input.val())  # Replace the editor with the new text. Store the unescaped value in data.
+
+    cancelHandler = () ->
+      span.text(span.data('value'))  # Replace the editor with the original text.
+
+    # Attach mouse handlers
+    ok = $('<button>OK</button>').click(okHandler)
+    cancel = $('<button>Cancel</button>').click(cancelHandler)
+
+    # Attach keyboard handlers
+    input.keyup (event) ->
+      switch event.keyCode
+        when 13 then okHandler()
+        when 27 then cancelHandler()
+
+      # Prevent esc from closing the dialog
+      event.stopPropagation()
+
+    # Replace original text with the editor
+    span.empty()
+    span.append(input)
+    span.append(ok)
+    span.append(cancel)
+
+    # Set focus to the editor
+    input.focus()
+
+    event.preventDefault()
+
+
+  #
+  # Stores the editor form content to the model object
+  #
+  saveQuestion: () ->
+    @question.text = $('#new-question-text').val()
+    @question.hint = $('#new-question-hint').val()
+
+    # Read alternatives
+    alternatives = []
+
+    if @question.type == 'CheckboxQuestion' || @question.type == 'RadioQuestion'
+      $('#new-question-alternatives span').each (index, element) ->
+        alternatives.push($(element).data('value'))
+
+    @question.payload = alternatives
+
+
+# TODO: move 'Copy existing question' related stuff from QuestionnaireEditor to CopyDialog
+# class CopyDialog
+
+
+class QuestionnaireEditor
+
+  constructor: () ->
+    @questionEditor = new QuestionEditor
+
+    # @questionsByQuestionId contains questions that are used in the questionnaire. Their order is maintained in the DOM.
+    @questionsByQuestionId = {}   # 'id' => Question
+
+    # @availableQuestions contains questions that are available for reuse from earlier questionnaires. This hash is lazily populated when user clicks the "Copy question" button.
+    #@availableQuestions = {}      # 'id' => Question
+
+    @editorElement = $('#questionnaire-editor')
+    @questionnaireId = @editorElement.data('questionnaire-id')
+    @questionnaireUrl = @editorElement.data('questionnaire-url')
+
+    # Event handlers
+    $('#save-questionnaire-button').click($.proxy(@clickSaveQuestionnaire, this))
+
+    $('#create-question-button').click($.proxy(@clickCreateQuestion, this))
+    $('#create-question-ok-button').click($.proxy(@clickCreateQuestionOk, this))
+
+    $('#copy-question-button').click($.proxy(@clickCopyQuestion, this))
+    $('#copy-question-ok-button').click($.proxy(@clickCopyQuestionOk, this))
+
+    $(document).on('click', '.question a.edit-question', $.proxy(@clickEditQuestion, this))
+    $(document).on('click', '.question a.delete-question', $.proxy(@clickDeleteQuestion, this))
+
+    # Draggables, etc.
+    @editorElement.sortable({
+      axis: 'y',
+      containment: '#questionnaire-editor',
+      distance: 5
+    })
+
+    # Prepare Handlebars templates
+    this.compileTemplates()
+
+    # Load questionnaire by AJAX
+    this.loadQuestionnaire(@questionnaireUrl)
+
+  #
+  # Prepares Handlebars templates
+  #
+  compileTemplates: () ->
+    @templates = {}
+    @templates['question'] = Handlebars.compile($("#question-template").html())
+    @templates['DefaultQuestion'] = Handlebars.compile($("#DefaultQuestion-template").html())
+    @templates['RateQuestion'] = Handlebars.compile($("#RateQuestion-template").html())
+    @templates['TextfieldQuestion'] = Handlebars.compile($("#TextfieldQuestion-template").html())
+    @templates['TextareaQuestion'] = Handlebars.compile($("#TextareaQuestion-template").html())
+    @templates['RadioQuestion'] = Handlebars.compile($("#RadioQuestion-template").html())
+    @templates['CheckboxQuestion'] = Handlebars.compile($("#CheckboxQuestion-template").html())
+
+  #
+  # Loads the questionnaire by AJAX
+  #
+  loadQuestionnaire: (url) ->
+    $.ajax
+      type: 'GET'
+      url: url
+      error: $.proxy(@onAjaxError, this)
+      dataType: 'json'
+      success: (data) =>
+        this.parseQuestionnaire(data)
+
+  #
+  # Parses the JSON questionnaire returned by the server. Called by loadQuestionnaire.
+  #
+  parseQuestionnaire: (data) ->
+    # Parse JSON, create objects, and add to DOM
+    for question in data
+      new_question = new Question(question)
+      @questionsByQuestionId[new_question.id] = new_question
+      this.appendQuestion(new_question)
+
+  #
+  # Returns HTML
+  #
+  makeQuestion: (question) ->
+    question_template = @templates[question.type]
+    unless question_template
+      console.log "Unknown question type (#{question.type})"
+      return
+
+    question_html = $(question_template(question.templateParams()))
+    container_html = $(@templates['question']({id: question.id}))
+    container_html.append(question_html)
+
+    # Set references
+    question.element = container_html
+    container_html.data('object', question)
+    container_html.find('.buttons a').data('object', question)
+
+    return container_html
+
+  #
+  # Renders and appends a question to DOM
+  #
+  appendQuestion: (question) ->
+    container_html = this.makeQuestion(question)
+    return unless container_html
+
+    @editorElement.append(container_html)
+
+  #
+  # Updates a question in the DOM to reflect changes in the model.
+  #
+  updateQuestion: (question) ->
+    original_element = question.element
+
+    container_html = this.makeQuestion(question)
+    return unless container_html
+
+    original_element.replaceWith(container_html)
+
+  #
+  # Updates the position attributes of questions to match their current order in DOM. This should be called before sending changes to server.
+  #
+  updateQuestionPositions: () ->
+    $("#questionnaire-editor .question").each (index, element) =>
+      #id = $(element).data('id')
+      #question = @questionsByQuestionId[id]
+      question = $(element).data('object')
+      unless question
+        console.log "Could not find question #{id}"
+        return
+
+      question.position = index
+
+  #
+  # Event handler: User clicks the "Create new question" button
+  #
+  clickCreateQuestion: (event) ->
+    @questionEditor.show()
+
+  #
+  # Event handler: User clicks OK in the "Create new question dialog"
+  #
+  clickCreateQuestionOk: (event) ->
+    question = @questionEditor.question
+    return unless question
+
+    #url = $(event.currentTarget).data('url')
+
+    @questionEditor.saveQuestion()
+
+    # Close dialog
+    $('#modalCreateQuestion').modal('hide')
+
+    # Update DOM
+    if question.element
+      # Edit existing question. Replace.
+      this.updateQuestion(question)
+    else
+      # Create new question. Append.
+      this.appendQuestion(question)
+
+    event.preventDefault()
+
+
+  #
+  # Event handler: User clicks OK in the "Create new question dialog"
+  #
+  clickCopyQuestion: (event) ->
+    url = $('#copy-question-button').data('url')
+    modal = $('#modalCopyQuestion')
+
+    # Show dialog
+    modal.modal('show')
+
+    # Skip the AJAx call if the editor has already been loaded
+    #return if @availableQuestions
+
+    modal.find('.modal-body').addClass('busy')
+
+    # Load questions by AJAX
+    if @availableQuestions
+      this.makeCopyDialog()
+    else
+      $.ajax
+        type: 'GET'
+        url: url
+        error: $.proxy(@onAjaxError, this)
+        dataType: 'json'
+        success: (data) =>
+          this.parseQuestions(data)
+
+  #
+  # Parses the JSON questions returned by the server
+  #
+  parseQuestions: (data) ->
+    @availableQuestions = {}
+
+    for question in data
+      @availableQuestions[question.id] = new Question(question)
+
+    this.makeCopyDialog()
+
+
+  makeCopyDialog: () ->
+    html = ''
+
+    for question_id, question of @availableQuestions
+      continue if @questionsByQuestionId[question_id]    # Omit those questions that are selected already
+
+      html += "<label><input type='checkbox' value='#{question_id}' /> #{question.text}</label><br />"
+
+    if html.length < 1
+      html = "Ei käyttämättömiä kysymyksiä muissa lomakkeissa"
+
+    $('#copy-question-options').html(html)
+
+    $('#modalCopyQuestion .modal-body').removeClass('busy')
+
+
+  #
+  # Event handler: User clicks OK in the "Copy existing question dialog"
+  #
+  clickCopyQuestionOk: (event) ->
+    # Close dialog
+    $('#modalCopyQuestion').modal('hide')
+
+    # Get the values of the selected checkboxes
+    that = this
+    $('#copy-question-options :checked').each ->
+      question_id = $(this).val()
+      question = that.availableQuestions[question_id]
+      return unless question
+
+      # Add to DOM
+      that.appendQuestion(question)
+
+      that.questionsByQuestionId[question_id] = question
+
+    event.preventDefault()
+
+
+  #
+  # Event handler: User clicks "Edit question button"
+  #
+  clickEditQuestion: (event) ->
+    question = $(event.currentTarget).data('object')
+
+    @questionEditor.show(question)
+
+    event.preventDefault()
+
+
+  #
+  # Event handler: User clicks "Remove question button"
+  #
+  clickDeleteQuestion: (event) ->
+    question = $(event.currentTarget).data('object')
+
+    # Remove from internal datastructures
+    delete @questionsByQuestionId[question.id]
+
+    # Remove from DOM
+    question.element.remove()
+
+    event.preventDefault()
+
+
+  #
+  # Event handler: User clicks the "Save" button
+  #
+  clickSaveQuestionnaire: (event) ->
+    this.updateQuestionPositions()
+
+    #console.log JSON.stringify(@questionsByQuestionId, ['id','type'])
+
+    #for question_id, question of @questionsByQuestionId
+    #  console.log JSON.stringify(question, ['question_id','type'])
+    question_jsons = []
+
+    $("#questionnaire-editor .question").each (index, element) =>
+      question = $(element).data('object')
+      json = JSON.stringify(question, ['id', 'type', 'text', 'payload', 'hint'])
+      question_jsons.push json
+
+    json = '[' + question_jsons.join(',') + ']'
+    console.log json
+    console.log @questionnaireUrl
+
+    # AJAX call
+    $.ajax
+      type: 'PUT',
+      url: @questionnaireUrl,
+      data: {questionnaire: json},
+      error: $.proxy(@onAjaxError, this)
+      dataType: 'json'
+      success: (data) =>
+        alert('Muutokset tallennettu')
+
+
+  #
+  # Callback for AJAX errors
+  #
+  onAjaxError: (jqXHR, textStatus, errorThrown) ->
+    switch textStatus
+      when 'timeout'
+        alert('Serveriin ei saada yhteyttä')
+      else
+        alert(errorThrown)
+
+
+jQuery ->
+  new QuestionnaireEditor()
