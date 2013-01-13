@@ -22,3 +22,14 @@ URL_FORMAT_MODEL = /^(\w|[\-+*.,!$'])+$/
 
 # Mail delivery method
 ActionMailer::Base.delivery_method = :sendmail
+
+# Shibboleth attribute names (attribute-map.xml)
+SHIB_ATTRIBUTES = {
+  :logout => 'Shib_logout-url',
+  :id => 'Shib_EP_PrincipalName',
+  :studentnumber => 'Shib_schac_PersonalUniqueCode',
+  :firstname => 'Shib_DisplayName',
+  :lastname => 'Shib_sn',
+  :email => 'Shib_mail',
+  :lang => 'Shib_preferredLanguage',
+}

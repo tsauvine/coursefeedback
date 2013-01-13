@@ -39,10 +39,11 @@ class SessionsController < ApplicationController
 
   def shibboleth
     shibinfo = {
-      :login => request.env['HTTP_EPPN'],
-      :studentnumber => (request.env['HTTP_SCHACPERSONALUNIQUECODE'] || '').split(':').last,
-      :name => "#{request.env['HTTP_DISPLAYNAME']} #{request.env['HTTP_SN']}",
-      :email => request.env['HTTP_MAIL'],
+      :login => request.env[SHIB_ATTRIBUTES[:id]],
+      :studentnumber => (request.env[SHIB_ATTRIBUTES[:studentnumber]] || '').split(':').last,
+      :firstname => request.env[SHIB_ATTRIBUTES[:firstname]],
+      :lastname => request.env[SHIB_ATTRIBUTES[:lastname]],
+      :email => request.env[SHIB_ATTRIBUTES[:email]],
     }
     logout_url = request.env['HTTP_LOGOUTURL']
 
