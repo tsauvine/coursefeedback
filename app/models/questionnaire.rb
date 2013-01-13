@@ -2,20 +2,8 @@
 # payload is JSON that looks like "{ question_ids: [1, 2, 3] }"
 #
 class Questionnaire < ActiveRecord::Base
-  belongs_to :race_instance
+  belongs_to :course_instance
   has_many :answer_sets
-
-  after_create :add_default_questions
-
-  #
-  # Makes the content of this questionnaire identical to the default questionnaire.
-  #
-  def add_default_questions
-    default_questionnaire = Questionnaire.find(1)  # FIXME: some clever way to identify the default questionnaire
-
-    self.payload = default_questionnaire.payload
-    save!
-  end
 
 #   def to_json
 #     questions = []
@@ -173,7 +161,11 @@ class Questionnaire < ActiveRecord::Base
   #
   def question_ids
     # Parse payload
-    json = JSON.parse(self.payload)['question_ids']
+    if self.payload
+      json = JSON.parse(self.payload)['question_ids']
+    else
+      []
+    end
   end
 
 

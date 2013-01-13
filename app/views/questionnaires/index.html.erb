@@ -1,13 +1,13 @@
-<h1>Listing questionnaires</h1>
+<h1>Questionnaires</h1>
 
 <ul>
   <% @questionnaires.each do |questionnaire| %>
     <li>
-      <%= link_to questionnaire do %>
-        <%= questionnaire.race_instance ? questionnaire.race_instance.name : questionnaire.id %>
+      <%= link_to [@instance,questionnaire] do %>
+        <%= questionnaire.id %>
       <% end %>
     </li>
   <% end %>
 </ul>
 
-<p><%= link_to 'Create New Questionnaire', new_questionnaire_path %></p>
+<p><%= link_to 'Create New Questionnaire', new_course_instance_questionnaire_path(@instance) %></p>

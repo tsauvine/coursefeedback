@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  background: #e0e0e0 url('../images/bg.png') repeat-x;
+  background: #e0e0e0 url('bg.png') repeat-x;
   margin: 0px;
   padding: 0px;
 }
@@ -17,7 +17,7 @@ div.content {
 
 div.sheet {
   width: 863px;
-  background: white url('../images/threadBottom.png') bottom repeat-x;
+  background: white url('threadBottom.png') bottom repeat-x;
   padding: 1.5em 1.5em 3em 1.5em;
   margin: 0px 0px;
 }
@@ -25,7 +25,7 @@ div.sheet {
 div.sheet-shadow {
   width: 863px;
   padding: 0px 0px 41px 0px;
-  background: url('../images/threadShadow.png') bottom repeat-x;
+  background: url('threadShadow.png') bottom repeat-x;
   margin: 0px 0px 10px 0px;
 }
 
@@ -135,15 +135,15 @@ hr {
 
 
 .sideNavi .feedbackLink a {
-  background: url('../images/feedbackButton.png');
+  background: url('feedbackButton.png');
 }
 
 .sideNavi .faqLink a {
-  background: url('../images/faqButton.png');
+  background: url('faqButton.png');
 }
 
 .sideNavi .settingsLink a {
-  background: url('../images/settingsButton.png');
+  background: url('settingsButton.png');
 }
 
 /*********************

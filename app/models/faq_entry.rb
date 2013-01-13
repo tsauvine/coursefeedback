@@ -12,5 +12,6 @@ class FaqEntry < ActiveRecord::Base
   belongs_to :course
   
   validates_presence_of :caption
-  
+
+  attr_accessible :course_id, :caption, :question, :answer
 end

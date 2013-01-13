@@ -17,6 +17,8 @@ class Message < ActiveRecord::Base
 
   has_one :editor, :class_name => 'User'
 
+  attr_accessible :nick, :text, :topic_id
+  
   # Increases the thums_up counter by one.
   def add_thumb_up
     Message.increment_counter(:thumbs_up, id)

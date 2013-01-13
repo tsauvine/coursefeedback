@@ -4,27 +4,26 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>
-    <%=t :app_title %>
     <% if @course %>
-      - <%= @course.code %>
+      <%= @course.code %> -
     <% end %>
     <% if @instance %>
-      - <%= @instance.name %>
+      <%= @instance.name %> -
     <% end %>
+    <%=t :app_title %>
   </title>
-  <%= stylesheet_link_tag 'default' %>
-  <%= stylesheet_link_tag 'theme' %>
-  <%= javascript_include_tag  :defaults %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <% if content_for? :javascript %>
+    <%= content_for :javascript %>
+  <% end %>
 </head>
 <body>
 
-<!-- Logo -->
-<div class="logo">
-  <h1><%=t :app_title %><sub>(beta)</sub></h1>
-</div>
-
 <!-- Top navigation bar -->
 <div class="topNavi">
+  <h1><%=t :app_title %><sub>(beta)</sub></h1>
+
   <div class="extraButtons">
     <!-- Language -->
     <% if request.get? %>
@@ -106,11 +105,8 @@ if flash[:notice] %>
             <li><%= link_to 'Feedback', topic_index_path(@instance.course.code, @instance.path) %></li>
             <% if can? :update, @course %>
               <li><%= link_to 'Instance settings', edit_course_instance_path(@instance) %></li>
-            <% end %>
-
-            <% if can? :update, @course %>
-              <!--li class="settingsLink"><%= link_to 'Roles', edit_course_path(@course) %></li-->
               <li><%= link_to 'Course settings', edit_course_path(@course) %></li>
+              <li><%= link_to 'Surveys', course_instance_questionnaires_path(@instance) %></li>
             <% end %>
           <% end %>
         </ul>

@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/collectiveidea/delayed_job_active_record.git
+  revision: f276ec2cb24227a6dd2873fed33aee233b7eaf50
+  specs:
+    delayed_job_active_record (0.3.3)
+      activerecord (>= 2.1.0, < 4)
+      delayed_job (~> 3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -42,6 +50,9 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
+    daemons (1.1.9)
+    delayed_job (3.0.4)
+      activesupport (~> 3.0)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -51,6 +62,9 @@ GEM
     jquery-rails (2.1.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (3.0.1)
+      jquery-rails
+      railties (>= 3.1.0)
     json (1.7.6)
     libv8 (3.11.8.13)
     mail (2.4.4)
@@ -118,7 +132,10 @@ DEPENDENCIES
   authlogic
   cancan
   coffee-rails (~> 3.2.1)
+  daemons
+  delayed_job_active_record!
   jquery-rails
+  jquery-ui-rails
   pg
   rails (= 3.2.11)
   sass-rails (~> 3.2.3)

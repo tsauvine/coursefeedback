@@ -1,20 +1,22 @@
 class QuestionnairesController < ApplicationController
 
-  before_filter :load_questionnaire, :only => [:show, :answer, :edit, :update]
+  before_filter :load_questionnaire #, :only => [:show, :answer, :edit, :update]
 
   def load_questionnaire
     if params[:id]
-      @questionnaire = Questionnaire.where(:id => params[:id]).first
-    elsif params[:instance_name]
-      @race_instance = RaceInstance.find_by_path(params[:instance_name])
-      @questionnaire = @race_instance.questionnaire
+      @questionnaire = Questionnaire.find(params[:id])
+      @instance = @questionnaire.course_instance
+    else
+      @instance = CourseInstance.find(params[:course_instance_id])
     end
+    
+    @course = @instance.course
   end
 
   # GET /questionnaires
   # GET /questionnaires.json
   def index
-    @questionnaires = Questionnaire.all
+    @questionnaires = @instance.questionnaires
 
     respond_to do |format|
       format.html # index.html.erb
@@ -29,7 +31,8 @@ class QuestionnairesController < ApplicationController
 
     respond_to do |format|
       format.html {
-        @answer_set = AnswerSet.new(:questionnaire_id => @questionnaire.id)
+        @answer_set = AnswerSet.new()
+        @answer_set.questionnaire_id = @questionnaire.id
         @answer_set.init_questionnaire(@questionnaire)
       }
       format.json { render :json => @questionnaire.questions.to_json }
@@ -40,9 +43,10 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/new
   # GET /questionnaires/new.json
   def new
-    authorize! :create, Questionnaire
-
     @questionnaire = Questionnaire.new
+    @questionnaire.course_instance = @instance
+    
+    authorize! :create, @questionnaire
 
     respond_to do |format|
       format.html # new.html.erb
@@ -53,19 +57,19 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/1/edit
   def edit
     authorize! :edit, @questionnaire
-
-    @race_instance = @questionnaire.race_instance
   end
 
   # POST /questionnaires
   # POST /questionnaires.json
   def create
     @questionnaire = Questionnaire.new(params[:questionnaire])
+    @questionnaire.course_instance = @instance
+    
     authorize! :create, @questionnaire
 
     respond_to do |format|
       if @questionnaire.save
-        format.html { redirect_to @questionnaire, notice: 'Kysymyslomakkeen luominen onnistui.' }
+        format.html { redirect_to [@instance, @questionnaire], notice: 'Kysymyslomakkeen luominen onnistui.' }
         format.json { render json: @questionnaire, status: :created, location: @questionnaire }
       else
         format.html { render action: "new" }
@@ -104,6 +108,32 @@ class QuestionnairesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to questionnaires_url }
       format.json { head :no_content }
+    end
+  end
+  
+    # GET /questionnaires
+  # GET /questionnaires.json
+  def questions
+    # Get a list of questionnaires that belong to instances of the current race
+    if @course
+      questionnaire_ids = @course.questionnaire_ids
+    elsif @instance
+      questionnaire_ids = @instance.questionnaire_ids
+    else
+      questionnaire_ids = []
+    end
+
+    # Collect question_ids that are used in those questionnaires
+    question_ids = Set.new
+    Questionnaire.where(:id => questionnaire_ids).find_each do |questionnaire|
+      question_ids.merge(questionnaire.question_ids)
+    end
+
+    @questions = Question.find(question_ids.to_a)
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render :json => @questions.to_json }
     end
   end
 end

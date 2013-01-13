@@ -12,4 +12,6 @@ class Courserole < ActiveRecord::Base
   validates_presence_of :user_id
   validates_presence_of :course_id
   validates_presence_of :role
+  
+  attr_accessible :user, :course, :role
 end

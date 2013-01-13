@@ -10,7 +10,7 @@
 class CourseInstance < ActiveRecord::Base
   belongs_to :course
   has_many :topics, :order => 'created_at DESC', :dependent => :destroy
-  #has_many :surveys, :order => 'closes_at ASC', :dependent => :destroy
+  has_many :questionnaires, :dependent => :destroy # :order => 'closes_at ASC'
   
   validates_presence_of :path
   validates_uniqueness_of :path, :scope => :course_id
@@ -54,7 +54,8 @@ class CourseInstance < ActiveRecord::Base
   # Notifications are sent in a background process (delayed_job).
   def notify_subscribers_later
     # Put the task to queue
-    self.send_later(:notify_subscribers, self.id)
+    # FIXME
+    #self.send_later(:notify_subscribers, self.id)
   end
   
   # used by delayed_job

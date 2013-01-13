@@ -5,8 +5,17 @@ img, object {
 
 
 div.topNavi {
-  background: #919191 url('../images/topnaviBg.png') repeat-x;
+  background: #919191 url('topnaviBg.png') repeat-x;
   height: 48px;
+}
+
+.topNavi h1 {
+  font-size: 100%;
+  margin: 0px;
+  padding-left: 1em;
+  float: left;
+  border: none;
+  color: white;
 }
 
 .topNavi .extraButtons {
@@ -43,11 +52,11 @@ div.topNavi {
 }
 
 .topNavi ul.buttons li {
-  background: #4464cb url('../images/topButtonLeft.png') left no-repeat;
+  background: #4464cb url('topButtonLeft.png') left no-repeat;
 }
 
 .topNavi ul.buttons a {
-  background: url('../images/topButtonRight.png') right no-repeat;
+  background: url('topButtonRight.png') right no-repeat;
 
 }
 
@@ -338,11 +347,11 @@ a.acceptButton, a.rejectButton {
 }
 
 a.acceptButton {
-  background: url('../images/acceptButton.png');
+  background: url('acceptButton.png');
 }
 
 a.rejectButton {
-  background: url('../images/rejectButton.png');
+  background: url('rejectButton.png');
 }
 
 span.acceptButton, span.acceptButton a, span.rejectButton, span.rejectButton a {
@@ -368,38 +377,38 @@ span.acceptButton a, span.rejectButton a {
 }
 
 span.acceptButton {
-  background: url('../images/buttons.png') no-repeat right 0px;
+  background: url('buttons.png') no-repeat right 0px;
 }
 
 span.acceptButton a {
-  background: url('../images/buttons.png') no-repeat left 0px;
+  background: url('buttons.png') no-repeat left 0px;
 }
 
 span.rejectButton a {
-  background: url('../images/buttons.png') no-repeat left -24px;
+  background: url('buttons.png') no-repeat left -24px;
 }
 
 span.rejectButton {
-  background: url('../images/buttons.png') no-repeat right -24px;
+  background: url('buttons.png') no-repeat right -24px;
 }
 
 /*
 span.acceptButton:hover {
-  background: url('../images/buttons.png') no-repeat right -24px;
+  background: url('buttons.png') no-repeat right -24px;
 }
 
 span.acceptButton:hover a {
-  background: url('../images/buttons.png') no-repeat left -24px;
+  background: url('buttons.png') no-repeat left -24px;
 }
 */
 
 /*
 span.rejectButton:hover {
-  background: url('../images/buttons.png') no-repeat right -96px;
+  background: url('buttons.png') no-repeat right -96px;
 }
 
 span.rejectButton:hover a {
-  background: url('../images/buttons.png') no-repeat left -96px;
+  background: url('buttons.png') no-repeat left -96px;
 }
 */
 
@@ -461,4 +470,55 @@ span.rejectButton:hover a {
 .message .text{
   white-space: pre-wrap;
   font-family: monospace;
+}
+
+
+/**************************************************************
+  Questionnaires
+ **************************************************************/
+
+.busy {
+  background: image_url("ajax-loader.gif") no-repeat center center;
+}
+
+.questionnaire-editor {
+  .question {
+    border: 1px solid white;
+    background: #fff;
+    padding: .5em;
+
+    .buttons {
+      visibility: hidden;
+    }
+  }
+
+  .question:hover {
+    border: 1px solid gray;
+    background: #eef;
+
+    .buttons {
+      visibility: visible;
+    }
+  }
+}
+
+.alternative {
+  .buttons {
+    display: inline;
+    visibility: hidden;
+  }
+}
+
+.alternative:hover {
+  .buttons {
+    visibility: visible;
+  }
+}
+
+.modal {
+  max-height: 800px;
+}
+
+#modalCreateQuestion .modal-body, #modalCopyQuestion .modal-body {
+  min-height: 200px;
 }

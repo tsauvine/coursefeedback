@@ -10,7 +10,16 @@ Rails.application.routes.draw do
     resources :courseroles
   end
 
-  resources :course_instances
+  resources :course_instances do
+    resources :questionnaires do # , :except => [:index]
+      member do
+        post :answer
+        get :questions
+      end
+    end
+    
+    
+  end
 
   resources :topics do
     member do
@@ -32,12 +41,6 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :questionnaires do # , :except => [:index]
-    member do
-      post :answer
-    end
-  end
-
   
   match '/login' => 'sessions#new', :as => :login
   match '/logout' => 'sessions#destroy', :as => :logout

@@ -1,6 +1,6 @@
 <%= form_for([@course, @courserole], :remote => true) do |f| %>
 <!-- :update => 'courseroles' -->
   <%=t :courserole_username %>:
-  <%= f.text_field :user_login %>
+  <%= f.text_field :user_id %>
   <%= f.submit t(:Save) %>
 <% end %>

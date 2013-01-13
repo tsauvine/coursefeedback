@@ -115,11 +115,11 @@ class MessagesController < ApplicationController
     authorize! :manage, @course
 
     case params[:status]
-      when 'accept':
+      when 'accept'
         @message.moderation_status = 'published'
-      when 'reject':
+      when 'reject'
         @message.moderation_status = 'censored'
-      when 'delete':
+      when 'delete'
         @message.moderation_status = 'deleted'
       else
         render :partial => 'moderation', :locals => {:message => @message}

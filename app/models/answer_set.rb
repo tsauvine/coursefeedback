@@ -12,8 +12,6 @@ class AnswerSet < ActiveRecord::Base
   # Populates the answer_set with answer objects so that the form can be shown
   #
   def init_questionnaire(questionnaire)
-    logger.info "*** INIT QUESTIONNAIRE ***"
-
     @answers = []
 
     questionnaire.questions.each do |question, index|

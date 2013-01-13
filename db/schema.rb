@@ -142,7 +142,6 @@ ActiveRecord::Schema.define(:version => 20120216193404) do
     t.datetime "updated_at",       :null => false
     t.text     "payload"
   end
-
   add_index "answer_sets", ["questionnaire_id"], :name => "index_answer_sets_on_questionnaire_id"
 
   create_table "answers", :force => true do |t|
@@ -151,18 +150,17 @@ ActiveRecord::Schema.define(:version => 20120216193404) do
     t.integer "question_id"
     t.text    "payload"
   end
-
   add_index "answers", ["answer_set_id"], :name => "index_answers_on_answer_set_id"
   
     create_table "questionnaires", :force => true do |t|
-    t.integer  "race_instance_id"
+    t.integer  "course_instance_id"
+    t.string   "name"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
     t.text     "payload"
     t.text     "summary"
   end
-
-  add_index "questionnaires", ["race_instance_id"], :name => "index_questionnaires_on_race_instance_id"
+  add_index "questionnaires", ["course_instance_id"], :name => "index_questionnaires_on_course_instance_id"
 
   create_table "questions", :force => true do |t|
     t.string   "type"

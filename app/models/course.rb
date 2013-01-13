@@ -18,6 +18,7 @@
 class Course < ActiveRecord::Base
   has_many :course_instances, :order => 'created_at DESC', :dependent => :destroy
   has_many :faq_entries, :order => 'position DESC', :dependent => :destroy
+  has_many :questionnaires, :through => :course_instances
 
   has_many :courseroles
   

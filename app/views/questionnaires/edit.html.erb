@@ -1,6 +1,3 @@
-<% if @questionnaire.race_instance %>
-  <%= content_for :title do %><%= @questionnaire.race_instance.name %><% end %>
-<% end %>
 <% content_for :javascript do %>
   <%= javascript_include_tag 'questionnaire-editor' %>
 <% end %>
@@ -79,19 +76,18 @@
 
 <h1>Kyselyn muokkaus</h1>
 
-<form class="form-inline questionnaire-editor" id="questionnaire-editor" data-questionnaire-id="<%= @questionnaire.id %>" data-questionnaire-url="<%= questionnaire_path(@questionnaire) %>">
+<form class="form-inline questionnaire-editor" id="questionnaire-editor" data-questionnaire-id="<%= @questionnaire.id %>" data-questionnaire-url="<%= course_instance_questionnaire_path(@instance, @questionnaire) %>">
 
 </form>
 
 <p>
   <button id="create-question-button" class="btn btn-primary">Luo uusi kysymys</button>
-  <button id="copy-question-button" class="btn btn-primary" data-url="<%=
-    if @race then race_questions_url(@race.id) elsif @race_instance then race_instance_questions_url(@race_instance.id) else '' end %>">Kopioi kysymyksiä muista kyselyistä</button>
+  <button id="copy-question-button" class="btn btn-primary" data-url="<%= questions_course_instance_questionnaire_path(@instance) %>">Kopioi kysymyksiä muista kyselyistä</button>
 </p>
 <p><button id="save-questionnaire-button" class="btn btn-success"><%=t :Save %></button></p>
 
 <div>
-  <%= link_to t(:Back), @race_instance %>
+  <%= link_to t(:Back), @instance %>
 </div>
 
 

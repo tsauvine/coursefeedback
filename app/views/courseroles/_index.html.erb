@@ -1,8 +1,8 @@
 <table>
   <% @course.courseroles.each do |role| %>
     <tr>
-      <td><%=h role.user_login %></td>
-      <td><%= link_to t(:Delete), :confirm => t(:courserole_confirm_delete, :name => role.user_login, :course => @course.name), :remote => true, :url => course_courserole_path(@course.id, role.id), :method => :delete
+      <td><%=h role.user_id %></td>
+      <td><%= link_to t(:Delete), :confirm => t(:courserole_confirm_delete, :name => role.user_id, :course => @course.name), :remote => true, :url => course_courserole_path(@course.id, role.id), :method => :delete
       #:update => "courseroles",
       %></td>
     </tr>

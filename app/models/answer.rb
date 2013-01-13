@@ -11,7 +11,7 @@ class Answer
     self.question = options[:question]
   end
 
-  # Needed to emulate ActiveRecord behaviour
+  # Needed to emulate ActiveRecord behavior
   def persisted?
     false
   end

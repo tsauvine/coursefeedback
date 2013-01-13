@@ -52,6 +52,10 @@ class Ability
       target == user
     end
 
+    can :answer, Questionnaire do |questionnaire|
+      course_write_permission?(questionnaire.course_instance.course, user)
+    end
+    
     if user
       can [:create], Course do |course|
         Courserole.exists?(:user_id => user.id, :role => 'teacher')
@@ -68,6 +72,11 @@ class Ability
       can [:create, :read, :update], Topic do |topic|
         Courserole.exists?(:user_id => user.id, :course_id => topic.course_instance.course.id, :role => 'teacher')
       end
+      
+      # Create questionnaire
+      can [:create, :edit], Questionnaire do |questionnaire|
+        questionnaire.course_instance && questionnaire.course_instance.course.has_teacher?(user)
+      end
 
       # Admin
       if user.admin?
@@ -80,9 +89,9 @@ class Ability
   end
 
 
-  def is_teacher?(user, course)
-    Courserole.exists?(:user_id => user.id, :course_id => course.id, :role => 'teacher')
-  end
+#   def is_teacher?(user, course)
+#     Courserole.exists?(:user_id => user.id, :course_id => course.id, :role => 'teacher')
+#   end
 
   def course_headlines_permission?(course, user)
     case course.headlines_read_permission

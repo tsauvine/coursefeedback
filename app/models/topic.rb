@@ -23,6 +23,8 @@ class Topic < ActiveRecord::Base
   
   has_many :messages, :order => 'created_at ASC', :conditions => "moderation_status != 'deleted'", :dependent => :destroy
 
+  attr_accessible :course_instance, :course_instance_id, :nick, :caption, :text, :visibility, :anonymous
+  
   def caption
     caption = read_attribute(:caption)
     text = read_attribute(:text)

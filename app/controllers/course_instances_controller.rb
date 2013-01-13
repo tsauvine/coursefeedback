@@ -87,7 +87,7 @@ class CourseInstancesController < ApplicationController
   def update
     @instance = CourseInstance.find(params[:id])
     @course = @instance.course if @instance
-    #authorize_teacher_or_admin or return
+
     authorize! :update, @instance
 
     @local_instance = CourseInstance.find(params[:id])
@@ -107,7 +107,6 @@ class CourseInstancesController < ApplicationController
   # DELETE /courses/1
   # DELETE /courses/1.xml
   def destroy
-    #authorize_teacher_or_admin or return
     authorize! :delete, @instance
 
     @instance.destroy
