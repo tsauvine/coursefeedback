@@ -191,7 +191,7 @@ class TopicsController < ApplicationController
       #render :partial => 'messages/thumbs', :locals => {:message => @topic}
       format.js { render 'thumbs', :locals => {:topic => @topic} }
     end
-    
+
   end
 
   def moderate
