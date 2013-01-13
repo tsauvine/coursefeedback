@@ -88,6 +88,7 @@ class SessionsController < ApplicationController
       user = User.new(shibinfo)
       user.login = shibinfo[:login]
       user.studentnumber = shibinfo[:studentnumber]
+      user.name = shibinfo[:firstname] + ' ' + shibinfo[:lastname]
       user.reset_persistence_token
       user.reset_single_access_token
       if user.save(:validate => false) # Don't validate because Authlogic would complain about missing password.
