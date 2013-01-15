@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+    
   resource :session do
     get 'shibboleth'
   end
@@ -42,8 +42,13 @@ Rails.application.routes.draw do
       get 'vote'
     end
   end
-  
-  
+
+  scope "embed", :module => 'embed' do
+    resources :course_instances do
+      resources :topics
+    end
+  end
+    
   match '/login' => 'sessions#new', :as => :login
   match '/logout' => 'sessions#destroy', :as => :logout
 
@@ -58,5 +63,5 @@ Rails.application.routes.draw do
   match '/:course_code', :to => 'courses#show', :constraints => { :course_code => URL_FORMAT_ROUTE }, :as => 'course_root'
 
   root :to => 'course_instances#index'
-
+  
 end

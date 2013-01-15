@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>
+    <% if @course %>
+      <%= @course.code %> -
+    <% end %>
+    <% if @instance %>
+      <%= @instance.name %> -
+    <% end %>
+    <%=t :app_title %>
+  </title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <% if content_for? :javascript %>
+    <%= content_for :javascript %>
+  <% end %>
+</head>
+<body>
+
+<% if flash[:error] %>
+  <div class="flashError"><%= flash[:error] %></div>
+<% end
+if flash[:warning] %>
+  <div class="flashWarning"><%= flash[:warning] %></div>
+<% end
+if flash[:success] %>
+  <div class="flashSuccess"><%= flash[:success] %></div>
+<% end
+if flash[:notice] %>
+  <div class="flashNotice"><%= flash[:notice] %></div>
+<% end %>
+
+<%= yield %>
+
+</body>
+</html>
