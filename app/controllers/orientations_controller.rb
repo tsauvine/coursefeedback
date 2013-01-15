@@ -10,6 +10,8 @@ class OrientationsController < ApplicationController
   end
 
   def show
+    redirect_to completed_course_instance_orientation_path(@instance) if Orientation.exists?(:user_id => current_user.id, :course_instance_id => @instance.id)
+    
     @questions = [
 "Minulle t&auml;rke&auml; tavoite opinnoissani on menesty&auml; paremmin kuin muut opiskelijat",
 "Tunnen itseni eritt&auml;in ep&auml;varmaksi ja hermostuneeksi, kun minun pit&auml;isi keskitty&auml; johonkin vaativaan tai vaikeaan teht&auml;v&auml;&auml;n",
@@ -51,15 +53,15 @@ class OrientationsController < ApplicationController
 ]
   end
   
-  def completed
-    @token = Digest::SHA1.hexdigest(current_user.studentnumber)
-  end
-
-
   # POST /courses
   # POST /courses.xml
   def create
     @orientation = Orientation.new
+    
+    unless params[:questions]
+      redirect_to course_instance_orientation_path(@instance)
+      return
+    end
     
     @orientation.user = current_user
     @orientation.course_instance = @instance
@@ -70,5 +72,10 @@ class OrientationsController < ApplicationController
     redirect_to completed_course_instance_orientation_path(@instance)
   end
 
+  def completed
+    redirect_to course_instance_orientation_path(@instance) unless Orientation.exists?(:user_id => current_user.id, :course_instance_id => @instance.id)
+    
+    @token = Digest::SHA1.hexdigest(current_user.studentnumber)
+  end
 
 end

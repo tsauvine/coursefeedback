@@ -1,3 +1,5 @@
 <h1>Kiitos vastauksesta</h1> 
 
-<p><a href="http://plus.cs.hut.fi/?survey_token=<%= @token %>">Rekisteröidy A+ -järjestelmään tästä linkistä</a></p>
+<% unless @instance.aplus_url.blank? %>
+  <p><a href="<%= @instance.aplus_url %>survey_token=<%= @token %>">Rekisteröidy A+ -järjestelmään tästä linkistä</a></p>
+<% end %>

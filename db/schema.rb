@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20120216193404) do
     t.boolean  "active",     :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "aplus_url"
   end
 
   create_table "courseroles", :force => true do |t|
