@@ -4,8 +4,8 @@
       <td><%=t :course_code %>:</td>
       <td><%= f.text_field :code %></td>
       <td>
-        <% if @local_course.errors[:code] %>
-          <span class="error"><%= @local_course.errors[:code] %></span>
+        <% if !@local_course.errors[:code].empty? %>
+          <span class="error"><%= @local_course.errors[:code].join('. ') %></span>
         <% elsif @local_course.new_record? %>
           <span class="hint"><%=t :course_code_hint %></span>
         <% end %>
@@ -15,8 +15,8 @@
       <td><%=t :course_name %>:</td>
       <td><%= f.text_field :name %></td>
       <td>
-        <% if @local_course.errors[:name] %>
-          <span class="error"><%= @local_course.errors[:name] %></span>
+        <% if !@local_course.errors[:name].empty? %>
+          <span class="error"><%= @local_course.errors[:name].join('. ') %></span>
         <% elsif @local_course.new_record? %>
           <span class="hint"><%=t :course_name_hint %></span>
         <% end %>

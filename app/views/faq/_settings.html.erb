@@ -7,8 +7,8 @@
       <td><%=t :new_caption %>:</td>
       <td>
         <%= f.text_field :caption %>
-        <% if @entry.errors[:caption] %>
-          <span class="error"><%= @entry.errors[:caption] %></span>
+        <% unless @entry.errors[:caption].empty? %>
+          <span class="error"><%= @entry.errors[:caption].join('. ') %></span>
         <% end %>
       </td>
     </tr>
