@@ -5,7 +5,7 @@ ERRORS_EMAIL = nil # 'admin@example.com'
 NOTIFICATIONS_SENDER_EMAIL = 'no-reply@example.com'
 
 # Automatically redirect from http to https
-ENABLE_SSL = false
+FORCE_SSL = false
 
 # Classname of the LDAP adaptor to use. Set to nil to disable LDAP.
 LDAP_ADAPTOR = nil

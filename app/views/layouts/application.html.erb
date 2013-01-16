@@ -65,7 +65,7 @@
   <% if current_user %>
     <%= link_to current_user.name, edit_user_path(current_user) %>
   <% else %>
-    <%= link_to t(:login_button), login_url(:protocol => ENABLE_SSL ? 'https' : 'http') %>
+    <%= link_to t(:login_button), login_url(:protocol => FORCE_SSL ? 'https' : 'http') %>
   <% end %>
 </div>
 
