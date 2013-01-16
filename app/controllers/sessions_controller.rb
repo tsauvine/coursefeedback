@@ -37,21 +37,21 @@ class SessionsController < ApplicationController
 
 
   def shibboleth
-#     shibinfo = {
-#       :login => request.env[SHIB_ATTRIBUTES[:id]],
-#       :studentnumber => (request.env[SHIB_ATTRIBUTES[:studentnumber]] || '').split(':').last,
-#       :name => request.env[SHIB_ATTRIBUTES[:firstname]] + ' ' + request.env[SHIB_ATTRIBUTES[:lastname]],
-#       :email => request.env[SHIB_ATTRIBUTES[:email]],
-#     }
-#     logout_url = request.env[SHIB_ATTRIBUTES[:logout]]
-
     shibinfo = {
-      :login => 'student1@aalto.fi', #'student1@hut.fi',
-      :studentnumber => ('urn:mace:terena.org:schac:personalUniqueCode:fi:aalto.fi:student:20001' || '').split(':').last,
-      :name => 'Teemu Teekkari',
-      :email => 'tteekkar@cs.hut.fi',
+      :login => request.env[SHIB_ATTRIBUTES[:id]],
+      :studentnumber => (request.env[SHIB_ATTRIBUTES[:studentnumber]] || '').split(':').last,
+      :name => request.env[SHIB_ATTRIBUTES[:firstname]] + ' ' + request.env[SHIB_ATTRIBUTES[:lastname]],
+      :email => request.env[SHIB_ATTRIBUTES[:email]],
     }
-    logout_url= 'http://www.aalto.fi/'
+    logout_url = request.env[SHIB_ATTRIBUTES[:logout]]
+
+#     shibinfo = {
+#       :login => 'student1@aalto.fi', #'student1@hut.fi',
+#       :studentnumber => ('urn:mace:terena.org:schac:personalUniqueCode:fi:aalto.fi:student:20001' || '').split(':').last,
+#       :name => 'Teemu Teekkari',
+#       :email => 'tteekkar@cs.hut.fi',
+#     }
+#     logout_url= 'http://www.aalto.fi/'
 
     shibboleth_login(shibinfo, logout_url)
   end
