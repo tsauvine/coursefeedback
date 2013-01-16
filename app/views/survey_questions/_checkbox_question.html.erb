@@ -1,8 +1,0 @@
-<!-- Checkboxes -->
-<p id="checkbox<%= question.id %>">
-  <% if question.payload %>
-    <% question.payload.each_with_index do |alternative, index| %>
-      <%= check_box_tag "#{question.id}[#{index}]", alternative %> <%=h alternative %> <br />
-    <% end %>
-  <% end %>
-</p>
