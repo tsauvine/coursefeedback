@@ -46,10 +46,10 @@ class OrientationsController < ApplicationController
 "Pid&auml;n ongelmista joita voin yritt&auml;&auml; ratkaista omalla tavallani.",
 "Pyrin tekem&auml;&auml;n vain pakolliset opintoihini liittyv&auml;t asiat, enk&auml; yht&auml;&auml;n enemp&auml;&auml;.",
 "Olen aina huolissani siit&auml;, ett&auml; ep&auml;onnistun tenteiss&auml;.",
-"Tavoitteeni on menesty&auml; opinnoissani hyvin.",
+"Tavoitteeni on menesty&auml; opinnoissani hyvin."
 
-"Olen motivoitunut suorittamaan t&auml;m&auml;n kurssin.",
-"Kurssin asioista on minulle paljon hy&ouml;ty&auml; jatkossa."
+#"Olen motivoitunut suorittamaan t&auml;m&auml;n kurssin.",
+#"Kurssin asioista on minulle paljon hy&ouml;ty&auml; jatkossa."
 ]
   end
   

@@ -33,13 +33,18 @@
           <td><%= index + 1 %>.</td>
           <td><%= question.html_safe %></td>
           <% for i in 1..7 do %>
-            <td><input type="radio" name="questions[<%= index %>]" value="<%= i %>" /></td>
+            <td><input type="radio" name="questions[<%= index + 1 %>]" value="<%= i %>" /></td>
           <% end %>
           <td></td>
         </tr>
       <% end %>
     </tbody>
   </table>
+  </p>
+  
+  <p>
+    Tavoitearvosanani kurssista:
+    <input type="textfield" name="questions[tavoite]" style="width: 4em;" />
   </p>
 
   <p><%= submit_tag 'Lähetä', :class => 'btn btn-success' %></p>
