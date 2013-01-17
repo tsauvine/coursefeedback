@@ -24,7 +24,7 @@
   </p>
 
   <p>
-    <% if user_signed_in? %>
+    <% if logged_in? %>
       <%= f.radio_button :anonymous, true %> <%=t :send_with_pseudonym %>: <%= f.text_field :nick %><br />
       <%= f.radio_button :anonymous, false %> <%=t :send_with_real_name %>: <b><%=h current_user.name %></b>
     <% else %>

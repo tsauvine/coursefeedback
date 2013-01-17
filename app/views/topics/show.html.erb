@@ -80,7 +80,7 @@
     <p id="messageEditor"><%= link_to t(:new_comment), new_message_url(:topic_id => @topic.id), :remote => true, :method => :get
     #:update => "messageEditor"
     %></p>
-  <% elsif !user_signed_in? %>
+  <% elsif !logged_in? %>
     <p class="hint"><%= link_to t(:new_comment_login), url_for(:require_login => true) %></p>
   <% elsif @course.feedback_write_permission == 'enrolled' && !@enrolled %>
     <p class="hint"><%=t :new_comment_enrolled %></p>

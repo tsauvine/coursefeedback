@@ -23,29 +23,29 @@ class Ability
   #   create            admin
 
 
-  def initialize(user)
+  def initialize(user, request)
     # All users, including unauthenticated
     can :read, [Course, CourseInstance]
 
     # Dynamic permissions
     can :read_headlines, Course do |course|
-      course_headlines_permission?(course, user)
+      course_headlines_permission?(course, user, request)
     end
 
     can :read_feedback, Course do |course|
-      course_read_permission?(course, user)
+      course_read_permission?(course, user, request)
     end
 
     can :write_feedback, Course do |course|
-      course_write_permission?(course, user)
+      course_write_permission?(course, user, request)
     end
 
     can :read, Topic do |topic|
-      topic.moderation_status == 'published' && course_read_permission?(topic.course_instance.course, user)
+      topic.moderation_status == 'published' && course_read_permission?(topic.course_instance.course, user, request)
     end
 
     can :create, Topic do |topic|
-      topic.course_instance.active && course_write_permission?(topic.course_instance.course, user)
+      topic.course_instance.active && course_write_permission?(topic.course_instance.course, user, request)
     end
 
     can :update, User do |target|
@@ -53,7 +53,7 @@ class Ability
     end
 
     can :answer, Questionnaire do |questionnaire|
-      course_write_permission?(questionnaire.course_instance.course, user)
+      course_write_permission?(questionnaire.course_instance.course, user, request)
     end
     
     if user
@@ -93,12 +93,12 @@ class Ability
 #     Courserole.exists?(:user_id => user.id, :course_id => course.id, :role => 'teacher')
 #   end
 
-  def course_headlines_permission?(course, user)
+  def course_headlines_permission?(course, user, request)
     case course.headlines_read_permission
     when 'public'
       return true
     when 'ip'
-      return !!user || trusted_ip_range?()
+      return !!user || trusted_ip_range?(request)
     when 'authenticated'
       !!user
     when 'enrolled'
@@ -110,12 +110,12 @@ class Ability
     end
   end
 
-  def course_read_permission?(course, user)
+  def course_read_permission?(course, user, request)
     case course.feedback_read_permission
     when 'public'
       return true
     when 'ip'
-      return !!user || trusted_ip_range?()
+      return !!user || trusted_ip_range?(request)
     when 'authenticated'
       !!user
     when 'enrolled'
@@ -127,12 +127,12 @@ class Ability
     end
   end
 
-  def course_write_permission?(course, user)
+  def course_write_permission?(course, user, request)
     case course.feedback_write_permission
     when 'public'
       return true
     when 'ip'
-      return !!user || trusted_ip_range?()
+      return !!user || trusted_ip_range?(request)
     when 'authenticated'
       !!user
     when 'enrolled'
@@ -144,7 +144,7 @@ class Ability
     end
   end
 
-  def trusted_ip_range?
+  def trusted_ip_range?(request)
     return false unless NETWORK_RANGE
 
     remote_ip = request.env['HTTP_X_FORWARDED_FOR'] || request.remote_ip

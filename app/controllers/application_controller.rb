@@ -74,15 +74,14 @@ class ApplicationController < ActionController::Base
     unless current_user
       store_location
 
-      # TODO: make this configurable
       #redirect_to new_session_url
-      if request.env[SHIB_ATTRIBUTES[:id]]
+      #if request.env[SHIB_ATTRIBUTES[:id]]
         # If Shibboleth headers are present, redirect directly to session creation
-        redirect_to shibboleth_session_path
-      else
+      #  redirect_to shibboleth_session_path
+      #else
         # If Shibboleth headers are not present, redirect directly to IdP
         redirect_to "/Shibboleth.sso/aalto?target=" + shibboleth_session_url(:protocol => 'https')
-      end
+      #end
 
       return false
     end
@@ -117,6 +116,10 @@ class ApplicationController < ActionController::Base
   def redirect_back_or_default(default)
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
+  end
+  
+  def current_ability
+    @current_ability ||= Ability.new(current_user, request)
   end
 
 end

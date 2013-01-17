@@ -110,7 +110,7 @@ class TopicsController < ApplicationController
     @topic.nick = 'Anonymous' if @topic.nick.blank?
 
     # User
-    if user_signed_in? && !@topic.anonymous
+    if logged_in? && !@topic.anonymous
       #@topic.anonymous = (@topic.nick != current_user.name)
       @topic.user = current_user
       @topic.nick = current_user.name
