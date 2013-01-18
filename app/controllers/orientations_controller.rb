@@ -75,7 +75,7 @@ class OrientationsController < ApplicationController
   def completed
     redirect_to course_instance_orientation_path(@instance) unless Orientation.exists?(:user_id => current_user.id, :course_instance_id => @instance.id)
     
-    @token = Digest::SHA1.hexdigest(current_user.studentnumber)
+    @token = Digest::SHA1.hexdigest(current_user.studentnumber || '')
   end
 
 end

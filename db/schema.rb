@@ -119,8 +119,8 @@ ActiveRecord::Schema.define(:version => 20120216193404) do
     t.string   "login"
     t.string   "studentnumber"
     t.string   "name"
-    t.string   "email"
-    t.string   "locale"
+    t.string   "email",                 :limit => 320
+    t.string   "locale",                :limit => 5,   :default => "fi"
     t.string   "crypted_password"
     t.string   "password_salt"
     t.boolean  "admin",               :default => false
