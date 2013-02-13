@@ -312,6 +312,13 @@ div.shibboleth-login a {
   margin-top: .5em;
 }
 
+.topic h2 {
+  font-family: serif;
+  margin-bottom: 1em;
+  padding: 0px;
+  /*font-size: 120%;*/
+}
+
 .answered {
   border-left: 2px solid #80ff80;
 }
@@ -467,7 +474,7 @@ span.rejectButton:hover a {
   margin: 0em 1em .5em 0em;
 }
 
-.message .text{
+.message .text {
   white-space: pre-wrap;
   font-family: monospace;
 }

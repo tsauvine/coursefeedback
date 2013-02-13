@@ -1,6 +1,6 @@
 <h1><%=t :new_topic_heading %></h1>
 
-<%= form_for(@topic) do |f| %>
+<%= form_for(@topic, :class => 'messageEditor') do |f| %>
   <%= f.hidden_field :course_instance_id %>
 
   <table>
@@ -20,7 +20,7 @@
 
   <p>
   <%=t :feedback %><br />
-  <%= f.text_area :text, { :rows => 5, :cols => 80 } %>
+  <%= f.text_area :text, { :rows => 5, :class => 'input-xxlarge'} %>
   </p>
 
   <p>
@@ -33,11 +33,8 @@
   </p>
 
   <p>
-    <!-- %= f.submit t(:preview_button) % -->
-    <%= f.submit t(:send_button) %>
+    <button type="submit" class="btn"><%= t(:send_button) %></button>
   </p>
 <% end %>
-
-<!--p class="hint"><%=t :new_topic_hint %></p-->
 
 <%= link_to t(:back), topic_index_path(@course.code, @instance.path) %>

@@ -77,9 +77,7 @@
   <% if !@instance.active %>
     <p class="hint"><%=t :new_comment_inactive %></p>
   <% elsif @allow_send %>
-    <p id="messageEditor"><%= link_to t(:new_comment), new_message_url(:topic_id => @topic.id), :remote => true, :method => :get
-    #:update => "messageEditor"
-    %></p>
+    <p class="messageEditor" id="messageEditor"><%= link_to t(:new_comment), new_message_url(:topic_id => @topic.id), :remote => true, :method => :get %></p>
   <% elsif !logged_in? %>
     <p class="hint"><%= link_to t(:new_comment_login), url_for(:require_login => true) %></p>
   <% elsif @course.feedback_write_permission == 'enrolled' && !@enrolled %>
