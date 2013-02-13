@@ -17,7 +17,7 @@ class CourseInstance < ActiveRecord::Base
   validates_format_of :path, :with => URL_FORMAT_MODEL
   validates_presence_of :name
 
-  attr_accessible :course, :name, :path, :position, :active
+  attr_accessible :course, :course_id, :name, :path, :position, :active
   
   # Returns topics sorted by an attribute.
   # Parameters: 
